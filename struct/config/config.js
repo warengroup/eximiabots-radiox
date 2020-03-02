@@ -4,6 +4,8 @@ module.exports = {
     //credentials
     token: process.env.TOKEN,
     devToken: process.env.DEVTOKEN,
+    //support guild
+    supportGuild: "https://discord.gg/rRA65Mn"
     //channels
     debug_channel: "634718645188034560",
     primary_test_channel: "617633098296721409",
