@@ -15,7 +15,6 @@ module.exports = {
         const embed = new Discord.MessageEmbed()
             .setTitle("__Now playing__")
             .setDescription(`<a:aNotes:674602408105476106>**Now playing:** ${radio.url}\n\`${client.funcs.msToTime(completed, "hh:mm:ss")}\``)
-            .setURL(radio.songs[0].url)
             .setThumbnail(thumbnail._rejectionHandler0)
             .setColor(client.config.embedColor)
         return msg.channel.send(embed);

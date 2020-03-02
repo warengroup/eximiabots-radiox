@@ -2,9 +2,7 @@ module.exports = async function (msg, voiceChannel, client, url) {
     const radio = client.radio.get(msg.guild.id);
 
     if (radio) {
-        radio.songs.push(song);
-        if (playlist) return;
-        return msg.channel.send(`<:green_check_mark:674265384777416705> **${song.title}** has been added to the queue!`);
+        radio.connection.dispatcher.end('Stopped');
     }
 
     const construct = {
