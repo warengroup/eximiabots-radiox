@@ -14,7 +14,7 @@ module.exports = {
     invite: "",
     //Settings
     devMode: false,
-    prefix: "?",
+    prefix: "#",
     devPrefix: "-",
     volume: 5,
 }
