@@ -1,4 +1,4 @@
 # RadioX by EximiaBots
 
 Join our Discord Server
-https://discord.gg/JBFrdfE
+https://discord.gg/rRA65Mn
