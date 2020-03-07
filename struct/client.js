@@ -39,8 +39,8 @@ module.exports = class extends Client {
         this.on('message', (msg) => {
             require(`${events}msg`).execute(this, msg, Discord);
         });
-        this.on('voiceStateUpdate', (newMember) => {
-            require(`${events}voiceStateUpdate`).execute(this, newMember);
+        this.on('voiceStateUpdate', (oldState, newState) => {
+            require(`${events}voiceStateUpdate`).execute(this, oldState, newState);
         });
         this.on('error', (error) => {
             client.channels.fetch(client.config.debug_channel).send('Error: ' + error);

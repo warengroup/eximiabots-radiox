@@ -9,7 +9,7 @@ module.exports = {
 	execute(msg, args, client, Discord, prefix, command) {
 		const radio = client.radio.get(msg.guild.id);
 		if (client.funcs.check(client, msg, command)) {
-			radio.connection.dispatcher.end('Stopped');
+			radio.connection.dispatcher.end();
 			msg.channel.send('<:stop:674685626108477519> Stopped the music!')
 		}
 	}

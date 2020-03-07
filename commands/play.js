@@ -7,7 +7,6 @@ module.exports = {
 	permission: 'none',
 	category: 'music',
 	async execute(msg, args, client, Discord, prefix) {
-		const searchString = args.slice(1).join(" ");
 		const url = args[1] ? args[1].replace(/<(.+)>/g, "$1") : "";
 		const radio = client.radio.get(msg.guild.id);
 		const voiceChannel = msg.member.voice.channel;
@@ -24,6 +23,30 @@ module.exports = {
 		if (!permissions.has('SPEAK')) {
 			return msg.channel.send('<:redx:674263474704220182> I cannot speak in your voice channel, make sure I have the proper permissions!');
 		}
-		return client.funcs.handleRadio(msg, voiceChannel, client, url);
+
+		if (radio) {
+			radio.connection.dispatcher.end();
+		}
+
+		const construct = {
+			textChannel: msg.channel,
+			voiceChannel: voiceChannel,
+			connection: null,
+			playing: false,
+			url: url,
+			name: null,
+			volume: client.config.volume,
+		};
+		client.radio.set(msg.guild.id, construct);
+
+		try {
+			const connection = await voiceChannel.join();
+			construct.connection = connection;
+			client.funcs.play(msg.guild, client, url);
+		} catch (error) {
+			client.radio.delete(msg.guild.id);
+			client.debug_channel.send("Error with connecting to voice channel: " + error);
+			return msg.channel.send(`<:redx:674263474704220182> An error occured: ${error}`);
+		}
 	}
 };
