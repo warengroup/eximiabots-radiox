@@ -4,7 +4,9 @@ module.exports = async function (guild, client, url) {
     const dispatcher = radio.connection
         .play(url, { bitrate: 1024, passes: 10, volume: 1, highWaterMark: 1 << 25 })
         .on("finish", () => {
+            radio.voiceChannel.leave();
             radio.delete();
+            return;
         });
     dispatcher.on('start', () => {
         dispatcher.player.streamingData.pausedTime = 0;
