@@ -5,7 +5,7 @@ module.exports = async function (guild, client, url) {
         .play(url, { bitrate: 1024, passes: 10, volume: 1, highWaterMark: 1 << 25 })
         .on("finish", () => {
             radio.voiceChannel.leave();
-            radio.delete();
+            client.radio.delete(guild.id);
             return;
         });
     dispatcher.on('start', () => {
