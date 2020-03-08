@@ -24,7 +24,7 @@ module.exports = {
                 if (radio.voiceChannel.members.size === 1) {
                     radio.songs = [];
                     radio.looping = false;
-                    radio.connection.dispatcher.end();
+                    radio.connection.dispatcher.destroy();
                 }
             }, 12000);
         }
