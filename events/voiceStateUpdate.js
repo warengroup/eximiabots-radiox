@@ -9,7 +9,7 @@ module.exports = {
                 radio.songs = [];
                 radio.looping = false;
                 radio.endReason = "manual disconnect";
-                return client.queue.delete(newState.guild.id);
+                return client.radio.delete(newState.guild.id);
             }
             if (newState.member.voice.channel !== radio.voiceChannel) {
                 change = true;
