@@ -3,7 +3,7 @@ require('dotenv/config');
 module.exports = {
     
     //credentials
-    token: "Njg0MTA5NTM1MzEyNjA5NDA5.XmOUxg.u2XChDQMZtokzueQRqGWc-CAvWE",
+    token: "",
     
     //support
     supportGuild: "https://discord.gg/rRA65Mn",
