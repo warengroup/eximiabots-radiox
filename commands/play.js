@@ -3,7 +3,6 @@ module.exports = {
 	alias: 'p',
 	usage: '<song name>',
 	description: 'Play some music.',
-	onlyDev: false,
 	permission: 'none',
 	category: 'music',
 	async execute(msg, args, client, Discord, prefix) {

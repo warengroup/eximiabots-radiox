@@ -3,7 +3,6 @@ module.exports = {
     alias: 'np',
     usage: '',
     description: 'See the currently playing song position and length.',
-    onlyDev: false,
     permission: 'none',
     category: 'music',
     async execute(msg, args, client, Discord, prefix) {
@@ -15,7 +14,7 @@ module.exports = {
         const embed = new Discord.MessageEmbed()
             .setTitle("__Now playing__")
             .setDescription(`<a:aNotes:674602408105476106>**Now playing:** ${radio.url}\n\`${client.funcs.msToTime(completed, "hh:mm:ss")}\``)
-            .setThumbnail(thumbnail._rejectionHandler0)
+            /*.setThumbnail(thumbnail._rejectionHandler0)*/
             .setColor(client.config.embedColor)
         return msg.channel.send(embed);
     }

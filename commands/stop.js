@@ -3,7 +3,6 @@ module.exports = {
 	description: 'Stop command.',
 	alias: 'none',
 	usage: '',
-	onlyDev: false,
 	permission: 'MANAGE_CHANNELS',
 	category: 'music',
 	execute(msg, args, client, Discord, prefix, command) {

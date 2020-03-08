@@ -1,7 +1,7 @@
 {
   "name": "radiox",
   "version": "1.0.0",
-  "description": "Finnish Radio Discord Music Bot",
+  "description": "We will bring you finnish radio to your discord server",
   "main": "index.js",
   "scripts": {
     "start": "node ."
