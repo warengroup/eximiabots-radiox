@@ -8,8 +8,9 @@ module.exports = {
     execute(msg, args, client, Discord, prefix) {
         const embed = new Discord.MessageEmbed()
             .setTitle(`Invite ${client.user.username} to your Discord server!`)
-            .setURL(client.config.invite)
             .setColor(client.config.embedColor)
+            .setURL(client.config.invite)
+            .setFooter('EximiaBots by Warén Media');
         return msg.channel.send(embed);
     }
 };

@@ -11,9 +11,9 @@ module.exports = {
             const command = client.commands.get(args[1]);
             const embed = new Discord.MessageEmbed()
                 .setTitle(`${client.global.db.guilds[msg.guild.id].prefix}${command.name} ${command.usage}`)
-                .setDescription(command.description)
-                .setFooter(`Command Alias: \`${command.alias}\``)
                 .setColor(client.config.embedColor)
+                .setDescription(command.description + `\n Command Alias: \`${command.alias}\``)
+                .setFooter('EximiaBots by Warén Media')
             msg.channel.send(embed);
         } else {
             const categories = [];
@@ -26,9 +26,9 @@ module.exports = {
             }
             const embed = new Discord.MessageEmbed()
                 .setTitle(`${client.user.username} help:`)
-                .setDescription(commands)
-                .setFooter(`"${client.config.prefix}help <command>" to see more information about a command.`)
                 .setColor(client.config.embedColor)
+                .setDescription(commands + `\n "${client.config.prefix}help <command>" to see more information about a command.`)
+                .setFooter('EximiaBots by Warén Media');
             msg.channel.send(embed);
         }
     }

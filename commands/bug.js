@@ -20,8 +20,9 @@ module.exports = {
         
         const embed = new Discord.MessageEmbed()
             .setTitle(`Found a bug with ${client.user.username}?\nDM the core developer:`)
+            .setColor(client.config.embedColor)
             .setDescription(`${developers}\nOr join the support server: ${client.config.supportGuild}`)
-            .setColor(client.config.embedColor);
+            .setFooter('EximiaBots by Warén Media');
         msg.channel.send(embed);
     },
 };

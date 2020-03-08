@@ -6,7 +6,7 @@ module.exports = {
 	permission: 'none',
 	category: 'music',
 	async execute(msg, args, client, Discord, prefix) {
-		const url = args[1] ? args[1].replace(/<(.+)>/g, "$1") : "";
+		const station = args[1] ? args[1].replace(/<(.+)>/g, "$1") : "";
 		const radio = client.radio.get(msg.guild.id);
 		const voiceChannel = msg.member.voice.channel;
 		if (!radio) {
@@ -25,25 +25,26 @@ module.exports = {
 
 		if (radio) {
 			radio.connection.dispatcher.destroy();
-			client.funcs.play(msg.guild, client, url);
+            radio.station = station;
+			client.funcs.play(msg.guild, client, station);
 			return;
 		}
-
-		const construct = {
+        
+        const construct = {
 			textChannel: msg.channel,
 			voiceChannel: voiceChannel,
 			connection: null,
 			playing: false,
-			url: url,
+			station: station-1,
 			name: null,
 			volume: client.config.volume,
 		};
 		client.radio.set(msg.guild.id, construct);
-
+        
 		try {
 			const connection = await voiceChannel.join();
 			construct.connection = connection;
-			client.funcs.play(msg.guild, client, url);
+			client.funcs.play(msg.guild, client, station);
 		} catch (error) {
 			client.radio.delete(msg.guild.id);
 			client.debug_channel.send("Error with connecting to voice channel: " + error);

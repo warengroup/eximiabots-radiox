@@ -1,7 +1,7 @@
 const { Client, Collection } = require('discord.js');
 const Discord = require('discord.js');
 const fs = require('fs');
-const path = require('path')
+const path = require('path');
 const events = '../events/';
 
 module.exports = class extends Client {
@@ -27,10 +27,6 @@ module.exports = class extends Client {
             command.uses = 0;
             this.commands.set(command.name, command);
             this.commandAliases.set(command.alias, command);
-        }
-
-        if (this.config.devMode) {
-            this.config.token = this.config.devToken;
         }
 
         this.on('ready', () => {
