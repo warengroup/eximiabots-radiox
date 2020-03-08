@@ -26,6 +26,7 @@ module.exports = {
 		if (radio) {
 			radio.connection.dispatcher.destroy();
 			client.funcs.play(msg.guild, client, url);
+			return;
 		}
 
 		const construct = {
