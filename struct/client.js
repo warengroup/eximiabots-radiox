@@ -15,7 +15,7 @@ module.exports = class extends Client {
         this.radio = new Map();
         this.funcs = {};
         this.dispatcher = {};
-        this.config = require('./config/config.js');
+        this.config = require('../config.js');
 
         fs.readdirSync(path.join(__dirname, 'funcs')).forEach(filename => {
             this.funcs[filename.slice(0, -3)] = require(`./funcs/${filename}`);

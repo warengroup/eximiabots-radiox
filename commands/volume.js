@@ -3,7 +3,6 @@ module.exports = {
 	description: 'Volume command.',
 	alias: 'none',
 	usage: '<volume>',
-	onlyDev: false,
 	permission: 'MANAGE_MESSAGES',
 	category: 'music',
 	execute(msg, args, client, Discord, prefix, command) {

@@ -3,7 +3,6 @@ module.exports = {
     alias: 'i',
     usage: '',
     description: 'Invite RadioX.',
-    onlyDev: false,
     permission: 'none',
     category: 'info',
     execute(msg, args, client, Discord, prefix) {

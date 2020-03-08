@@ -3,7 +3,6 @@ module.exports = {
 	alias: 'p',
 	usage: '<song name>',
 	description: 'Play some music.',
-	onlyDev: false,
 	permission: 'none',
 	category: 'music',
 	async execute(msg, args, client, Discord, prefix) {
@@ -25,7 +24,8 @@ module.exports = {
 		}
 
 		if (radio) {
-			radio.connection.dispatcher.end();
+			radio.connection.dispatcher.destroy();
+			client.funcs.play(msg.guild, client, url);
 		}
 
 		const construct = {
