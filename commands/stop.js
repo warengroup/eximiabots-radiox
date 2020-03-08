@@ -9,7 +9,7 @@ module.exports = {
 		const radio = client.radio.get(msg.guild.id);
 		radio.connection.dispatcher.destroy();
 		radio.voiceChannel.leave();
-		client.radio.delete(guild.id);
+		client.radio.delete(msg.guild.id);
 		msg.channel.send('<:stop:674685626108477519> Stopped the music!');
 	}
 };

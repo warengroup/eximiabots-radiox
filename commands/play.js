@@ -12,7 +12,7 @@ module.exports = {
 		if (!radio) {
 			if (!msg.member.voice.channel) return msg.channel.send('<:redx:674263474704220182> I\'m sorry but you need to be in a voice channel to play music!');
 		} else {
-			if (voiceChannel !== radio.voiceChannel) return msg.channel.send('<:redx:674263474704220182> I\'m sorry but you need to be in the same voice channel as Musix to play music!');
+			if (voiceChannel !== radio.voiceChannel) return msg.channel.send('<:redx:674263474704220182> I\'m sorry but you need to be in the same voice channel as RadioX to play music!');
 		}
 		if (!args[1]) return msg.channel.send('<:redx:674263474704220182> You need to use a link or search for a song!');
 		const permissions = voiceChannel.permissionsFor(msg.client.user);
