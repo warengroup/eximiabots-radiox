@@ -2,6 +2,7 @@ const { Client, Collection } = require('discord.js');
 const Discord = require('discord.js');
 const fs = require('fs');
 const path = require('path');
+const fetch = require('node-fetch');
 const events = '../events/';
 
 module.exports = class extends Client {
@@ -28,6 +29,9 @@ module.exports = class extends Client {
             this.commands.set(command.name, command);
             this.commandAliases.set(command.alias, command);
         }
+
+        client.stations = fetch('https://gitea.cwinfo.org/cwchristerw/radio/raw/branch/master/playlist.json')
+            .then(res => res.json());
 
         this.on('ready', () => {
             require(`${events}ready`).execute(this, Discord);
