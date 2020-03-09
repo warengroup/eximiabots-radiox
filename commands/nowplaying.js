@@ -12,7 +12,7 @@ module.exports = {
         const completed = (radio.time.toFixed(0));
 
         const embed = new Discord.MessageEmbed()
-            .setTitle("<a:aNotes:674602408105476106> Now Playing")
+            .setTitle("Now Playing")
             .setColor(client.config.embedColor)
             .setDescription(`**${radio.station.name}** \n Owner: ${radio.station.owner} \n\`${client.funcs.msToTime(completed, "hh:mm:ss")}\``)
             .setFooter('EximiaBots by Warén Media');
