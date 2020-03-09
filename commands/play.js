@@ -28,7 +28,7 @@ module.exports = {
 			return;
 		} else if (!isNaN(number)) {
 			if (number > client.stations.length - 1) {
-				return radio.textChannel.send('<:redx:674263474704220182> no such station!');
+				return msg.channel.send('<:redx:674263474704220182> no such station!');
 			} else {
 				url = client.stations[number].stream[client.stations[number].stream.default];
 				station = client.stations[number];
