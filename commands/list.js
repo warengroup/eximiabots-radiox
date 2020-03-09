@@ -12,7 +12,7 @@ module.exports = {
             stations = stations.replace('**#**', `**${i + 1}**`);
         }
         const embed = new Discord.MessageEmbed()
-            .setTitle(`📻 Radio Stations`)
+            .setTitle(`Radio Stations`)
             .setColor(client.config.embedColor)
             .setDescription(stations)
             .setFooter('EximiaBots by Warén Media')
