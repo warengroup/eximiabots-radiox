@@ -25,7 +25,6 @@ module.exports = function (key, client) {
         }
     }
     let highestProbabilityStation;
-    console.log('Stations found: ', foundStations);
     for (let i = 0; i < foundStations.length; i++) {
         if (!highestProbabilityStation || highestProbabilityStation.probability < foundStations[i].probability) highestProbabilityStation = foundStations[i];
         if (highestProbabilityStation && highestProbabilityStation.probability === foundStations[i].probability) {
