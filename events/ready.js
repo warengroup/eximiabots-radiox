@@ -1,7 +1,8 @@
+const fetch = require('node-fetch');
+
 module.exports = {
     name: 'ready',
     async execute(client, Discord) {
-        const fetch = require('node-fetch');
         
         console.log('RadioX');
         console.log('We will bring you finnish radio to your discord server');
