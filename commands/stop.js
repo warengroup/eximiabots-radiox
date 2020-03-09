@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'stop',
 	description: 'Stop command.',
-	alias: 'none',
+	alias: 's',
 	usage: '',
 	permission: 'none',
 	category: 'music',
