@@ -8,7 +8,6 @@ module.exports = {
             if (newState.member.voice.channel === null) {
                 radio.songs = [];
                 radio.looping = false;
-                radio.endReason = "manual disconnect";
                 return client.radio.delete(newState.guild.id);
             }
             if (newState.member.voice.channel !== radio.voiceChannel) {

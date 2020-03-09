@@ -6,7 +6,7 @@ module.exports = {
 	permission: 'none',
 	category: 'music',
 	async execute(msg, args, client, Discord, prefix) {
-		const station = args[1] ? args[1].replace(/<(.+)>/g, "$1") : "";
+		let url = args[1] ? args[1].replace(/<(.+)>/g, "$1") : "";
 		const radio = client.radio.get(msg.guild.id);
 		const voiceChannel = msg.member.voice.channel;
 		if (!radio) {
@@ -22,29 +22,46 @@ module.exports = {
 		if (!permissions.has('SPEAK')) {
 			return msg.channel.send('<:redx:674263474704220182> I cannot speak in your voice channel, make sure I have the proper permissions!');
 		}
+		let station;
+		const number = parseInt(args[1] - 1);
+		if (url.startsWith('http')) {
+			return;
+		} else if (!isNaN(number)) {
+			if (number > client.stations.length - 1) {
+				return radio.textChannel.send('<:redx:674263474704220182> no such station!');
+			} else {
+				url = client.stations[number].stream[client.stations[number].stream.default];
+				station = client.stations[number];
+			}
+		} else {
+			const sstation = await client.funcs.searchStation(args.slice(1).join(' '), client);
+			if (sstation === false) return msg.channel.send('No stations found!');
+			url = sstation.stream[sstation.stream.default];
+			station = sstation
+		}
 
 		if (radio) {
 			radio.connection.dispatcher.destroy();
-            radio.station = station;
-			client.funcs.play(msg.guild, client, station);
+			radio.station = station;
+			client.funcs.play(msg.guild, client, url);
 			return;
 		}
-        
-        const construct = {
+
+		const construct = {
 			textChannel: msg.channel,
 			voiceChannel: voiceChannel,
 			connection: null,
 			playing: false,
-			station: station-1,
-			name: null,
+			station: station,
 			volume: client.config.volume,
+			time: null
 		};
 		client.radio.set(msg.guild.id, construct);
-        
+
 		try {
 			const connection = await voiceChannel.join();
 			construct.connection = connection;
-			client.funcs.play(msg.guild, client, station);
+			client.funcs.play(msg.guild, client, url);
 		} catch (error) {
 			client.radio.delete(msg.guild.id);
 			client.debug_channel.send("Error with connecting to voice channel: " + error);
