@@ -1,6 +1,7 @@
 module.exports = {
     name: 'voiceStateUpdate',
     async execute(client, oldState, newState) {
+        console.log('voicesateupate')
         let change = false;
         const radio = client.radio.get(newState.guild.id);
         if (!radio) return;
@@ -19,13 +20,16 @@ module.exports = {
         if (oldState.channel === null) return;
         if (oldState.channel.members.size === 1 && oldState.channel === radio.voiceChannel || change) {
             setTimeout(() => {
+                console.log('timeout')
                 if (!radio) return;
                 if (radio.voiceChannel.members.size === 1) {
                     radio.songs = [];
                     radio.looping = false;
                     radio.connection.dispatcher.destroy();
+                    radio.voiceChannel.leave();
+                    client.radio.delete(newState.guild.id);
                 }
-            }, 12000);
+            }, 1200);
         }
     }
 }
