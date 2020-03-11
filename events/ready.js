@@ -8,7 +8,7 @@ module.exports = {
         console.log('We will bring you finnish radio to your discord server');
         console.log('(c)2020 EximiaBots by Warén Media / Christer Warén & MatteZ02');
 
-        let client.developers = "";
+        client.developers = "";
         let user = "";
         for (i = 0; i < client.config.devId.length; i++) {
             user = await client.users.fetch(client.config.devId[i]);
