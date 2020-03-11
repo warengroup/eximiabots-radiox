@@ -29,7 +29,7 @@ module.exports = {
                     radio.voiceChannel.leave();
                     client.radio.delete(newState.guild.id);
                 }
-            }, 1200);
+            }, 120000);
         }
     }
 }
