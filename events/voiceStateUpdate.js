@@ -12,16 +12,11 @@ module.exports = {
                 return client.radio.delete(newState.guild.id);
             }
 
-            if (newState.channel !== radio.voiceChannel) {
-                change = true;
-                radio.voiceChannel = newState.channel;
-                radio.connection = newState.connection;
-            }
             const newPermissions = newState.channel.permissionsFor(newState.client.user);
             if (!newPermissions.has('CONNECT') || !newPermissions.has('SPEAK') || !newPermissions.has('VIEW_CHANNEL')) {
                 try {
                     const connection = await oldState.channel.join();
-                    radio.connection = connection;
+                    return radio.connection = connection;
                 } catch (error) {
                     radio.songs = [];
                     radio.looping = false;
@@ -31,6 +26,11 @@ module.exports = {
                     client.debug_channel.send("Error with connecting to voice channel: " + error);
                     return msg.channel.send(`<:redx:674263474704220182> An error occured: ${error}`);
                 }
+            }
+            if (newState.channel !== radio.voiceChannel) {
+                change = true;
+                radio.voiceChannel = newState.channel;
+                radio.connection = newState.connection;
             }
         }
         if (oldState.channel.members.size === 1 && oldState.channel === radio.voiceChannel || change) {
