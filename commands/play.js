@@ -35,7 +35,7 @@ module.exports = {
 			}
 		} else {
 			const sstation = await client.funcs.searchStation(args.slice(1).join(' '), client);
-			if (sstation === false) return msg.channel.send('No stations found!');
+			if (!sstation) return msg.channel.send('No stations found!');
 			url = sstation.stream[sstation.stream.default];
 			station = sstation
 		}

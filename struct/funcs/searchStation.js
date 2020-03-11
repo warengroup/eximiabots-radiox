@@ -1,4 +1,5 @@
 module.exports = function (key, client) {
+    if (client.stations === null) return false;
     let foundStations = [];
     if (!key) return false;
     const probabilityIncrement = 100 / key.split(' ').length / 2;
