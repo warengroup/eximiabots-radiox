@@ -34,7 +34,7 @@ module.exports = {
 				station = client.stations[number];
 			}
 		} else {
-            if(args[1].length < 4) return msg.channel.send('<:redx:674263474704220182> station must be over 3 characters!');
+			if (args[1].length < 4) return msg.channel.send('station must be over 3 characters!');
 			const sstation = await client.funcs.searchStation(args.slice(1).join(' '), client);
 			if (!sstation) return msg.channel.send('No stations found!');
 			url = sstation.stream[sstation.stream.default];
