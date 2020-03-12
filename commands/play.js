@@ -10,17 +10,17 @@ module.exports = {
 		const radio = client.radio.get(msg.guild.id);
 		const voiceChannel = msg.member.voice.channel;
 		if (!radio) {
-			if (!msg.member.voice.channel) return msg.channel.send('<:redx:674263474704220182> I\'m sorry but you need to be in a voice channel to play music!');
+			if (!msg.member.voice.channel) return msg.channel.send('you need to be in a voice channel to play music!');
 		} else {
-			if (voiceChannel !== radio.voiceChannel) return msg.channel.send('<:redx:674263474704220182> I\'m sorry but you need to be in the same voice channel as RadioX to play music!');
+			if (voiceChannel !== radio.voiceChannel) return msg.channel.send('you need to be in the same voice channel as RadioX to play music!');
 		}
-		if (!args[1]) return msg.channel.send('<:redx:674263474704220182> You need to use a link or search for a song!');
+		if (!args[1]) return msg.channel.send('You need to use a number or search for a supported station!');
 		const permissions = voiceChannel.permissionsFor(msg.client.user);
 		if (!permissions.has('CONNECT')) {
-			return msg.channel.send('<:redx:674263474704220182> I cannot connect to your voice channel, make sure I have the proper permissions!');
+			return msg.channel.send('I cannot connect to your voice channel.');
 		}
 		if (!permissions.has('SPEAK')) {
-			return msg.channel.send('<:redx:674263474704220182> I cannot speak in your voice channel, make sure I have the proper permissions!');
+			return msg.channel.send('I cannot speak in your voice channel.');
 		}
 		let station;
 		const number = parseInt(args[1] - 1);
@@ -28,7 +28,7 @@ module.exports = {
 			return;
 		} else if (!isNaN(number)) {
 			if (number > client.stations.length - 1) {
-				return msg.channel.send('<:redx:674263474704220182> no such station!');
+				return msg.channel.send('no such station!');
 			} else {
 				url = client.stations[number].stream[client.stations[number].stream.default];
 				station = client.stations[number];
@@ -65,7 +65,7 @@ module.exports = {
 		} catch (error) {
 			client.radio.delete(msg.guild.id);
 			client.debug_channel.send("Error with connecting to voice channel: " + error);
-			return msg.channel.send(`<:redx:674263474704220182> An error occured: ${error}`);
+			return msg.channel.send(`An error occured: ${error}`);
 		}
 	}
 };

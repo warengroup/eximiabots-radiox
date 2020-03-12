@@ -18,12 +18,12 @@ module.exports = async function (guild, client, url) {
         console.error(error);
         radio.voiceChannel.leave();
         client.radio.delete(guild.id);
-        return radio.textChannel.send('<:redx:674263474704220182> An error has occured while playing radio!');
+        return radio.textChannel.send('An error has occured while playing radio!');
     });
 
     dispatcher.setVolume(radio.volume / 10);
 
-    radio.textChannel.send('Start playing');
+    radio.textChannel.send(`Start playing: ${radio.station.name}`);
     radio.playing = true;
 
 }

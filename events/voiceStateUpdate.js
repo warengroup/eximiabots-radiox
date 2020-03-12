@@ -24,7 +24,7 @@ module.exports = {
                     radio.voiceChannel.leave();
                     client.radio.delete(msg.guild.id);
                     client.debug_channel.send("Error with connecting to voice channel: " + error);
-                    return msg.channel.send(`<:redx:674263474704220182> An error occured: ${error}`);
+                    return msg.channel.send(`An error occured: ${error}`);
                 }
             }
             if (newState.channel !== radio.voiceChannel) {

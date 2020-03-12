@@ -7,7 +7,7 @@ module.exports = {
     category: 'music',
     async execute(msg, args, client, Discord, prefix) {
         const radio = client.radio.get(msg.guild.id);
-        if (!radio || !radio.playing) return msg.channel.send('<:redx:674263474704220182> There is nothing playing.');
+        if (!radio || !radio.playing) return msg.channel.send('There is nothing playing.');
         radio.time = radio.connection.dispatcher.streamTime;
         const completed = (radio.time.toFixed(0));
 

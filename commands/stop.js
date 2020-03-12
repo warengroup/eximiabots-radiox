@@ -10,6 +10,6 @@ module.exports = {
 		radio.connection.dispatcher.destroy();
 		radio.voiceChannel.leave();
 		client.radio.delete(msg.guild.id);
-		msg.channel.send('<:stop:674685626108477519> Stopped the music!');
+		msg.channel.send('Stopped playback!');
 	}
 };
