@@ -17,7 +17,7 @@ module.exports = {
     invite: "https://discordapp.com/api/oauth2/authorize?client_id=684109535312609409&permissions=3427328&scope=bot",
     
     //Settings
-    prefix: "rx>",
+    prefix: "rx-",
     volume: 5
 
 }
