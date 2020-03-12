@@ -10,9 +10,9 @@ module.exports = {
 		const radio = client.radio.get(msg.guild.id);
 		const voiceChannel = msg.member.voice.channel;
 		if (!radio) {
-			if (!msg.member.voice.channel) return msg.channel.send('you need to be in a voice channel to play music!');
+			if (!msg.member.voice.channel) return msg.channel.send('You need to be in a voice channel to play music!');
 		} else {
-			if (voiceChannel !== radio.voiceChannel) return msg.channel.send('you need to be in the same voice channel as RadioX to play music!');
+			if (voiceChannel !== radio.voiceChannel) return msg.channel.send('You need to be in the same voice channel as RadioX to play music!');
 		}
 		if (!args[1]) return msg.channel.send('You need to use a number or search for a supported station!');
 		const permissions = voiceChannel.permissionsFor(msg.client.user);
@@ -28,13 +28,13 @@ module.exports = {
 			return;
 		} else if (!isNaN(number)) {
 			if (number > client.stations.length - 1) {
-				return msg.channel.send('no such station!');
+				return msg.channel.send('No such station!');
 			} else {
 				url = client.stations[number].stream[client.stations[number].stream.default];
 				station = client.stations[number];
 			}
 		} else {
-			if (args[1].length < 4) return msg.channel.send('station must be over 3 characters!');
+			if (args[1].length < 4) return msg.channel.send('Station must be over 3 characters!');
 			const sstation = await client.funcs.searchStation(args.slice(1).join(' '), client);
 			if (!sstation) return msg.channel.send('No stations found!');
 			url = sstation.stream[sstation.stream.default];
