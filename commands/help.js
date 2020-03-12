@@ -6,13 +6,22 @@ module.exports = {
     permission: 'none',
     category: 'info',
     execute(msg, args, client, Discord, prefix, command) {
+        let message = {};
+        
         if (args[1]) {
             if (!client.commands.has(args[1]) || (client.commands.has(args[1]) && client.commands.get(args[1]).omitFromHelp === true)) return msg.channel.send('That command does not exist');
             const command = client.commands.get(args[1]);
+            
+            message.helpCommandTitle = client.messages.helpCommandTitle.replace("%client.config.prefix%", client.config.prefix);
+            message.helpCommandTitle = message.helpCommandTitle.replace("%command.name%", command.name);
+            message.helpCommandTitle = message.helpCommandTitle.replace("%command.usage%", command.usage);
+            message.helpCommandDescription = client.messages.helpCommandTitle.replace("%command.description%", command.description);
+            message.helpCommandDescription = message.helpCommandDescription.replace("%command.alias%", command.alias);
+            
             const embed = new Discord.MessageEmbed()
-                .setTitle(`${client.global.db.guilds[msg.guild.id].prefix}${command.name} ${command.usage}`)
+                .setTitle(message.helpCommandTitle)
                 .setColor(client.config.embedColor)
-                .setDescription(command.description + `\n Command Alias: \`${command.alias}\``)
+                .setDescription(message.helpCommandDescription)
                 .setFooter('EximiaBots by Warén Media')
             msg.channel.send(embed);
         } else {
@@ -24,10 +33,15 @@ module.exports = {
             for (let i = 0; i < categories.length; i++) {
                 commands += `**» ${categories[i].toUpperCase()}**\n${client.commands.filter(x => x.category === categories[i] && !x.omitFromHelp).map(x => `\`${x.name}\``).join(', ')}\n`;
             }
+            
+            message.helpTitle = client.messages.helpTitle.replace("%client.user.username%", client.user.username);
+            message.helpDescription = client.messages.helpDescription.replace("%commands%", commands);
+            message.helpDescription = message.helpDescription.replace("%client.config.prefix%", client.config.prefix);
+            
             const embed = new Discord.MessageEmbed()
-                .setTitle(`${client.user.username} help:`)
+                .setTitle(message.helpTitle)
                 .setColor(client.config.embedColor)
-                .setDescription(commands + `\n "${client.config.prefix}help <command>" to see more information about a command.`)
+                .setDescription(message.helpDescription)
                 .setFooter('EximiaBots by Warén Media');
             msg.channel.send(embed);
         }

@@ -10,17 +10,17 @@ module.exports = {
 		const radio = client.radio.get(msg.guild.id);
 		const voiceChannel = msg.member.voice.channel;
 		if (!radio) {
-			if (!msg.member.voice.channel) return msg.channel.send('You need to be in a voice channel to play music!');
+			if (!msg.member.voice.channel) return msg.channel.send(client.messages.noVoiceChannel);
 		} else {
-			if (voiceChannel !== radio.voiceChannel) return msg.channel.send('You need to be in the same voice channel as RadioX to play music!');
+			if (voiceChannel !== radio.voiceChannel) return msg.channel.send(client.messages.wrongVoiceChannel);
 		}
-		if (!args[1]) return msg.channel.send('You need to use a number or search for a supported station!');
+		if (!args[1]) return msg.channel.send(client.messages.noQuery);
 		const permissions = voiceChannel.permissionsFor(msg.client.user);
 		if (!permissions.has('CONNECT')) {
-			return msg.channel.send('I cannot connect to your voice channel.');
+			return msg.channel.send(client.messages.noPermsConnect);
 		}
 		if (!permissions.has('SPEAK')) {
-			return msg.channel.send('I cannot speak in your voice channel.');
+			return msg.channel.send(client.messages.noPermsSpeak);
 		}
 		let station;
 		const number = parseInt(args[1] - 1);
@@ -28,15 +28,15 @@ module.exports = {
 			return;
 		} else if (!isNaN(number)) {
 			if (number > client.stations.length - 1) {
-				return msg.channel.send('No such station!');
+				return msg.channel.send(client.messages.wrongStationNumber);
 			} else {
 				url = client.stations[number].stream[client.stations[number].stream.default];
 				station = client.stations[number];
 			}
 		} else {
-			if (args[1].length < 3) return msg.channel.send('Station must be over 2 characters!');
+			if (args[1].length < 3) return msg.channel.send(client.messages.tooShortSearch);
 			const sstation = await searchStation(args.slice(1).join(' '), client);
-			if (!sstation) return msg.channel.send('No stations found!');
+			if (!sstation) return msg.channel.send(client.messages.noSearchResults);
 			url = sstation.stream[sstation.stream.default];
 			station = sstation
 		}
@@ -65,13 +65,12 @@ module.exports = {
 			play(msg.guild, client, url);
 		} catch (error) {
 			client.radio.delete(msg.guild.id);
-			client.debug_channel.send("Error with connecting to voice channel: " + error);
 			return msg.channel.send(`An error occured: ${error}`);
 		}
 	}
 };
 function play(guild, client, url) {
-
+    let message = {};
 	const radio = client.radio.get(guild.id);
 
 	const dispatcher = radio.connection
@@ -90,12 +89,13 @@ function play(guild, client, url) {
 		console.error(error);
 		radio.voiceChannel.leave();
 		client.radio.delete(guild.id);
-		return radio.textChannel.send('An error has occured while playing radio!');
+		return radio.textChannel.send(client.messages.errorPlaying);
 	});
 
 	dispatcher.setVolume(radio.volume / 10);
 
-	radio.textChannel.send(`Start playing: ${radio.station.name}`);
+    message.play = client.messages.play.replace("%radio.station.name%", radio.station.name);
+	radio.textChannel.send(message.play);
 	radio.playing = true;
 
 };

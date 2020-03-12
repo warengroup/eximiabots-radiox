@@ -6,15 +6,20 @@ module.exports = {
     permission: 'none',
     category: 'music',
     async execute(msg, args, client, Discord, prefix) {
+        let message = {};
         const radio = client.radio.get(msg.guild.id);
         if (!radio || !radio.playing) return msg.channel.send('There is nothing playing.');
         radio.time = radio.connection.dispatcher.streamTime;
         const completed = (radio.time.toFixed(0));
 
+        message.nowplayingDescription = client.messages.nowplayingDescription.replace("%radio.station.name%", radio.station.name);
+        message.nowplayingDescription = message.nowplayingDescription.replace("%radio.station.owner%", radio.station.owner);
+        message.nowplayingDescription = message.nowplayingDescription.replace("%msToTime(completed, \"hh:mm:ss\")%", msToTime(completed, "hh:mm:ss"));
+        
         const embed = new Discord.MessageEmbed()
-            .setTitle("Now Playing")
+            .setTitle(client.messages.nowplayingTitle)
             .setColor(client.config.embedColor)
-            .setDescription(`**${radio.station.name}** \n Owner: ${radio.station.owner} \n\`${msToTime(completed, "hh:mm:ss")}\``)
+            .setDescription(message.nowplayingDescription)
             .setFooter('EximiaBots by Warén Media');
         return msg.channel.send(embed);
     }

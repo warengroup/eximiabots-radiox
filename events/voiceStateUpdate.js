@@ -23,8 +23,7 @@ module.exports = {
                     radio.connection.dispatcher.destroy();
                     radio.voiceChannel.leave();
                     client.radio.delete(msg.guild.id);
-                    client.debug_channel.send("Error with connecting to voice channel: " + error);
-                    return msg.channel.send(`An error occured: ${error}`);
+                    return;
                 }
             }
             if (newState.channel !== radio.voiceChannel) {

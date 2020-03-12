@@ -11,8 +11,9 @@ module.exports = {
         for (let i = 0; i < hashs; i++) {
             stations = stations.replace('**#**', `**${i + 1}**`);
         }
+        
         const embed = new Discord.MessageEmbed()
-            .setTitle(`Radio Stations`)
+            .setTitle(client.messages.listTitle)
             .setColor(client.config.embedColor)
             .setDescription(stations)
             .setFooter('EximiaBots by Warén Media')
