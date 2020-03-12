@@ -34,7 +34,8 @@ module.exports = {
 				station = client.stations[number];
 			}
 		} else {
-			const sstation = await client.funcs.searchStation(args.slice(1).join(' '), client);
+			if (args[1].length < 3) return msg.channel.send('Station must be over 2 characters!');
+			const sstation = await searchStation(args.slice(1).join(' '), client);
 			if (!sstation) return msg.channel.send('No stations found!');
 			url = sstation.stream[sstation.stream.default];
 			station = sstation
@@ -43,7 +44,7 @@ module.exports = {
 		if (radio) {
 			radio.connection.dispatcher.destroy();
 			radio.station = station;
-			client.funcs.play(msg.guild, client, url);
+			play(msg.guild, client, url);
 			return;
 		}
 
@@ -61,11 +62,79 @@ module.exports = {
 		try {
 			const connection = await voiceChannel.join();
 			construct.connection = connection;
-			client.funcs.play(msg.guild, client, url);
+			play(msg.guild, client, url);
 		} catch (error) {
 			client.radio.delete(msg.guild.id);
 			client.debug_channel.send("Error with connecting to voice channel: " + error);
 			return msg.channel.send(`An error occured: ${error}`);
 		}
 	}
+};
+function play(guild, client, url) {
+
+	const radio = client.radio.get(guild.id);
+
+	const dispatcher = radio.connection
+		.play(url, { bitrate: 1024, passes: 10, volume: 1, highWaterMark: 1 << 25 })
+		.on("finish", () => {
+			radio.voiceChannel.leave();
+			client.radio.delete(guild.id);
+			return;
+		});
+
+	dispatcher.on('start', () => {
+		dispatcher.player.streamingData.pausedTime = 0;
+	});
+
+	dispatcher.on('error', error => {
+		console.error(error);
+		radio.voiceChannel.leave();
+		client.radio.delete(guild.id);
+		return radio.textChannel.send('An error has occured while playing radio!');
+	});
+
+	dispatcher.setVolume(radio.volume / 10);
+
+	radio.textChannel.send(`Start playing: ${radio.station.name}`);
+	radio.playing = true;
+
+};
+
+function searchStation(key, client) {
+	if (client.stations === null) return false;
+	let foundStations = [];
+	if (!key) return false;
+	if (key == 'radio') return false;
+	if (key.startsWith("radio ")) key = key.slice(6);
+	const probabilityIncrement = 100 / key.split(' ').length / 2;
+	for (let i = 0; i < key.split(' ').length; i++) {
+		client.stations.filter(x => x.name.toUpperCase().includes(key.split(' ')[i].toUpperCase()) || x === key).forEach(x => foundStations.push({ station: x, name: x.name, probability: probabilityIncrement }));
+	}
+	if (foundStations.length === 0) return false;
+	for (let i = 0; i < foundStations.length; i++) {
+		for (let j = 0; j < foundStations.length; j++) {
+			if (foundStations[i] === foundStations[j] && i !== j) foundStations.splice(i, 1);
+		}
+	}
+	for (let i = 0; i < foundStations.length; i++) {
+		if (foundStations[i].name.length > key.length) {
+			foundStations[i].probability -= (foundStations[i].name.split(' ').length - key.split(' ').length) * (probabilityIncrement * 0.5);
+		} else if (foundStations[i].name.length === key.length) {
+			foundStations[i].probability += (probabilityIncrement * 0.9);
+		}
+
+		for (let j = 0; j < key.split(' ').length; j++) {
+			if (!foundStations[i].name.toUpperCase().includes(key.toUpperCase().split(' ')[j])) {
+				foundStations[i].probability -= (probabilityIncrement * 0.5);
+			}
+		}
+	}
+	let highestProbabilityStation;
+	for (let i = 0; i < foundStations.length; i++) {
+		if (!highestProbabilityStation || highestProbabilityStation.probability < foundStations[i].probability) highestProbabilityStation = foundStations[i];
+		if (highestProbabilityStation && highestProbabilityStation.probability === foundStations[i].probability) {
+			highestProbabilityStation = foundStations[i].station;
+		}
+	}
+	return highestProbabilityStation;
 };

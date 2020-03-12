@@ -15,11 +15,9 @@ module.exports = class extends Client {
         this.radio = new Map();
         this.funcs = {};
         this.dispatcher = {};
-        this.config = require('../config.js');
+        this.config = require('./config.js');
 
-        fs.readdirSync(path.join(__dirname, 'funcs')).forEach(filename => {
-            this.funcs[filename.slice(0, -3)] = require(`./funcs/${filename}`);
-        });
+        this.funcs.check = require('./check.js');
 
         const commandFiles = fs.readdirSync(path.join(path.dirname(__dirname), 'commands')).filter(f => f.endsWith('.js'));
         for (const file of commandFiles) {
@@ -39,7 +37,7 @@ module.exports = class extends Client {
             require(`${events}voiceStateUpdate`).execute(this, oldState, newState);
         });
         this.on('error', (error) => {
-            client.channels.fetch(client.config.debug_channel).send('Error: ' + error);
+            console.error(error);
         });
 
         this.login(this.config.token).catch(err => console.log('Failed to login: ' + err));

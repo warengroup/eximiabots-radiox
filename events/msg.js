@@ -9,6 +9,14 @@ module.exports = {
         const commandName = args[0].toLowerCase();
         const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName)) || client.commandAliases.get(commandName);
         if (!command && msg.content !== `${prefix}`) return;
-        client.funcs.exe(msg, args, client, Discord, prefix, command);
+        const permissions = msg.channel.permissionsFor(msg.client.user);
+        if (!permissions.has('EMBED_LINKS')) return msg.channel.send('I cannot send embeds (Embed links).');
+        try {
+            command.uses++;
+            command.execute(msg, args, client, Discord, prefix, command);
+        } catch (error) {
+            msg.reply(`Error!`);
+            console.error(error);
+        }
     }
 }

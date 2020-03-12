@@ -7,9 +7,11 @@ module.exports = {
 	category: 'music',
 	execute(msg, args, client, Discord, prefix, command) {
 		const radio = client.radio.get(msg.guild.id);
-		radio.connection.dispatcher.destroy();
-		radio.voiceChannel.leave();
-		client.radio.delete(msg.guild.id);
-		msg.channel.send('Stopped playback!');
+		if (client.funcs.check(client, msg, command)) {
+			radio.connection.dispatcher.destroy();
+			radio.voiceChannel.leave();
+			client.radio.delete(msg.guild.id);
+			msg.channel.send('Stopped playback!');
+		}
 	}
 };
