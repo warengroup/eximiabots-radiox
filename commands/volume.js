@@ -8,8 +8,11 @@ module.exports = {
 	execute(msg, args, client, Discord, prefix, command) {
         let message = {};
 		const radio = client.radio.get(msg.guild.id);
-        /*message.currentVolume = client.messages.currentVolume.replace("%radio.volume%", radio.volume)*/
-		if (!args[1] && radio) return msg.channel.send(client.messages.currentVolume);
+        
+		if (!args[1] && radio) {
+            message.currentVolume = client.messages.currentVolume.replace("%radio.volume%", radio.volume)
+            return msg.channel.send(message.currentVolume);
+        }
 		const volume = parseFloat(args[1]);
 		if (client.funcs.check(client, msg, command)) {
 			if (isNaN(volume)) return msg.channel.send(client.messages.invalidVolume);
