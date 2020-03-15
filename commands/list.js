@@ -14,9 +14,10 @@ module.exports = {
         
         const embed = new Discord.MessageEmbed()
             .setTitle(client.messages.listTitle)
+            .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["list"].replace(/[^0-9]+/g, ''))
             .setColor(client.config.embedColor)
             .setDescription(stations)
-            .setFooter('EximiaBots by Warén Media')
+            .setFooter('EximiaBots by Warén Media', 'https://cdn.discordapp.com/emojis/687022937978568760.png');
         return msg.channel.send(embed);
     }
 };

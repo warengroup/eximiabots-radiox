@@ -15,14 +15,15 @@ module.exports = {
             message.helpCommandTitle = client.messages.helpCommandTitle.replace("%client.config.prefix%", client.config.prefix);
             message.helpCommandTitle = message.helpCommandTitle.replace("%command.name%", command.name);
             message.helpCommandTitle = message.helpCommandTitle.replace("%command.usage%", command.usage);
-            message.helpCommandDescription = client.messages.helpCommandTitle.replace("%command.description%", command.description);
+            message.helpCommandDescription = client.messages.helpCommandDescription.replace("%command.description%", command.description);
             message.helpCommandDescription = message.helpCommandDescription.replace("%command.alias%", command.alias);
             
             const embed = new Discord.MessageEmbed()
                 .setTitle(message.helpCommandTitle)
+                .setThumbnail("https://cdn.discordapp.com/emojis/686296221433725076.png")
                 .setColor(client.config.embedColor)
                 .setDescription(message.helpCommandDescription)
-                .setFooter('EximiaBots by Warén Media')
+                .setFooter('EximiaBots by Warén Media', 'https://cdn.discordapp.com/emojis/687022937978568760.png');
             msg.channel.send(embed);
         } else {
             const categories = [];
@@ -40,9 +41,10 @@ module.exports = {
             
             const embed = new Discord.MessageEmbed()
                 .setTitle(message.helpTitle)
+                .setThumbnail("https://cdn.discordapp.com/emojis/686296221433725076.png")
                 .setColor(client.config.embedColor)
                 .setDescription(message.helpDescription)
-                .setFooter('EximiaBots by Warén Media');
+                .setFooter('EximiaBots by Warén Media', 'https://cdn.discordapp.com/emojis/687022937978568760.png');
             msg.channel.send(embed);
         }
     }

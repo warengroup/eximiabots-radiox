@@ -31,5 +31,7 @@ module.exports = {
             client.stations = await fetch('https://gitea.cwinfo.org/cwchristerw/radio/raw/branch/master/playlist.json')
                 .then(res => res.json());
         }, 3600000);
+        
+        require(`../struct/emojis.js`).execute(client, Discord);
     }
 }

@@ -11,7 +11,7 @@ module.exports = {
 			radio.connection.dispatcher.destroy();
 			radio.voiceChannel.leave();
 			client.radio.delete(msg.guild.id);
-			msg.channel.send(client.messages.stop);
+			msg.channel.send(client.messageEmojis["stop"] + client.messages.stop);
 		}
 	}
 };

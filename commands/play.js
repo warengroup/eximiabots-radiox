@@ -10,17 +10,17 @@ module.exports = {
 		const radio = client.radio.get(msg.guild.id);
 		const voiceChannel = msg.member.voice.channel;
 		if (!radio) {
-			if (!msg.member.voice.channel) return msg.channel.send(client.messages.noVoiceChannel);
+			if (!msg.member.voice.channel) return msg.channel.send(client.messageEmojis["x"] + client.messages.noVoiceChannel);
 		} else {
-			if (voiceChannel !== radio.voiceChannel) return msg.channel.send(client.messages.wrongVoiceChannel);
+			if (voiceChannel !== radio.voiceChannel) return msg.channel.send(client.messageEmojis["x"] + client.messages.wrongVoiceChannel);
 		}
 		if (!args[1]) return msg.channel.send(client.messages.noQuery);
 		const permissions = voiceChannel.permissionsFor(msg.client.user);
 		if (!permissions.has('CONNECT')) {
-			return msg.channel.send(client.messages.noPermsConnect);
+			return msg.channel.send(client.messageEmojis["x"] + client.messages.noPermsConnect);
 		}
 		if (!permissions.has('SPEAK')) {
-			return msg.channel.send(client.messages.noPermsSpeak);
+			return msg.channel.send(client.messageEmojis["x"] + client.messages.noPermsSpeak);
 		}
 		let station;
 		const number = parseInt(args[1] - 1);
@@ -28,15 +28,15 @@ module.exports = {
 			return;
 		} else if (!isNaN(number)) {
 			if (number > client.stations.length - 1) {
-				return msg.channel.send(client.messages.wrongStationNumber);
+				return msg.channel.send(client.messageEmojis["x"] + client.messages.wrongStationNumber);
 			} else {
 				url = client.stations[number].stream[client.stations[number].stream.default];
 				station = client.stations[number];
 			}
 		} else {
-			if (args[1].length < 3) return msg.channel.send(client.messages.tooShortSearch);
+			if (args[1].length < 3) return msg.channel.send(client.messageEmojis["x"] + client.messages.tooShortSearch);
 			const sstation = await searchStation(args.slice(1).join(' '), client);
-			if (!sstation) return msg.channel.send(client.messages.noSearchResults);
+			if (!sstation) return msg.channel.send(client.messageEmojis["x"] + client.messages.noSearchResults);
 			url = sstation.stream[sstation.stream.default];
 			station = sstation
 		}
@@ -65,7 +65,7 @@ module.exports = {
 			play(msg.guild, client, url);
 		} catch (error) {
 			client.radio.delete(msg.guild.id);
-			return msg.channel.send(`An error occured: ${error}`);
+			return msg.channel.send(client.messageEmojis["x"] + `An error occured: ${error}`);
 		}
 	}
 };
@@ -95,7 +95,7 @@ function play(guild, client, url) {
 	dispatcher.setVolume(radio.volume / 10);
 
     message.play = client.messages.play.replace("%radio.station.name%", radio.station.name);
-	radio.textChannel.send(message.play);
+	radio.textChannel.send(client.messageEmojis["play"] + message.play);
 	radio.playing = true;
 
 };
