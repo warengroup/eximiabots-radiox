@@ -5,7 +5,7 @@ module.exports = {
 	usage: '',
 	permission: 'none',
 	category: 'music',
-	execute(msg, args, client, Discord, prefix, command) {
+	execute(msg, args, client, Discord, command) {
 		const radio = client.radio.get(msg.guild.id);
 		if (client.funcs.check(client, msg, command)) {
 			radio.connection.dispatcher.destroy();

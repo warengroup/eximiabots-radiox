@@ -4,7 +4,7 @@ module.exports = {
 
     //credentials
     token: process.env.DISCORD_TOKEN,
-    
+
     //support
     supportGuild: "https://discord.gg/rRA65Mn",
     devId: [
@@ -18,6 +18,5 @@ module.exports = {
 
     //Settings
     prefix: process.env.PREFIX || "rx>",
-    volume: 5
 
 }

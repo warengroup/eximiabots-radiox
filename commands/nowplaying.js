@@ -5,17 +5,16 @@ module.exports = {
     description: 'See the currently playing song position and length.',
     permission: 'none',
     category: 'music',
-    async execute(msg, args, client, Discord, prefix) {
+    async execute(msg, args, client, Discord, command) {
         let message = {};
         const radio = client.radio.get(msg.guild.id);
-        if (!radio || !radio.playing) return msg.channel.send('There is nothing playing.');
-        radio.time = radio.connection.dispatcher.streamTime;
-        const completed = (radio.time.toFixed(0));
+        if (!radio) return msg.channel.send('There is nothing playing.');
+        const completed = (radio.connection.dispatcher.streamTime.toFixed(0));
 
         message.nowplayingDescription = client.messages.nowplayingDescription.replace("%radio.station.name%", radio.station.name);
         message.nowplayingDescription = message.nowplayingDescription.replace("%radio.station.owner%", radio.station.owner);
         message.nowplayingDescription = message.nowplayingDescription.replace("%msToTime(completed, \"hh:mm:ss\")%", msToTime(completed, "hh:mm:ss"));
-        
+
         const embed = new Discord.MessageEmbed()
             .setTitle(client.messages.nowplayingTitle)
             .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["play"].replace(/[^0-9]+/g, ''))

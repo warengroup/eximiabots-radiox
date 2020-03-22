@@ -7,8 +7,6 @@ module.exports = {
         if (!radio) return;
         if (newState.member.id === client.user.id && oldState.member.id === client.user.id) {
             if (newState.channel === null) {
-                radio.songs = [];
-                radio.looping = false;
                 return client.radio.delete(newState.guild.id);
             }
 
@@ -18,8 +16,6 @@ module.exports = {
                     const connection = await oldState.channel.join();
                     return radio.connection = connection;
                 } catch (error) {
-                    radio.songs = [];
-                    radio.looping = false;
                     radio.connection.dispatcher.destroy();
                     radio.voiceChannel.leave();
                     client.radio.delete(msg.guild.id);
@@ -36,8 +32,6 @@ module.exports = {
             setTimeout(() => {
                 if (!radio) return;
                 if (radio.voiceChannel.members.size === 1) {
-                    radio.songs = [];
-                    radio.looping = false;
                     radio.connection.dispatcher.destroy();
                     radio.voiceChannel.leave();
                     client.radio.delete(newState.guild.id);

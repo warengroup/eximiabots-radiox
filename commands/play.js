@@ -5,7 +5,7 @@ module.exports = {
 	description: 'Play some music.',
 	permission: 'none',
 	category: 'music',
-	async execute(msg, args, client, Discord, prefix) {
+	async execute(msg, args, client, Discord, command) {
 		let url = args[1] ? args[1].replace(/<(.+)>/g, "$1") : "";
 		const radio = client.radio.get(msg.guild.id);
 		const voiceChannel = msg.member.voice.channel;
@@ -44,7 +44,7 @@ module.exports = {
 		if (radio) {
 			radio.connection.dispatcher.destroy();
 			radio.station = station;
-            radio.textChannel = msg.channel;
+			radio.textChannel = msg.channel;
 			play(msg.guild, client, url);
 			return;
 		}
@@ -53,10 +53,8 @@ module.exports = {
 			textChannel: msg.channel,
 			voiceChannel: voiceChannel,
 			connection: null,
-			playing: false,
 			station: station,
-			volume: client.config.volume,
-			time: null
+			volume: 5,
 		};
 		client.radio.set(msg.guild.id, construct);
 
@@ -71,7 +69,7 @@ module.exports = {
 	}
 };
 function play(guild, client, url) {
-    let message = {};
+	let message = {};
 	const radio = client.radio.get(guild.id);
 
 	const dispatcher = radio.connection
@@ -82,10 +80,6 @@ function play(guild, client, url) {
 			return;
 		});
 
-	dispatcher.on('start', () => {
-		dispatcher.player.streamingData.pausedTime = 0;
-	});
-
 	dispatcher.on('error', error => {
 		console.error(error);
 		radio.voiceChannel.leave();
@@ -95,10 +89,8 @@ function play(guild, client, url) {
 
 	dispatcher.setVolume(radio.volume / 10);
 
-    message.play = client.messages.play.replace("%radio.station.name%", radio.station.name);
+	message.play = client.messages.play.replace("%radio.station.name%", radio.station.name);
 	radio.textChannel.send(client.messageEmojis["play"] + message.play);
-	radio.playing = true;
-
 };
 
 function searchStation(key, client) {

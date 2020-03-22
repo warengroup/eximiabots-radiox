@@ -5,7 +5,7 @@ module.exports = {
     description: 'Invite RadioX.',
     permission: 'none',
     category: 'info',
-    execute(msg, args, client, Discord, prefix) {
+    execute(msg, args, client, Discord, command) {
         let message = {};
         message.inviteTitle = client.messages.inviteTitle.replace("%client.user.username%", client.user.username);
         const embed = new Discord.MessageEmbed()

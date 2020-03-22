@@ -7,13 +7,13 @@ module.exports = {
         if (!msg.content.startsWith(prefix)) return;
         if (!args[0]) return;
         const commandName = args[0].toLowerCase();
+        if (commandName === 'none') return;
         const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName)) || client.commandAliases.get(commandName);
         if (!command && msg.content !== `${prefix}`) return;
         const permissions = msg.channel.permissionsFor(msg.client.user);
         if (!permissions.has('EMBED_LINKS')) return msg.channel.send(client.messages.noPermsEmbed);
         try {
-            command.uses++;
-            command.execute(msg, args, client, Discord, prefix, command);
+            command.execute(msg, args, client, Discord, command);
         } catch (error) {
             msg.reply(client.messages.runningCommandFailed);
             console.error(error);

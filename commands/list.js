@@ -5,13 +5,13 @@ module.exports = {
     description: 'List radio stations.',
     permission: 'none',
     category: 'info',
-    execute(msg, args, client, Discord, prefix) {
+    execute(msg, args, client, Discord, command) {
         let stations = `${client.stations.map(s => `**#** ${s.name}`).join('\n')}`
         const hashs = stations.split('**#**').length;
         for (let i = 0; i < hashs; i++) {
             stations = stations.replace('**#**', `**${i + 1}**`);
         }
-        
+
         const embed = new Discord.MessageEmbed()
             .setTitle(client.messages.listTitle)
             .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["list"].replace(/[^0-9]+/g, ''))
