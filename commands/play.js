@@ -44,6 +44,7 @@ module.exports = {
 		if (radio) {
 			radio.connection.dispatcher.destroy();
 			radio.station = station;
+            radio.textChannel = msg.channel;
 			play(msg.guild, client, url);
 			return;
 		}
