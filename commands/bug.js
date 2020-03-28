@@ -14,10 +14,10 @@ module.exports = {
 
         const embed = new Discord.MessageEmbed()
             .setTitle(message.bugTitle)
-            .setThumbnail("https://cdn.discordapp.com/emojis/686296221433725076.png")
+            .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["logo"].replace(/[^0-9]+/g, ''))
             .setColor(client.config.embedColor)
             .setDescription(message.bugDescription)
-            .setFooter('EximiaBots by Warén Media', 'https://cdn.discordapp.com/emojis/687022937978568760.png');
+            .setFooter('EximiaBots by Warén Media', "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
         msg.channel.send(embed);
 
     },

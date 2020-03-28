@@ -2,6 +2,8 @@ module.exports = {
     name: 'emojis',
     async execute(client) {
         let customEmojis = {
+            logo: "<:RadioX:688765708808487072>",
+            eximiabots: "<:EximiaBots:693277919929303132>",
             list: "<:RadioXList:688541155519889482>",
             play: "<:RadioXPlay:688541155712827458>",
             stop: "<:RadioXStop:688541155377414168>",
@@ -9,6 +11,8 @@ module.exports = {
         };
 
         let fallbackEmojis = {
+            logo: "RadioX",
+            eximiabots: "EximiaBots",
             list: "📜",
             play: "▶️",
             stop: "⏹️",

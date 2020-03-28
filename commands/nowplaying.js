@@ -20,7 +20,7 @@ module.exports = {
             .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["play"].replace(/[^0-9]+/g, ''))
             .setColor(client.config.embedColor)
             .setDescription(message.nowplayingDescription)
-            .setFooter('EximiaBots by Warén Media', 'https://cdn.discordapp.com/emojis/687022937978568760.png');
+            .setFooter('EximiaBots by Warén Media', "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
         return msg.channel.send(embed);
     }
 };
