@@ -10,10 +10,11 @@ module.exports = function (client, msg, command) {
         msg.channel.send(client.messageEmojis["x"] + client.messages.wrongVoiceChannel);
         return false;
     }
-    console.log(command.permission);
-    if (!permissions.has(command.permission)) {
-        message.noPerms = client.messages.noPerms.replace("%command.permission%", command.permission);
-        msg.channel.send(client.messageEmojis["x"] + message.noPerms);
-        return false;
+    if(!command.permission == 'none'){
+        if (!permissions.has(command.permission)) {
+            message.noPerms = client.messages.noPerms.replace("%command.permission%", command.permission);
+            msg.channel.send(client.messageEmojis["x"] + message.noPerms);
+            return false;
+        } else return true;
     } else return true;
 };
