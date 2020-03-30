@@ -14,7 +14,7 @@ module.exports = {
     listTitle: "Radio Stations",
     nowplayingTitle: "Now Playing",
     nowplayingDescription: "**%radio.station.name%** \n Owner: %radio.station.owner% \n %msToTime(completed, \"hh:mm:ss\")%",
-    noVoiceChannel: "You need to be in a voice channel to play music!",
+    noVoiceChannel: "You need to be in a voice channel to play radio!",
     noQuery: "You need to use a number or search for a supported station!",
     noPermsConnect: "I cannot connect to your voice channel.",
     noPermsSpeak: "I cannot speak in your voice channel.",
