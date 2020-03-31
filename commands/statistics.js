@@ -11,7 +11,9 @@ module.exports = {
         let statistics;
         let i = 0;
         
-        if(currentGuild.statistics){
+        if(!currentGuild || currentGuild && !currentGuild.statistics){
+            statistics = "You have not listened any radio station";
+        } else {
             Object.keys(client.stations).forEach(function(station) {
                 if(currentGuild.statistics[stations[station].name]){
                     if(i > 0){
@@ -26,10 +28,6 @@ module.exports = {
                     i++;
                 }
             });
-        }
-        
-        if(!statistics){
-            statistics = "You have not listened any radio station";
         }
         
         const embed = new Discord.MessageEmbed()
