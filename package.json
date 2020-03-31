@@ -4,7 +4,8 @@
   "description": "We will bring you finnish radio to your discord server",
   "main": "index.js",
   "scripts": {
-    "start": "node ."
+    "start": "node .",
+    "install": "mkdir datastore"
   },
   "repository": {
     "type": "git",

@@ -38,14 +38,27 @@ module.exports = {
 			const sstation = await searchStation(args.slice(1).join(' '), client);
 			if (!sstation) return msg.channel.send(client.messageEmojis["x"] + client.messages.noSearchResults);
 			url = sstation.stream[sstation.stream.default];
-			station = sstation
+			station = sstation;
 		}
 
 		if (radio) {
+            
+            if(!radio.currentGuild.statistics[radio.station.name]){
+                radio.currentGuild.statistics[radio.station.name] = {};
+                radio.currentGuild.statistics[radio.station.name].time = 0;
+                radio.currentGuild.statistics[radio.station.name].used = 0;
+                client.datastore.updateEntry(msg.guild, radio.currentGuild);
+            }
+            
+            radio.currentGuild.statistics[radio.station.name].time = parseInt(radio.currentGuild.statistics[radio.station.name].time)+parseInt(radio.connection.dispatcher.streamTime.toFixed(0));
+            radio.currentGuild.statistics[radio.station.name].used = parseInt(radio.currentGuild.statistics[radio.station.name].used)+1;
+            client.datastore.updateEntry(msg.guild, radio.currentGuild);
+            
 			radio.connection.dispatcher.destroy();
 			radio.station = station;
 			radio.textChannel = msg.channel;
 			play(msg.guild, client, url);
+            
 			return;
 		}
 
@@ -62,6 +75,17 @@ module.exports = {
 			const connection = await voiceChannel.join();
 			construct.connection = connection;
 			play(msg.guild, client, url);
+            
+            client.datastore.checkEntry(msg.guild.id);
+            construct.currentGuild = client.datastore.getEntry(msg.guild.id);
+            
+            if(!construct.currentGuild.statistics[construct.station.name]){
+                construct.currentGuild.statistics[construct.station.name] = {};
+                construct.currentGuild.statistics[construct.station.name].time = 0;
+                construct.currentGuild.statistics[construct.station.name].used = 0;
+                client.datastore.updateEntry(msg.guild, construct.currentGuild);
+            }
+            
 		} catch (error) {
 			client.radio.delete(msg.guild.id);
 			return msg.channel.send(client.messageEmojis["x"] + `An error occured: ${error}`);

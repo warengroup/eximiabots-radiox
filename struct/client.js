@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const events = '../events/';
+const Datastore = require('./datastore.js');
 
 module.exports = class extends Client {
     constructor() {
@@ -28,6 +29,7 @@ module.exports = class extends Client {
 
         this.on('ready', () => {
             require(`${events}ready`).execute(this, Discord);
+            this.datastore = new Datastore();
         });
         this.on('message', (msg) => {
             require(`${events}msg`).execute(this, msg, Discord);

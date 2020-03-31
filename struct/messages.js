@@ -28,5 +28,6 @@ module.exports = {
     maxVolume: "The max volume is `100`!",
     invalidVolume: "You need to enter a valid __number__.",
     negativeVolume: "The volume needs to be a positive number!",
-    newVolume: "Volume is now: **%volume%**"
+    newVolume: "Volume is now: **%volume%**",
+    statisticsTitle: "Statistics"
 };
