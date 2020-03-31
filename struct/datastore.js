@@ -76,7 +76,7 @@ module.exports = class {
     saveEntry(file, data) {
         data = JSON.stringify(data, null, 4);
         
-        fs.writeFile(path.join(path.dirname(__dirname), 'datastore') + "/" + file + ".json", data, function(err) {
+        fs.writeFile(path.join(path.dirname(__dirname), 'datastore') + "/" + file + ".json", data, 'utf8', function(err) {
             if (err) {
                 //console.log(err);
             }

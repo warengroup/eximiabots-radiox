@@ -7,24 +7,26 @@ module.exports = {
     category: 'info',
     execute(msg, args, client, Discord, command) {
         let stations = client.stations;
-        let currentGuildStatistics = client.datastore.getEntry(msg.guild.id).statistics;
+        let currentGuild = client.datastore.getEntry(msg.guild.id);
         let statistics;
         let i = 0;
         
-        Object.keys(client.stations).forEach(function(station) {
-            if(currentGuildStatistics[stations[station].name]){
-                if(i > 0){
-                    statistics += "**" + station + " " + stations[station].name + "** \n";
-                    statistics += "Time: " + msToTime(currentGuildStatistics[stations[station].name].time, "hh:mm:ss") + "\n";
-                    statistics += "Used: " + currentGuildStatistics[stations[station].name].used + "\n";
-                } else {
-                    statistics = "**" + station + " " + stations[station].name + "** \n";
-                    statistics += "Time: " + msToTime(currentGuildStatistics[stations[station].name].time, "hh:mm:ss") + "\n";
-                    statistics += "Used: " + currentGuildStatistics[stations[station].name].used + "\n";
+        if(currentGuild.statistics){
+            Object.keys(client.stations).forEach(function(station) {
+                if(currentGuild.statistics[stations[station].name]){
+                    if(i > 0){
+                        statistics += "**" + station + " " + stations[station].name + "** \n";
+                        statistics += "Time: " + msToTime(currentGuild.statistics[stations[station].name].time, "hh:mm:ss") + "\n";
+                        statistics += "Used: " + currentGuild.statistics[stations[station].name].used + "\n";
+                    } else {
+                        statistics = "**" + station + " " + stations[station].name + "** \n";
+                        statistics += "Time: " + msToTime(currentGuild.statistics[stations[station].name].time, "hh:mm:ss") + "\n";
+                        statistics += "Used: " + currentGuild.statistics[stations[station].name].used + "\n";
+                    }
+                    i++;
                 }
-                i++;
-            }
-        });
+            });
+        }
         
         if(!statistics){
             statistics = "You have not listened any radio station";
