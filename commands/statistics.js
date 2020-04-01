@@ -32,7 +32,7 @@ module.exports = {
         
         const embed = new Discord.MessageEmbed()
             .setTitle(client.messages.statisticsTitle)
-            .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["list"].replace(/[^0-9]+/g, ''))
+            .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["statistics"].replace(/[^0-9]+/g, ''))
             .setColor(client.config.embedColor)
             .setDescription(statistics)
             .setFooter('EximiaBots by Warén Media', "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
