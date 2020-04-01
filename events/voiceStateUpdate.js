@@ -7,6 +7,7 @@ module.exports = {
         if (!radio) return;
         if (newState.member.id === client.user.id && oldState.member.id === client.user.id) {
             if (newState.channel === null) {
+                statisticsUpdate(client, newState, radio);
                 return client.radio.delete(newState.guild.id);
             }
 
@@ -16,9 +17,10 @@ module.exports = {
                     const connection = await oldState.channel.join();
                     return radio.connection = connection;
                 } catch (error) {
+                    statisticsUpdate(client, newState, radio);
                     radio.connection.dispatcher.destroy();
                     radio.voiceChannel.leave();
-                    client.radio.delete(msg.guild.id);
+                    client.radio.delete(oldState.guild.id);
                     return;
                 }
             }
@@ -32,6 +34,7 @@ module.exports = {
             setTimeout(() => {
                 if (!radio) return;
                 if (radio.voiceChannel.members.size === 1) {
+                    statisticsUpdate(client, newState, radio);
                     radio.connection.dispatcher.destroy();
                     radio.voiceChannel.leave();
                     client.radio.delete(newState.guild.id);
@@ -39,4 +42,31 @@ module.exports = {
             }, 120000);
         }
     }
+};
+
+function statisticsUpdate(client, currentState, radio) {
+    
+    client.datastore.checkEntry(currentState.guild.id);
+    
+    radio.currentGuild = client.datastore.getEntry(currentState.guild.id);
+    
+    if(!radio.currentGuild.statistics[radio.station.name]){
+        radio.currentGuild.statistics[radio.station.name] = {};
+        radio.currentGuild.statistics[radio.station.name].time = 0;
+        radio.currentGuild.statistics[radio.station.name].used = 0;
+        client.datastore.updateEntry(currentState.guild, radio.currentGuild);
+    }
+    
+    if(!radio.connection.dispatcher){
+        let date = new Date();
+        radio.currentTime = date.getTime();
+        radio.playTime = parseInt(radio.currentTime)-parseInt(radio.startTime);
+        radio.currentGuild.statistics[radio.station.name].time = parseInt(radio.currentGuild.statistics[radio.station.name].time)+parseInt(radio.playTime);
+    } else {
+        radio.currentGuild.statistics[radio.station.name].time = parseInt(radio.currentGuild.statistics[radio.station.name].time)+parseInt(radio.connection.dispatcher.streamTime.toFixed(0));
+    }
+    
+    radio.currentGuild.statistics[radio.station.name].used = parseInt(radio.currentGuild.statistics[radio.station.name].used)+1;
+    client.datastore.updateEntry(currentState.guild, radio.currentGuild);
+    
 }

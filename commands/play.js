@@ -43,16 +43,7 @@ module.exports = {
 
 		if (radio) {
             
-            if(!radio.currentGuild.statistics[radio.station.name]){
-                radio.currentGuild.statistics[radio.station.name] = {};
-                radio.currentGuild.statistics[radio.station.name].time = 0;
-                radio.currentGuild.statistics[radio.station.name].used = 0;
-                client.datastore.updateEntry(msg.guild, radio.currentGuild);
-            }
-            
-            radio.currentGuild.statistics[radio.station.name].time = parseInt(radio.currentGuild.statistics[radio.station.name].time)+parseInt(radio.connection.dispatcher.streamTime.toFixed(0));
-            radio.currentGuild.statistics[radio.station.name].used = parseInt(radio.currentGuild.statistics[radio.station.name].used)+1;
-            client.datastore.updateEntry(msg.guild, radio.currentGuild);
+            statisticsUpdate(client, msg.guild, radio);
             
 			radio.connection.dispatcher.destroy();
 			radio.station = station;
@@ -74,6 +65,8 @@ module.exports = {
 		try {
 			const connection = await voiceChannel.join();
 			construct.connection = connection;
+            let date = new Date();
+            construct.startTime = date.getTime();
 			play(msg.guild, client, url);
             
             client.datastore.checkEntry(msg.guild.id);
@@ -115,6 +108,19 @@ function play(guild, client, url) {
 
 	message.play = client.messages.play.replace("%radio.station.name%", radio.station.name);
 	radio.textChannel.send(client.messageEmojis["play"] + message.play);
+};
+
+function statisticsUpdate(client, guild, radio) {
+    if(!radio.currentGuild.statistics[radio.station.name]){
+        radio.currentGuild.statistics[radio.station.name] = {};
+        radio.currentGuild.statistics[radio.station.name].time = 0;
+        radio.currentGuild.statistics[radio.station.name].used = 0;
+        client.datastore.updateEntry(guild, radio.currentGuild);
+    }
+            
+    radio.currentGuild.statistics[radio.station.name].time = parseInt(radio.currentGuild.statistics[radio.station.name].time)+parseInt(radio.connection.dispatcher.streamTime.toFixed(0));
+    radio.currentGuild.statistics[radio.station.name].used = parseInt(radio.currentGuild.statistics[radio.station.name].used)+1;
+    client.datastore.updateEntry(guild, radio.currentGuild);
 };
 
 function searchStation(key, client) {
