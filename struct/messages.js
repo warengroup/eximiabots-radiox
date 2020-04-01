@@ -29,5 +29,7 @@ module.exports = {
     invalidVolume: "You need to enter a valid __number__.",
     negativeVolume: "The volume needs to be a positive number!",
     newVolume: "Volume is now: **%volume%**",
-    statisticsTitle: "Statistics"
+    statisticsTitle: "Statistics",
+    maintenanceTitle: "Maintenance",
+    maintenanceDescription: "This command is not ready to be used by anyone."
 };
