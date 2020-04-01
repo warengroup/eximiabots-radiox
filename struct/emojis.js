@@ -7,6 +7,8 @@ module.exports = {
             list: "<:RadioXList:688541155519889482>",
             play: "<:RadioXPlay:688541155712827458>",
             stop: "<:RadioXStop:688541155377414168>",
+            statistics: "<:RadioXStatistics:000000000000000000>",
+            maintenance: "<:RadioXMaintenance:000000000000000000>",
             x: "<:RadioXX:688541155792781320>"
         };
 
@@ -16,6 +18,8 @@ module.exports = {
             list: "📜",
             play: "▶️",
             stop: "⏹️",
+            statistics: "📊",
+            maintenance: "🛠️",
             x: "❌"
         };
 
