@@ -4,7 +4,7 @@ module.exports = {
     usage: '',
     description: 'Bot Maintenance',
     permission: 'none',
-    category: 'maintenance',
+    category: 'info',
     execute(msg, args, client, Discord, command) {
         const embed = new Discord.MessageEmbed()
             .setTitle(client.messages.maintenanceTitle)
