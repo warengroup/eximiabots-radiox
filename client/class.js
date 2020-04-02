@@ -20,7 +20,7 @@ module.exports = class extends Client {
         this.funcs.msToTime = require('./funcs/msToTime.js');
         this.funcs.statisticsUpdate = require('./funcs/statisticsUpdate.js');
 
-        this.config = require('./config.js');
+        this.config = require('../config.js');
         this.messages = require('./messages.js');
 
         const commandFiles = fs.readdirSync(path.join('commands')).filter(f => f.endsWith('.js'));
