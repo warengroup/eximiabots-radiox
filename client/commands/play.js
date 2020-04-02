@@ -43,7 +43,7 @@ module.exports = {
 
 		if (radio) {
             
-            statisticsUpdate(client, msg.guild, radio);
+            client.funcs.statisticsUpdate(client, msg.guild, radio);
             
 			radio.connection.dispatcher.destroy();
 			radio.station = station;
@@ -108,19 +108,6 @@ function play(guild, client, url) {
 
 	message.play = client.messages.play.replace("%radio.station.name%", radio.station.name);
 	radio.textChannel.send(client.messageEmojis["play"] + message.play);
-};
-
-function statisticsUpdate(client, guild, radio) {
-    if(!radio.currentGuild.statistics[radio.station.name]){
-        radio.currentGuild.statistics[radio.station.name] = {};
-        radio.currentGuild.statistics[radio.station.name].time = 0;
-        radio.currentGuild.statistics[radio.station.name].used = 0;
-        client.datastore.updateEntry(guild, radio.currentGuild);
-    }
-            
-    radio.currentGuild.statistics[radio.station.name].time = parseInt(radio.currentGuild.statistics[radio.station.name].time)+parseInt(radio.connection.dispatcher.streamTime.toFixed(0));
-    radio.currentGuild.statistics[radio.station.name].used = parseInt(radio.currentGuild.statistics[radio.station.name].used)+1;
-    client.datastore.updateEntry(guild, radio.currentGuild);
 };
 
 function searchStation(key, client) {
