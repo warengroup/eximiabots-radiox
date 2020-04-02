@@ -32,6 +32,6 @@ module.exports = {
                 .then(res => res.json());
         }, 3600000);
 
-        require(`../struct/emojis.js`).execute(client);
+        require(`./emojis.js`).execute(client);
     }
 }
