@@ -18,11 +18,11 @@ module.exports = {
                 if(currentGuild.statistics[stations[station].name]){
                     if(i > 0){
                         statistics += "**" + station + " " + stations[station].name + "** \n";
-                        statistics += "Time: " + msToTime(currentGuild.statistics[stations[station].name].time, "hh:mm:ss") + "\n";
+                        statistics += "Time: " + client.funcs.msToTime(currentGuild.statistics[stations[station].name].time, "hh:mm:ss") + "\n";
                         statistics += "Used: " + currentGuild.statistics[stations[station].name].used + "\n";
                     } else {
                         statistics = "**" + station + " " + stations[station].name + "** \n";
-                        statistics += "Time: " + msToTime(currentGuild.statistics[stations[station].name].time, "hh:mm:ss") + "\n";
+                        statistics += "Time: " + client.funcs.msToTime(currentGuild.statistics[stations[station].name].time, "hh:mm:ss") + "\n";
                         statistics += "Used: " + currentGuild.statistics[stations[station].name].used + "\n";
                     }
                     i++;
@@ -39,21 +39,3 @@ module.exports = {
         return msg.channel.send(embed);
     }
 };
-
-function msToTime(duration, format) {
-    var seconds = Math.floor((duration / 1000) % 60),
-        minutes = Math.floor((duration / (1000 * 60)) % 60),
-        hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-    days = Math.floor((duration / (1000 * 60 * 60 * 24)) % 24);
-
-    days = (days < 10) ? "0" + days : days;
-    hours = (hours < 10) ? "0" + hours : hours;
-    minutes = (minutes < 10) ? "0" + minutes : minutes;
-    seconds = (seconds < 10) ? "0" + seconds : seconds;
-
-    if (format === "hh:mm:ss") {
-        return `${hours}:${minutes}:${seconds}`;
-    } else if (format === "dd:hh:mm:ss") {
-        return `${days}:${hours}:${minutes}:${seconds}`;
-    }
-}

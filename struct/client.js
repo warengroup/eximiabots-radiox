@@ -14,10 +14,13 @@ module.exports = class extends Client {
         this.commands = new Collection();
         this.commandAliases = new Collection();
         this.radio = new Map();
+
         this.funcs = {};
+        this.funcs.check = require('../funcs/check.js');
+        this.funcs.msToTime = require('../funcs/msToTime.js');
+
         this.config = require('../config.js');
         this.messages = require('./messages.js');
-        this.funcs.check = require('./check.js');
 
         const commandFiles = fs.readdirSync(path.join(path.dirname(__dirname), 'commands')).filter(f => f.endsWith('.js'));
         for (const file of commandFiles) {

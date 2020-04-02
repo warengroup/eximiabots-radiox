@@ -13,7 +13,7 @@ module.exports = {
 
         message.nowplayingDescription = client.messages.nowplayingDescription.replace("%radio.station.name%", radio.station.name);
         message.nowplayingDescription = message.nowplayingDescription.replace("%radio.station.owner%", radio.station.owner);
-        message.nowplayingDescription = message.nowplayingDescription.replace("%msToTime(completed, \"hh:mm:ss\")%", msToTime(completed, "hh:mm:ss"));
+        message.nowplayingDescription = message.nowplayingDescription.replace("%client.funcs.msToTime(completed, \"hh:mm:ss\")%", client.funcs.msToTime(completed, "hh:mm:ss"));
 
         const embed = new Discord.MessageEmbed()
             .setTitle(client.messages.nowplayingTitle)
@@ -24,20 +24,3 @@ module.exports = {
         return msg.channel.send(embed);
     }
 };
-function msToTime(duration, format) {
-    var seconds = Math.floor((duration / 1000) % 60),
-        minutes = Math.floor((duration / (1000 * 60)) % 60),
-        hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-    days = Math.floor((duration / (1000 * 60 * 60 * 24)) % 24);
-
-    days = (days < 10) ? "0" + days : days;
-    hours = (hours < 10) ? "0" + hours : hours;
-    minutes = (minutes < 10) ? "0" + minutes : minutes;
-    seconds = (seconds < 10) ? "0" + seconds : seconds;
-
-    if (format === "hh:mm:ss") {
-        return `${hours}:${minutes}:${seconds}`;
-    } else if (format === "dd:hh:mm:ss") {
-        return `${days}:${hours}:${minutes}:${seconds}`;
-    }
-}

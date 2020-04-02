@@ -13,7 +13,7 @@ module.exports = {
     inviteTitle: "Invite %client.user.username% to your Discord server!",
     listTitle: "Radio Stations",
     nowplayingTitle: "Now Playing",
-    nowplayingDescription: "**%radio.station.name%** \n Owner: %radio.station.owner% \n %msToTime(completed, \"hh:mm:ss\")%",
+    nowplayingDescription: "**%radio.station.name%** \n Owner: %radio.station.owner% \n %client.funcs.msToTime(completed, \"hh:mm:ss\")%",
     noVoiceChannel: "You need to be in a voice channel to play radio!",
     noQuery: "You need to use a number or search for a supported station!",
     noPermsConnect: "I cannot connect to your voice channel.",
