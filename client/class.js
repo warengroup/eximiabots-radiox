@@ -23,7 +23,7 @@ module.exports = class extends Client {
         this.config = require('../config.js');
         this.messages = require('./messages.js');
 
-        const commandFiles = fs.readdirSync(path.join('commands')).filter(f => f.endsWith('.js'));
+        const commandFiles = fs.readdirSync('./commands/').filter(f => f.endsWith('.js'));
         for (const file of commandFiles) {
             const command = require(`./commands/${file}`);
             command.uses = 0;
