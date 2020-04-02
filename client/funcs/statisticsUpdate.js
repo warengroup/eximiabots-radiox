@@ -1,14 +1,14 @@
-module.exports = function statisticsUpdate(client, currentState, radio) {
+module.exports = function statisticsUpdate(client, guild, radio) {
     
-    client.datastore.checkEntry(currentState.guild.id);
+    client.datastore.checkEntry(guild.id);
     
-    radio.currentGuild = client.datastore.getEntry(currentState.guild.id);
+    radio.currentGuild = client.datastore.getEntry(guild.id);
     
     if(!radio.currentGuild.statistics[radio.station.name]){
         radio.currentGuild.statistics[radio.station.name] = {};
         radio.currentGuild.statistics[radio.station.name].time = 0;
         radio.currentGuild.statistics[radio.station.name].used = 0;
-        client.datastore.updateEntry(currentState.guild, radio.currentGuild);
+        client.datastore.updateEntry(guild, radio.currentGuild);
     }
     
     if(!radio.connection.dispatcher){
@@ -21,6 +21,6 @@ module.exports = function statisticsUpdate(client, currentState, radio) {
     }
     
     radio.currentGuild.statistics[radio.station.name].used = parseInt(radio.currentGuild.statistics[radio.station.name].used)+1;
-    client.datastore.updateEntry(currentState.guild, radio.currentGuild);
+    client.datastore.updateEntry(guild, radio.currentGuild);
     
 }

@@ -7,7 +7,7 @@ module.exports = {
         if (!radio) return;
         if (newState.member.id === client.user.id && oldState.member.id === client.user.id) {
             if (newState.channel === null) {
-                client.funcs.statisticsUpdate(client, newState, radio);
+                client.funcs.statisticsUpdate(client, newState.guild, radio);
                 return client.radio.delete(newState.guild.id);
             }
 
@@ -17,7 +17,7 @@ module.exports = {
                     const connection = await oldState.channel.join();
                     return radio.connection = connection;
                 } catch (error) {
-                    client.funcs.statisticsUpdate(client, newState, radio);
+                    client.funcs.statisticsUpdate(client, newState.guild, radio);
                     radio.connection.dispatcher.destroy();
                     radio.voiceChannel.leave();
                     client.radio.delete(oldState.guild.id);
@@ -34,7 +34,7 @@ module.exports = {
             setTimeout(() => {
                 if (!radio) return;
                 if (radio.voiceChannel.members.size === 1) {
-                    client.funcs.statisticsUpdate(client, newState, radio);
+                    client.funcs.statisticsUpdate(client, newState.guild, radio);
                     radio.connection.dispatcher.destroy();
                     radio.voiceChannel.leave();
                     client.radio.delete(newState.guild.id);
