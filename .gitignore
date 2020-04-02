@@ -1,4 +1,5 @@
+datastore/
 node_modules/
-.env
 .vscode/
+.env
 package-lock.json
