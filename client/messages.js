@@ -31,5 +31,6 @@ module.exports = {
     newVolume: "Volume is now: **%volume%**",
     statisticsTitle: "Statistics",
     maintenanceTitle: "Maintenance",
-    maintenanceDescription: "This command is not ready to be used by anyone."
+    maintenanceDescription: "This command is not ready to be used by anyone.",
+    errorToGetPlaylist: "There is no playlist which this bot can use to play radio."
 };

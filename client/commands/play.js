@@ -14,6 +14,7 @@ module.exports = {
 		} else {
 			if (voiceChannel !== radio.voiceChannel) return msg.channel.send(client.messageEmojis["error"] + client.messages.wrongVoiceChannel);
 		}
+		if(!client.stations) return msg.channel.send(client.messageEmojis["error"] + client.messages.errorToGetPlaylist);
 		if (!args[1]) return msg.channel.send(client.messages.noQuery);
 		const permissions = voiceChannel.permissionsFor(msg.client.user);
 		if (!permissions.has('CONNECT')) {
