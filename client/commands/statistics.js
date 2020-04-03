@@ -17,14 +17,15 @@ module.exports = {
             Object.keys(client.stations).forEach(function(station) {
                 if(currentGuild.statistics[stations[station].name]){
                     if(i > 0){
-                        statistics += "**" + station + " " + stations[station].name + "** \n";
+                        statistics += `**${parseInt(station) + 1}** ` + stations[station].name + " \n";
                         statistics += "Time: " + client.funcs.msToTime(currentGuild.statistics[stations[station].name].time, "hh:mm:ss") + "\n";
                         statistics += "Used: " + currentGuild.statistics[stations[station].name].used + "\n";
                     } else {
-                        statistics = "**" + station + " " + stations[station].name + "** \n";
+                        statistics = `**${parseInt(station) + 1}** ` + stations[station].name + " \n";
                         statistics += "Time: " + client.funcs.msToTime(currentGuild.statistics[stations[station].name].time, "hh:mm:ss") + "\n";
                         statistics += "Used: " + currentGuild.statistics[stations[station].name].used + "\n";
                     }
+
                     i++;
                 }
             });
