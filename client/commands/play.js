@@ -6,6 +6,7 @@ module.exports = {
 	permission: 'none',
 	category: 'music',
 	async execute(msg, args, client, Discord, command) {
+		let message = {};
 		let url = args[1] ? args[1].replace(/<(.+)>/g, "$1") : "";
 		const radio = client.radio.get(msg.guild.id);
 		const voiceChannel = msg.member.voice.channel;
@@ -14,7 +15,10 @@ module.exports = {
 		} else {
 			if (voiceChannel !== radio.voiceChannel) return msg.channel.send(client.messageEmojis["error"] + client.messages.wrongVoiceChannel);
 		}
-		if(!client.stations) return msg.channel.send(client.messageEmojis["error"] + client.messages.errorToGetPlaylist);
+		if(!client.stations) {
+			message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
+			return msg.channel.send(client.messageEmojis["error"] + message.errorToGetPlaylist);
+		}
 		if (!args[1]) return msg.channel.send(client.messages.noQuery);
 		const permissions = voiceChannel.permissionsFor(msg.client.user);
 		if (!permissions.has('CONNECT')) {

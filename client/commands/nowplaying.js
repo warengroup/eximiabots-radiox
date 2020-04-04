@@ -9,6 +9,10 @@ module.exports = {
         let message = {};
         const radio = client.radio.get(msg.guild.id);
         if (!radio) return msg.channel.send('There is nothing playing.');
+		if(!client.stations) {
+			message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
+			return msg.channel.send(client.messageEmojis["error"] + message.errorToGetPlaylist);
+		}
         const completed = (radio.connection.dispatcher.streamTime.toFixed(0));
 
         message.nowplayingDescription = client.messages.nowplayingDescription.replace("%radio.station.name%", radio.station.name);

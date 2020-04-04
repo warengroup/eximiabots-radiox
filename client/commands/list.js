@@ -6,6 +6,11 @@ module.exports = {
     permission: 'none',
     category: 'info',
     execute(msg, args, client, Discord, command) {
+        let message = {};
+		if(!client.stations) {
+			message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
+			return msg.channel.send(client.messageEmojis["error"] + message.errorToGetPlaylist);
+		}
         let stations = `${client.stations.map(s => `**#** ${s.name}`).join('\n')}`
         const hashs = stations.split('**#**').length;
         for (let i = 0; i < hashs; i++) {
