@@ -19,6 +19,7 @@ module.exports = class extends Client {
         this.funcs.check = require('./funcs/check.js');
         this.funcs.msToTime = require('./funcs/msToTime.js');
         this.funcs.statisticsUpdate = require('./funcs/statisticsUpdate.js');
+        this.funcs.isAuthorDev = require('./funcs/isAuthorDev.js');
 
         this.config = require('../config.js');
         this.messages = require('./messages.js');
