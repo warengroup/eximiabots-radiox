@@ -7,17 +7,8 @@ module.exports = {
     category: 'info',
     execute(msg, args, client, Discord, command) {
         let message = {};
-        /*
-        const embed = new Discord.MessageEmbed()
-            .setTitle(client.messages.maintenanceTitle)
-            .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["maintenance"].replace(/[^0-9]+/g, ''))
-            .setColor(client.config.embedColor)
-            .setDescription(client.messages.maintenanceDescription)
-            .setFooter('EximiaBots by Warén Media', "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-        return msg.channel.send(embed);
-        */
 
-        if(!client.funcs.isDev(client.config.devId, msg.author.id)) return msg.channel.send(client.messageEmojis["error"] + "You are not allowed to do that!");
+        if(!client.funcs.isDev(client.config.devId, msg.author.id)) return msg.channel.send(client.messageEmojis["error"] + client.messages.notAllowed);
 
         if(!client.stations) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
@@ -40,7 +31,7 @@ module.exports = {
                     .setTitle(client.messages.maintenanceTitle)
                     .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["maintenance"].replace(/[^0-9]+/g, ''))
                     .setColor(client.config.embedColor)
-                    .setDescription("There is ongoing maintenance")
+                    .setDescription(client.messages.sendedMaintenanceMessage)
                     .setFooter('EximiaBots by Warén Media', "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
                 currentRadio.textChannel.send(cembed);
                 client.radio.delete(radio.value);
