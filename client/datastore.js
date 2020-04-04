@@ -8,7 +8,7 @@ module.exports = class {
     }
     
     loadData() {
-        console.log("");
+        //console.log("");
         const dataFiles = fs.readdirSync(path.join(path.dirname(__dirname), 'datastore')).filter(f => f.endsWith('.json'));
         for (const file of dataFiles) {
             try {
@@ -20,9 +20,9 @@ module.exports = class {
                 //console.log('[ERROR] Loading ' + file + ' failed');
             }
         }
-        console.log("");
+        //console.log("");
     }
-    
+
     checkEntry(id){
         if(!this.map.has(id)){
             this.createEntry(id);
