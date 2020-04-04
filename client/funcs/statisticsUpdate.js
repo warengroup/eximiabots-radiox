@@ -22,5 +22,4 @@ module.exports = function statisticsUpdate(client, guild, radio) {
     
     radio.currentGuild.statistics[radio.station.name].used = parseInt(radio.currentGuild.statistics[radio.station.name].used)+1;
     client.datastore.updateEntry(guild, radio.currentGuild);
-    
 }
