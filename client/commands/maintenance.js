@@ -17,7 +17,7 @@ module.exports = {
         return msg.channel.send(embed);
         */
 
-        if(!client.funcs.isAuthorDev(client.config.devId, msg.author.id)) return msg.channel.send(client.messageEmojis["error"] + "You are not allowed to do that!");
+        if(!client.funcs.isDev(client.config.devId, msg.author.id)) return msg.channel.send(client.messageEmojis["error"] + "You are not allowed to do that!");
 
         if(!client.stations) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
