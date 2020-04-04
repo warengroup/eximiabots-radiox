@@ -23,7 +23,6 @@ module.exports = {
             client.stations = await fetch('https://gitea.cwinfo.org/cwchristerw/radio/raw/branch/master/playlist.json')
                 .then(res => res.json());
         } catch (err) {
-            client.stations = null;
             console.error(err);
         }
 
@@ -32,6 +31,12 @@ module.exports = {
                 .then(res => res.json());
         }, 3600000);
 
+        if(!client.stations) {
+            client.user.setStatus('dnd');
+        }
+        
+        client.datastore.calculateGlobal(client);
         require(`../emojis.js`).execute(client);
+
     }
 }
