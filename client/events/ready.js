@@ -21,14 +21,20 @@ module.exports = {
 
         try {
             client.stations = await fetch('https://gitea.cwinfo.org/cwchristerw/radio/raw/branch/master/playlist.json')
-                .then(res => res.json());
-        } catch (err) {
-            console.error(err);
+                .then(client.funcs.checkFetchStatus)
+                .then(response => response.json());
+        } catch (error) {
+            console.error(error);
         }
-
+        
         setInterval(async () => {
-            client.stations = await fetch('https://gitea.cwinfo.org/cwchristerw/radio/raw/branch/master/playlist.json')
-                .then(res => res.json());
+            try {
+                client.stations = await fetch('https://gitea.cwinfo.org/cwchristerw/radio/raw/branch/master/playlist.json')
+                    .then(client.funcs.checkFetchStatus)
+                    .then(response => response.json());
+            } catch (error) {
+                console.error(error);
+            }
         }, 3600000);
 
         if(!client.stations) {
