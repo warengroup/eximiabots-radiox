@@ -32,5 +32,5 @@ module.exports = {
     statisticsTitle: "Statistics",
     maintenanceTitle: "Maintenance",
     maintenanceDescription: "This command is not ready to be used by anyone.",
-    errorToGetPlaylist: "There is no playlist which this bot can use to play radio."
+    errorToGetPlaylist: "You can't use this bot because it has no playlist available. Check more information in our Discord support server %client.config.supportGuild% !"
 };
