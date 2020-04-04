@@ -19,6 +19,8 @@ module.exports = {
         let radio = currentRadios.next();
         let stoppedRadios = "";
 
+        client.user.setStatus('dnd');
+        
         while (!radio.done) {
             let currentRadio = client.radio.get(radio.value);
             currentRadio.guild = client.datastore.getEntry(radio.value).guild;
