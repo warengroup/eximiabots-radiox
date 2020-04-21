@@ -97,6 +97,7 @@ function play(guild, client, url) {
 	const dispatcher = radio.connection
 		.play(url, { bitrate: "auto", volume: 1 })
 		.on("finish", () => {
+			console.log("Stream finished");
 			radio.voiceChannel.leave();
 			client.radio.delete(guild.id);
 			return;
