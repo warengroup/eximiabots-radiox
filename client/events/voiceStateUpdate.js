@@ -32,7 +32,7 @@ module.exports = {
         }
         if (oldState.channel.members.size === 1 && oldState.channel === radio.voiceChannel || change) {
             setTimeout(() => {
-                if (!radio) return;
+                if (!radio || !radio.connection.dispatcher || !radio.connection.dispatcher === null) return;
                 if (radio.voiceChannel.members.size === 1) {
                     client.funcs.statisticsUpdate(client, newState.guild, radio);
                     radio.connection.dispatcher.destroy();
