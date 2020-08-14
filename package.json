@@ -4,8 +4,7 @@
   "description": "Radio Bot for Discord",
   "main": "index.js",
   "scripts": {
-    "start": "node .",
-    "install": "mkdir datastore"
+    "start": "node ."
   },
   "repository": {
     "type": "git",
