@@ -17,10 +17,9 @@
     "url": "https://github.com/warengroup/eximiabots-radiox/issues"
   },
   "dependencies": {
-    "@discordjs/opus": "^0.1.0",
-    "discord.js": "^12.2.0",
+    "@discordjs/opus": "^0.3.2",
+    "discord.js": "^12.3.0",
     "dotenv": "^8.2.0",
-    "fs": "0.0.1-security",
     "node-fetch": "^2.6.0",
     "path": "^0.12.7"
   }
