@@ -1,2 +1,7 @@
-.git/
-.vscode/
+.git
+.gitignore
+.vscode
+datastore
+Dockerfile
+LICENSE
+README.md
