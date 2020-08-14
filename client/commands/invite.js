@@ -12,7 +12,7 @@ module.exports = {
             .setTitle(message.inviteTitle)
             .setColor(client.config.embedColor)
             .setURL(client.config.invite)
-            .setFooter(message.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
+            .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
         return msg.channel.send(embed);
     }
 };

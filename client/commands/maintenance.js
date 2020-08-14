@@ -34,7 +34,7 @@ module.exports = {
                     .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["maintenance"].replace(/[^0-9]+/g, ''))
                     .setColor(client.config.embedColor)
                     .setDescription(client.messages.sendedMaintenanceMessage)
-                    .setFooter(message.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
+                    .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
                 currentRadio.textChannel.send(cembed);
                 client.radio.delete(radio.value);
                 stoppedRadios += "-" + radio.value + ": " + currentRadio.currentGuild.guild.name + "\n";
@@ -47,7 +47,7 @@ module.exports = {
         .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["maintenance"].replace(/[^0-9]+/g, ''))
         .setColor(client.config.embedColor)
         .setDescription("Stopped all radios" + "\n" + stoppedRadios)
-        .setFooter(message.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
+        .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
         return msg.channel.send(embed);
     }
 };
