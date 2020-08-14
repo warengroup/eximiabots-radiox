@@ -17,6 +17,6 @@ module.exports = {
     invite: "https://discordapp.com/api/oauth2/authorize?client_id=684109535312609409&permissions=3427328&scope=bot",
 
     //Settings
-    prefix: process.env.PREFIX || "rx>",
+    prefix: process.env.RADIOX_PREFIX || process.env.PREFIX || "rx>",
 
 }
