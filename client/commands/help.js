@@ -23,7 +23,7 @@ module.exports = {
                 .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["logo"].replace(/[^0-9]+/g, ''))
                 .setColor(client.config.embedColor)
                 .setDescription(message.helpCommandDescription)
-                .setFooter('EximiaBots by Warén Media', "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
+                .setFooter(message.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
             msg.channel.send(embed);
         } else {
             const categories = [];
@@ -44,7 +44,7 @@ module.exports = {
                 .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["logo"].replace(/[^0-9]+/g, ''))
                 .setColor(client.config.embedColor)
                 .setDescription(message.helpDescription)
-                .setFooter('EximiaBots by Warén Media', "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
+                .setFooter(message.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
             msg.channel.send(embed);
         }
     }

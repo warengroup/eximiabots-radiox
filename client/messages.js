@@ -34,4 +34,5 @@ module.exports = {
     errorToGetPlaylist: "You can't use this bot because it has no playlist available. Check more information in our Discord support server %client.config.supportGuild% !",
     notAllowed: "You are not allowed to do that!",
     sendedMaintenanceMessage: "This bot is going to be under maintenance!",
+    footerText: "EximiaBots by Warén Group"
 };
