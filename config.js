@@ -5,6 +5,9 @@ module.exports = {
     //credentials
     token: process.env.DISCORD_TOKEN,
 
+    //radio stations
+    stationslistUrl: process.env.RADIOX_STATIONSLISTURL || "https://gitea.cwinfo.org/cwchristerw/radio/raw/branch/master/playlist.json",
+
     //support
     supportGuild: "https://discord.gg/rRA65Mn",
     devId: [
@@ -17,6 +20,6 @@ module.exports = {
     invite: "https://discordapp.com/api/oauth2/authorize?client_id=684109535312609409&permissions=3427328&scope=bot",
 
     //Settings
-    prefix: process.env.RADIOX_PREFIX || process.env.PREFIX || "rx>",
+    prefix: process.env.RADIOX_PREFIX || "rx-",
 
 }

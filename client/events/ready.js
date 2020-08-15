@@ -20,7 +20,7 @@ module.exports = {
         }
 
         try {
-            client.stations = await fetch('https://gitea.cwinfo.org/cwchristerw/radio/raw/branch/master/playlist.json')
+            client.stations = await fetch(client.config.stationslistUrl)
                 .then(client.funcs.checkFetchStatus)
                 .then(response => response.json());
         } catch (error) {
@@ -29,7 +29,7 @@ module.exports = {
         
         setInterval(async () => {
             try {
-                client.stations = await fetch('https://gitea.cwinfo.org/cwchristerw/radio/raw/branch/master/playlist.json')
+                client.stations = await fetch(client.config.stationslistUrl)
                     .then(client.funcs.checkFetchStatus)
                     .then(response => response.json());
             } catch (error) {
