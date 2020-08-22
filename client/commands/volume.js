@@ -4,7 +4,7 @@ module.exports = {
 	alias: 'none',
 	usage: '<volume>',
 	permission: 'MANAGE_MESSAGES',
-	category: 'music',
+	category: 'radio',
 	execute(msg, args, client, Discord, command) {
 		let message = {};
 		const radio = client.radio.get(msg.guild.id);

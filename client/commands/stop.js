@@ -4,7 +4,7 @@ module.exports = {
 	alias: 's',
 	usage: '',
 	permission: 'none',
-	category: 'music',
+	category: 'radio',
 	execute(msg, args, client, Discord, command) {
 		const radio = client.radio.get(msg.guild.id);
 		if (client.funcs.check(client, msg, command)) {

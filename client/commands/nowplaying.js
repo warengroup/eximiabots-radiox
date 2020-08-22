@@ -4,7 +4,7 @@ module.exports = {
     usage: '',
     description: 'See the currently playing song position and length.',
     permission: 'none',
-    category: 'music',
+    category: 'radio',
     async execute(msg, args, client, Discord, command) {
         let message = {};
         const radio = client.radio.get(msg.guild.id);

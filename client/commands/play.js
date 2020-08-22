@@ -4,7 +4,7 @@ module.exports = {
 	usage: '<song name>',
 	description: 'Play some music.',
 	permission: 'none',
-	category: 'music',
+	category: 'radio',
 	async execute(msg, args, client, Discord, command) {
 		let message = {};
 		let url = args[1] ? args[1].replace(/<(.+)>/g, "$1") : "";

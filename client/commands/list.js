@@ -4,7 +4,7 @@ module.exports = {
     usage: '',
     description: 'List radio stations.',
     permission: 'none',
-    category: 'info',
+    category: 'radio',
     execute(msg, args, client, Discord, command) {
         let message = {};
 		if(!client.stations) {
