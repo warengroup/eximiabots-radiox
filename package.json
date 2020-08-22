@@ -1,6 +1,6 @@
 {
   "name": "eximiabots-radiox",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Internet Radio to your Discord guild",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/warengroup/eximiabots-radiox.git"
   },
-  "author": "EximiaBots",
+  "author": "EximiaBots by Warén Group",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/warengroup/eximiabots-radiox/issues"
