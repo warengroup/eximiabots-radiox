@@ -5,11 +5,21 @@ const path = require('path');
 const events = './events/';
 const Datastore = require('./datastore.js');
 
+const GatewayIntents = new Discord.Intents();
+GatewayIntents.add(
+    1 << 0, // GUILDS
+    1 << 7, // GUILD_VOICE_STATES
+    1 << 9 // GUILD_MESSAGES
+);
+
 module.exports = class extends Client {
     constructor() {
         super({
             disableEveryone: true,
-            disabledEvents: ['TYPING_START']
+            disabledEvents: ['TYPING_START'],
+            ws: {
+                intents: GatewayIntents
+            }
         });
         this.commands = new Collection();
         this.commandAliases = new Collection();
