@@ -2,7 +2,7 @@ module.exports = {
     name: 'help',
     alias: 'h',
     usage: '<command(opt)>',
-    description: 'See the help for RadioX.',
+    description: 'Get help using bot',
     permission: 'none',
     category: 'info',
     execute(msg, args, client, Discord, command) {

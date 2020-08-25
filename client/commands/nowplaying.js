@@ -2,7 +2,7 @@ module.exports = {
     name: 'nowplaying',
     alias: 'np',
     usage: '',
-    description: 'See the currently playing song position and length.',
+    description: 'Current Radio Station',
     permission: 'none',
     category: 'radio',
     async execute(msg, args, client, Discord, command) {

@@ -2,7 +2,7 @@ module.exports = {
     name: 'invite',
     alias: 'i',
     usage: '',
-    description: 'Invite RadioX.',
+    description: 'Invite Bot',
     permission: 'none',
     category: 'info',
     execute(msg, args, client, Discord, command) {
