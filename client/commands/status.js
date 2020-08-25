@@ -9,6 +9,7 @@ module.exports = {
         let message = {};
 
         message.statusTitle = client.messages.statusTitle.replace("%client.user.username%", client.user.username);
+        let uptime = client.funcs.msToTime(client.uptime, "dd:hh:mm:ss");
 
         const embed = new Discord.MessageEmbed()
             .setTitle(message.statusTitle)
