@@ -18,8 +18,10 @@ module.exports = {
     //misc
     embedColor: "#88aa00",
     invite: "https://discordapp.com/api/oauth2/authorize?client_id=684109535312609409&permissions=3427328&scope=bot",
+    hostedBy: "[Warén Group](https://waren.io)",
 
     //Settings
     prefix: process.env.RADIOX_PREFIX || "rx-",
+    version: process.env.RADIOX_VERSION || process.env.npm_package_version
 
 }

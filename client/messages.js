@@ -36,6 +36,9 @@ module.exports = {
     sendedMaintenanceMessage: "This bot is going to be under maintenance!",
     footerText: "EximiaBots by Warén Group",
     statusTitle: "%client.user.username% Status",
-    statusField1: "Ping",
-    statusField2: "Uptime"
+    statusField1: "Bot Latency",
+    statusField2: "API Latency",
+    statusField3: "Uptime",
+    statusField4: "Version",
+    statusField5: "Hosted by"
 };
