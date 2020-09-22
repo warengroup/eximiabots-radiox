@@ -30,7 +30,7 @@ module.exports = {
 		let station;
 		const number = parseInt(args[1] - 1);
 		if (url.startsWith('http')) {
-			return;
+			return msg.channel.send(client.messageEmojis["error"] + client.messages.errorStationURL);
 		} else if (!isNaN(number)) {
 			if (number > client.stations.length - 1) {
 				return msg.channel.send(client.messageEmojis["error"] + client.messages.wrongStationNumber);

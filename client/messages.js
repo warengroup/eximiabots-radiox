@@ -40,5 +40,6 @@ module.exports = {
     statusField2: "API Latency",
     statusField3: "Uptime",
     statusField4: "Version",
-    statusField5: "Hosted by"
+    statusField5: "Hosted by",
+    errorStationURL: "Station can't be URL"
 };
