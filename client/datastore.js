@@ -26,7 +26,7 @@ module.exports = class {
     calculateGlobal(client){
         let guilds = this.map.keys();
         let stations = client.stations;
-        let statistics = {};
+        var statistics = {};
 
         if(!client.stations) return;
         
@@ -34,23 +34,21 @@ module.exports = class {
 
         while (!calculation.done) {
             let currentGuild = this.getEntry(calculation.value);
-            if(calculation.value == 'global'){
-                return calculation = guilds.next();
-            }
-            
-            if(stations){
-                Object.keys(stations).forEach(function(station) {
-                    if(currentGuild.statistics[stations[station].name] && currentGuild.statistics[stations[station].name].time && !parseInt(currentGuild.statistics[stations[station].name].time) == 0  && currentGuild.statistics[stations[station].name].used && !parseInt(currentGuild.statistics[stations[station].name].used) == 0){
-                        if(!statistics[stations[station].name]){
-                            statistics[stations[station].name] = {};
-                            statistics[stations[station].name].time = 0;
-                            statistics[stations[station].name].used = 0;
+            if(calculation.value != 'global'){
+                if(stations){
+                    Object.keys(stations).forEach(function(station) {
+                        if(currentGuild.statistics[stations[station].name] && currentGuild.statistics[stations[station].name].time && parseInt(currentGuild.statistics[stations[station].name].time) != 0  && currentGuild.statistics[stations[station].name].used && parseInt(currentGuild.statistics[stations[station].name].used) != 0){
+                            if(!statistics[stations[station].name]){
+                                statistics[stations[station].name] = {};
+                                statistics[stations[station].name].time = 0;
+                                statistics[stations[station].name].used = 0;
+                            }
+                        
+                            statistics[stations[station].name].time = parseInt(statistics[stations[station].name].time)+parseInt(currentGuild.statistics[stations[station].name].time);
+                            statistics[stations[station].name].used = parseInt(statistics[stations[station].name].used)+parseInt(currentGuild.statistics[stations[station].name].used);
                         }
-
-                        statistics[stations[station].name].time = parseInt(statistics[stations[station].name].time)+parseInt(currentGuild.statistics[stations[station].name].time);
-                        statistics[stations[station].name].used = parseInt(statistics[stations[station].name].used)+parseInt(currentGuild.statistics[stations[station].name].used);
-                    }
-                });
+                    });
+                }
             }
             calculation = guilds.next();
         }
