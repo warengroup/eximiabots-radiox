@@ -5,8 +5,8 @@ module.exports = {
     async execute(client, Discord) {
 
         console.log('RadioX');
-        console.log('We will bring you finnish radio to your discord server');
-        console.log('(c)2020 EximiaBots by Warén Media / Christer Warén & MatteZ02');
+        console.log('Internet Radio to your Discord guild');
+        console.log('(c)2020-2021 EximiaBots by Warén Group');
 
         client.developers = "";
         let user = "";
