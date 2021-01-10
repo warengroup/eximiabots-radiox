@@ -98,6 +98,7 @@ function play(guild, client, url) {
 		.play(url, { bitrate: "auto", volume: 1 })
 		.on("finish", () => {
 			console.log("Stream finished");
+			client.funcs.statisticsUpdate(client, guild, radio);
 			radio.voiceChannel.leave();
 			client.radio.delete(guild.id);
 			return;
