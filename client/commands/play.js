@@ -85,6 +85,7 @@ module.exports = {
             }
             
 		} catch (error) {
+			console.log(error);
 			client.radio.delete(msg.guild.id);
 			return msg.channel.send(client.messageEmojis["error"] + `An error occured: ${error}`);
 		}
