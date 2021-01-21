@@ -27,7 +27,7 @@ module.exports = {
 
             if(currentRadio){
                 client.funcs.statisticsUpdate(client, currentRadio.currentGuild.guild, currentRadio);
-                currentRadio.connection.dispatcher.destroy();
+                currentRadio.connection.dispatcher?.destroy();
                 currentRadio.voiceChannel.leave();
                 const cembed = new Discord.MessageEmbed()
                     .setTitle(client.messages.maintenanceTitle)
