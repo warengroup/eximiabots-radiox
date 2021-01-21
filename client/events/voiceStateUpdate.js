@@ -5,6 +5,7 @@ module.exports = {
         let change = false;
         const radio = client.radio.get(newState.guild.id);
         if (!radio) return;
+        /*
         if (newState.member.id === client.user.id && oldState.member.id === client.user.id) {
             if (newState.channel === null) {
                 client.funcs.statisticsUpdate(client, newState.guild, radio);
@@ -29,7 +30,7 @@ module.exports = {
                 radio.voiceChannel = newState.channel;
                 radio.connection = newState.connection;
             }
-        }
+        }*/
         if (oldState.channel.members.size === 1 && oldState.channel === radio.voiceChannel || change) {
             setTimeout(() => {
                 if (!radio || !radio.connection.dispatcher || !radio.connection.dispatcher === null) return;
