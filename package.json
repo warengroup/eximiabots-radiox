@@ -1,10 +1,11 @@
 {
   "name": "eximiabots-radiox",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Internet Radio to your Discord guild",
   "main": "index.js",
   "scripts": {
-    "start": "node ."
+    "build": "rimraf ./build && tsc",
+    "start": "npm run build && node build/index.js"
   },
   "repository": {
     "type": "git",
@@ -17,9 +18,26 @@
   },
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
-    "discord.js": "^12.5.3",
+    "@discordjs/voice": "^0.2.1",
+    "@types/node": "^15.12.2",
+    "@types/ws": "^7.4.4",
+    "discord-api-types": "^0.18.1",
+    "discord.js": "^13.0.0-dev.dec191aa1e4f22690285ca06c6eee7e6086b2930",
     "dotenv": "^8.2.0",
     "node-fetch": "^2.6.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "tsc-watch": "^4.4.0",
+    "typescript": "^4.3.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "nodemon": "^2.0.6",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.2",
+    "ts-node": "^8.10.2"
   }
 }

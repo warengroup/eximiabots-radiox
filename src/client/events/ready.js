@@ -10,7 +10,7 @@ module.exports = {
 
         client.developers = "";
         let user = "";
-        for (i = 0; i < client.config.devId.length; i++) {
+        for (let i = 0; i < client.config.devId.length; i++) {
             user = await client.users.fetch(client.config.devId[i]);
             if (i == client.config.devId.length - 1) {
                 client.developers += user.tag;
