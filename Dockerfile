@@ -1,10 +1,10 @@
-FROM node:14.15.4-alpine
+FROM node:14.16.0-alpine
 
 #Dependencies
-RUN apk add --virtual .build-deps python make g++ gcc
+RUN apk add --virtual .build-deps python make g++ gcc git
 
-#Dependencies for RadioX Bot
-RUN apk add --virtual .radiox-deps ffmpeg
+#Code Dependencies
+RUN apk add --virtual .code-deps ffmpeg
 
 WORKDIR /usr/src/app
 
