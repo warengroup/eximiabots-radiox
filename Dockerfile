@@ -1,4 +1,4 @@
-FROM node:14.16.0-alpine
+FROM node:14.17.1-alpine
 
 #Dependencies
 RUN apk add --virtual .build-deps python make g++ gcc git
