@@ -38,7 +38,7 @@ class RadioClient extends Client {
         this.funcs.msToTime = require("./client/funcs/msToTime.js");
         this.funcs.statisticsUpdate = require("./client/funcs/statisticsUpdate.js");
 
-        const commandFiles = fs.readdirSync("D:/GitHub/eximiabots-radiox/src/client/commands/"/*path.join("./client/commands")*/).filter(f => f.endsWith(".js"));
+        const commandFiles = fs.readdirSync(path.join("./src/client/commands")).filter(f => f.endsWith(".js"));
         for (const file of commandFiles) {
             const command = require(`./client/commands/${file}`);
             command.uses = 0;
