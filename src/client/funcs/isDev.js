@@ -1,7 +1,7 @@
 module.exports = function (devList, authorID){
     let response = false;
     Object.keys(devList).forEach(function(oneDev) {
-        devID = devList[oneDev];
+        let devID = devList[oneDev];
         if(authorID == devID){
             response = true;
         }
