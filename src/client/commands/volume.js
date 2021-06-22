@@ -19,7 +19,7 @@ module.exports = {
 			if (volume > 100) return msg.channel.send(client.messages.maxVolume);
 			if (volume < 0) return msg.channel.send(client.messages.negativeVolume);
 			radio.volume = volume;
-			radio.connection.dispatcher.setVolume(volume / 5);
+			/*radio.connection.dispatcher.setVolume(volume / 5);*/
 			message.newVolume = client.messages.newVolume.replace("%volume%", volume);
 			return msg.channel.send(message.newVolume);
 		}
