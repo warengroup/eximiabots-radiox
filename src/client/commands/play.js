@@ -89,8 +89,7 @@ module.exports = {
             voiceChannel: voiceChannel,
             connection: null,
             audioPlayer: createAudioPlayer(),
-            station: station,
-            volume: 5
+            station: station
         };
         client.radio.set(msg.guild.id, construct);
 
