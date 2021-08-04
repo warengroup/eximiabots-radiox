@@ -8,6 +8,10 @@ module.exports = class {
     }
     
     loadData() {
+        const dir = path.join(path.dirname(__dirname), '../datastore');
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir);
+        }
         //console.log("");
         const dataFiles = fs.readdirSync(path.join(path.dirname(__dirname), '../datastore')).filter(f => f.endsWith('.json'));
         for (const file of dataFiles) {
