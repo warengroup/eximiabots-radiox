@@ -21,8 +21,8 @@ module.exports = {
                     );
                 } catch (error) {
                     client.funcs.statisticsUpdate(client, newState.guild, radio);
-                    radio.connection.dispatcher.destroy();
-                    radio.voiceChannel.leave();
+                    radio.connection.destroy();
+                    radio.audioPlayer.stop();
                     client.radio.delete(oldState.guild.id);
                 }
                 return;
@@ -38,8 +38,8 @@ module.exports = {
                 if (!radio || !radio.connection.dispatcher || !radio.connection.dispatcher === null) return;
                 if (radio.voiceChannel.members.size === 1) {
                     client.funcs.statisticsUpdate(client, newState.guild, radio);
-                    radio.connection.dispatcher.destroy();
-                    radio.voiceChannel.leave();
+                    radio.connection.destroy();
+                    radio.audioPlayer.stop();
                     client.radio.delete(newState.guild.id);
                 }
             }, 120000);
