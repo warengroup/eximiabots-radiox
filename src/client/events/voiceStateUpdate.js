@@ -2,6 +2,7 @@ const {
     getVoiceConnection,
     joinVoiceChannel
 } = require("@discordjs/voice");
+const { createDiscordJSAdapter } = require("../utils/adapter");
 
 module.exports = {
     name: "voiceStateUpdate",
@@ -23,7 +24,7 @@ module.exports = {
                 try {
                     setTimeout(
                         async () => (
-                            radio.connection = await joinVoiceChannel({
+                            radio.connection = joinVoiceChannel({
                                 channelId: oldState.channel.id,
                                 guildId: oldState.channel.guild.id,
                                 adapterCreator: createDiscordJSAdapter(oldState.channel)
