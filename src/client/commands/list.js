@@ -23,6 +23,6 @@ module.exports = {
             .setColor(client.config.embedColor)
             .setDescription(stations)
             .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-        return msg.channel.send(embed);
+        return msg.channel.send({ embed: embed });
     }
 };
