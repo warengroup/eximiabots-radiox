@@ -135,13 +135,13 @@ function play(guild, client, url) {
         .on("finish", () => {
             console.log("Stream finished");
             client.funcs.statisticsUpdate(client, guild, radio);
-            radio.voiceChannel.leave();
+            radio.connection.destroy();
             client.radio.delete(guild.id);
             return;
         })
         .on("error", error => {
             console.error(error);
-            radio.voiceChannel.leave();
+            radio.connection.destroy();
             client.radio.delete(guild.id);
             return radio.textChannel.send(client.messages.errorPlaying);
         });
