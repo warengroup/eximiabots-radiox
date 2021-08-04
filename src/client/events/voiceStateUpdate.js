@@ -37,7 +37,7 @@ module.exports = {
             if (newState.channel !== radio.voiceChannel) {
                 change = true;
                 radio.voiceChannel = newState.channel;
-                radio.connection = getVoiceConnection(voiceChannel.guild.id);
+                radio.connection = getVoiceConnection(newState.channel.guild.id);
                 //radio.connection = await newState.channel.join();
             }
         }
