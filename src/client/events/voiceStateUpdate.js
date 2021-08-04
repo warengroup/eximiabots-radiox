@@ -13,6 +13,9 @@ module.exports = {
         if (!radio) return;
 
         if (newState.member.id === client.user.id && oldState.member.id === client.user.id) {
+            console.log(oldState);
+            console.log(newState);
+            
             if (newState.channel === null) {
                 client.funcs.statisticsUpdate(client, newState.guild, radio);
                 radio.audioPlayer.stop();
