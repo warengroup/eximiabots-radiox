@@ -76,7 +76,6 @@ module.exports = {
         if (radio) {
             client.funcs.statisticsUpdate(client, msg.guild, radio);
 
-            //radio.connection.destroy();
             radio.station = station;
             radio.textChannel = msg.channel;
             play(msg.guild, client, url);
