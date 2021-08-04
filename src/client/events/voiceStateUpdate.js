@@ -1,3 +1,8 @@
+const {
+    getVoiceConnection,
+    joinVoiceChannel
+} = require("@discordjs/voice");
+
 module.exports = {
     name: "voiceStateUpdate",
     async execute(client, oldState, newState) {
@@ -9,6 +14,7 @@ module.exports = {
         if (newState.member.id === client.user.id && oldState.member.id === client.user.id) {
             if (newState.channel === null) {
                 client.funcs.statisticsUpdate(client, newState.guild, radio);
+                radio.audioPlayer.stop();
                 return client.radio.delete(newState.guild.id);
             }
 
