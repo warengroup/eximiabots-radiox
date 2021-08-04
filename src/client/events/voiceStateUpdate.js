@@ -37,12 +37,7 @@ module.exports = {
             if (newState.channel !== radio.voiceChannel) {
                 change = true;
                 radio.voiceChannel = newState.channel;
-                /*radio.connection = getVoiceConnection(voiceChannel.guild.id) ??
-                joinVoiceChannel({
-                    channelId: voiceChannel.id,
-                    guildId: voiceChannel.guild.id,
-                    adapterCreator: createDiscordJSAdapter(voiceChannel)
-                });*/
+                radio.connection = getVoiceConnection(voiceChannel.guild.id);
                 //radio.connection = await newState.channel.join();
             }
         }
