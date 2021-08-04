@@ -16,8 +16,8 @@ module.exports = {
 
             if (newState.channel === null) {
                 client.funcs.statisticsUpdate(client, newState.guild, radio);
-                radio.connection.destroy();
-                radio.audioPlayer.stop();
+                radio.connection?.destroy();
+                radio.audioPlayer?.stop();
                 return client.radio.delete(newState.guild.id);
             }
 
@@ -37,8 +37,8 @@ module.exports = {
                     );
                 } catch (error) {
                     client.funcs.statisticsUpdate(client, newState.guild, radio);
-                    radio.connection.destroy();
-                    radio.audioPlayer.stop();
+                    radio.connection?.destroy();
+                    radio.audioPlayer?.stop();
                     client.radio.delete(oldState.guild.id);
                 }
                 return;
@@ -52,11 +52,11 @@ module.exports = {
         }
         if ((oldState.channel.members.size === 1 && oldState.channel === radio.voiceChannel) || change) {
             setTimeout(() => {
-                if (!radio || !radio.connection.dispatcher || !radio.connection.dispatcher === null) return;
+                if (!radio || !radio.connection || !radio.connection === null) return;
                 if (radio.voiceChannel.members.size === 1) {
                     client.funcs.statisticsUpdate(client, newState.guild, radio);
-                    radio.connection.destroy();
-                    radio.audioPlayer.stop();
+                    radio.connection?.destroy();
+                    radio.audioPlayer?.stop();
                     client.radio.delete(newState.guild.id);
                 }
             }, 120000);
