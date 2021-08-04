@@ -50,7 +50,7 @@ class RadioClient extends Client {
             require(`${events}ready`).execute(this, Discord);
             this.datastore = new Datastore();
         });
-        this.on("message", msg => {
+        this.on("messageCreate", msg => {
             require(`${events}msg`).execute(this, msg, Discord);
         });
         this.on("voiceStateUpdate", (oldState, newState) => {
