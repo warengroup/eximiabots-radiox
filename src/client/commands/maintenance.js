@@ -28,7 +28,6 @@ module.exports = {
             if(currentRadio){
                 client.funcs.statisticsUpdate(client, currentRadio.currentGuild.guild, currentRadio);
                 currentRadio.connection.destroy();
-                currentRadio.voiceChannel.leave();
                 const cembed = new Discord.MessageEmbed()
                     .setTitle(client.messages.maintenanceTitle)
                     .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["maintenance"].replace(/[^0-9]+/g, ''))
