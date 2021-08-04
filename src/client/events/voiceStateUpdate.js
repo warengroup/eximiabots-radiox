@@ -16,7 +16,14 @@ module.exports = {
             if (!newPermissions.has("CONNECT") || !newPermissions.has("SPEAK") || !newPermissions.has("VIEW_CHANNEL")) {
                 try {
                     setTimeout(
-                        async () => (radio.connection = await oldState.channel.join()),
+                        async () => (
+                            radio.connection = await joinVoiceChannel({
+                                channelId: oldState.channel.id,
+                                guildId: oldState.channel.guild.id,
+                                adapterCreator: createDiscordJSAdapter(oldState.channel)
+                            })
+                            //radio.connection = await oldState.channel.join()
+                        ),
                         1000
                     );
                 } catch (error) {
@@ -30,7 +37,13 @@ module.exports = {
             if (newState.channel !== radio.voiceChannel) {
                 change = true;
                 radio.voiceChannel = newState.channel;
-                radio.connection = await newState.channel.join();
+                /*radio.connection = getVoiceConnection(voiceChannel.guild.id) ??
+                joinVoiceChannel({
+                    channelId: voiceChannel.id,
+                    guildId: voiceChannel.guild.id,
+                    adapterCreator: createDiscordJSAdapter(voiceChannel)
+                });*/
+                //radio.connection = await newState.channel.join();
             }
         }
         if ((oldState.channel.members.size === 1 && oldState.channel === radio.voiceChannel) || change) {
