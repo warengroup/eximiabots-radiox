@@ -35,7 +35,7 @@ module.exports = {
                     .setColor(client.config.embedColor)
                     .setDescription(client.messages.sendedMaintenanceMessage)
                     .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-                currentRadio.textChannel.send(cembed);
+                currentRadio.textChannel.send({ embeds: cembed });
                 client.radio.delete(radio.value);
                 stoppedRadios += "-" + radio.value + ": " + currentRadio.currentGuild.guild.name + "\n";
             }
@@ -48,6 +48,6 @@ module.exports = {
         .setColor(client.config.embedColor)
         .setDescription("Stopped all radios" + "\n" + stoppedRadios)
         .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-        return msg.channel.send({ embed: embed });
+        return msg.channel.send({ embeds: embed });
     }
 };

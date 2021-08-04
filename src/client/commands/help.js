@@ -24,7 +24,7 @@ module.exports = {
                 .setColor(client.config.embedColor)
                 .setDescription(message.helpCommandDescription)
                 .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-            msg.channel.send({ embed: embed });
+            msg.channel.send({ embeds: embed });
         } else {
             const categories = [];
             for (let i = 0; i < client.commands.size; i++) {
@@ -45,7 +45,7 @@ module.exports = {
                 .setColor(client.config.embedColor)
                 .setDescription(message.helpDescription)
                 .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-            msg.channel.send({ embed: embed });
+            msg.channel.send({ embeds: embed });
         }
     }
 };

@@ -13,6 +13,6 @@ module.exports = {
             .setColor(client.config.embedColor)
             .setURL("https://discordapp.com/api/oauth2/authorize?client_id=" + client.user.id + "&permissions=3427328&scope=bot")
             .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-        return msg.channel.send({ embed: embed });
+        return msg.channel.send({ embeds: embed });
     }
 };
