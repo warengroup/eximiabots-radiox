@@ -1,6 +1,6 @@
 import { DiscordGatewayAdapterCreator, DiscordGatewayAdapterLibraryMethods } from '@discordjs/voice';
 import { VoiceChannel, Snowflake, Client, Constants, WebSocketShard, Guild, StageChannel } from 'discord.js';
-import { GatewayVoiceServerUpdateDispatchData, GatewayVoiceStateUpdateDispatchData } from 'discord-api-types/v8';
+import { GatewayVoiceServerUpdateDispatchData, GatewayVoiceStateUpdateDispatchData } from 'discord-api-types/v9';
 
 const adapters = new Map<Snowflake, DiscordGatewayAdapterLibraryMethods>();
 const trackedClients = new Set<Client>();
