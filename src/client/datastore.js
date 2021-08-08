@@ -16,7 +16,7 @@ module.exports = class {
         const dataFiles = fs.readdirSync(path.join(path.dirname(__dirname), '../datastore')).filter(f => f.endsWith('.json'));
         for (const file of dataFiles) {
             try {
-                const json = require(`../../../datastore/${file}`);
+                const json = require(`../../datastore/${file}`);
                 this.map.set(json.guild.id, json);
                 //console.log('[LOADED] ' + file + " (" + json.guild.id + ")");
                 //console.log(JSON.stringify(json, null, 4));
