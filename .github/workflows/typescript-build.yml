@@ -1,0 +1,22 @@
+name: TypeScript Build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tsc:
+    name: tsc
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: install node v16
+      uses: actions/setup-node@v2.3.1
+      with:
+        node-version: 16
+    - name: npm install -g npm
+      run: npm install -g npm
+    - name: npm install
+      run: npm install
+    - name: tsc
+      uses: icrawl/action-tsc@v1
