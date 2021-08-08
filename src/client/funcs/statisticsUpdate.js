@@ -11,14 +11,10 @@ module.exports = function statisticsUpdate(client, guild, radio) {
         client.datastore.updateEntry(guild, radio.currentGuild);
     }
     
-    if(!radio.connection.dispatcher){
-        let date = new Date();
-        radio.currentTime = date.getTime();
-        radio.playTime = parseInt(radio.currentTime)-parseInt(radio.startTime);
-        radio.currentGuild.statistics[radio.station.name].time = parseInt(radio.currentGuild.statistics[radio.station.name].time)+parseInt(radio.playTime);
-    } else {
-        radio.currentGuild.statistics[radio.station.name].time = parseInt(radio.currentGuild.statistics[radio.station.name].time)+parseInt(radio.connection.dispatcher.streamTime.toFixed(0));
-    }
+    let date = new Date();
+    radio.currentTime = date.getTime();
+    radio.playTime = parseInt(radio.currentTime)-parseInt(radio.startTime);
+    radio.currentGuild.statistics[radio.station.name].time = parseInt(radio.currentGuild.statistics[radio.station.name].time)+parseInt(radio.playTime);
     
     radio.currentGuild.statistics[radio.station.name].used = parseInt(radio.currentGuild.statistics[radio.station.name].used)+1;
     client.datastore.updateEntry(guild, radio.currentGuild);
