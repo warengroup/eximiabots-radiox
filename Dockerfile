@@ -14,4 +14,6 @@ RUN npm install -g npm
 
 RUN npm install
 
+RUN npm build
+
 CMD [ "npm", "start" ]
