@@ -1,4 +1,4 @@
-module.exports = function (client, msg, command) {
+module.exports = function (client, interaction, command) {
     let message = {};
     const radio = client.radio.get(interaction.guild.id);
     const permissions = interaction.channel.permissionsFor(interaction.user);
