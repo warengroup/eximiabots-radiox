@@ -113,7 +113,7 @@ module.exports = {
             construct.connection = connection;
             let date = new Date();
             construct.startTime = date.getTime();
-            play(interaction.guild, client, url);
+            play(interaction, interaction.guild, client, url);
 
             client.datastore.checkEntry(interaction.guild.id);
             construct.currentGuild = client.datastore.getEntry(interaction.guild.id);
@@ -131,7 +131,7 @@ module.exports = {
         }
     }
 };
-function play(guild, client, url) {
+function play(interaction, guild, client, url) {
     let message = {};
     const radio = client.radio.get(guild.id);
     const resource = createAudioResource(url);
@@ -152,11 +152,11 @@ function play(guild, client, url) {
             console.error(error);
             radio.connection.destroy();
             client.radio.delete(guild.id);
-            return radio.textChannel.send(client.messages.errorPlaying);
+            return interaction.reply(client.messages.errorPlaying);
         });
 
     message.play = client.messages.play.replace("%radio.station.name%", radio.station.name);
-    radio.textChannel.send(client.messageEmojis["play"] + message.play);
+    interaction.reply(client.messageEmojis["play"] + message.play);
 }
 
 function searchStation(key, client) {
