@@ -1,7 +1,8 @@
 module.exports = {
     name: 'message',
     async execute(client, msg, Discord) {
-        if (msg.author.bot || !msg.guild) return;
+        return;
+        /*if (msg.author.bot || !msg.guild) return;
         let prefix = client.config.prefix;
         if(msg.mentions.members.first()){
             if(msg.mentions.members.first().user.id === client.user.id){
@@ -22,6 +23,6 @@ module.exports = {
         } catch (error) {
             msg.reply(client.messages.runningCommandFailed);
             console.error(error);
-        }
+        }*/
     }
 }
