@@ -1,3 +1,5 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
 module.exports = {
     name: 'help',
     alias: 'h',
@@ -5,11 +7,14 @@ module.exports = {
     description: 'Get help using bot',
     permission: 'none',
     category: 'info',
-    execute(msg, args, client, Discord, command) {
+    data: new SlashCommandBuilder()
+        .setName('help')
+        .setDescription('Get help using bot'),
+    execute(interaction, client, Discord, command) {
         let message = {};
 
         if (args[1]) {
-            if (!client.commands.has(args[1]) || (client.commands.has(args[1]) && client.commands.get(args[1]).omitFromHelp === true)) return msg.channel.send('That command does not exist');
+            if (!client.commands.has(args[1]) || (client.commands.has(args[1]) && client.commands.get(args[1]).omitFromHelp === true)) return interaction.reply('That command does not exist');
             const command = client.commands.get(args[1]);
 
             message.helpCommandTitle = client.messages.helpCommandTitle.replace("%client.config.prefix%", client.config.prefix);
@@ -24,7 +29,7 @@ module.exports = {
                 .setColor(client.config.embedColor)
                 .setDescription(message.helpCommandDescription)
                 .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-            msg.channel.send({ embeds: [embed] });
+            interaction.reply({ embeds: [embed] });
         } else {
             const categories = [];
             for (let i = 0; i < client.commands.size; i++) {
@@ -45,7 +50,7 @@ module.exports = {
                 .setColor(client.config.embedColor)
                 .setDescription(message.helpDescription)
                 .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-            msg.channel.send({ embeds: [embed] });
+            interaction.reply({ embeds: [embed] });
         }
     }
 };

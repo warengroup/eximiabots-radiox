@@ -1,3 +1,5 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
 module.exports = {
     name: 'nowplaying',
     alias: 'np',
@@ -5,13 +7,16 @@ module.exports = {
     description: 'Current Radio Station',
     permission: 'none',
     category: 'radio',
-    async execute(msg, args, client, Discord, command) {
+    data: new SlashCommandBuilder()
+        .setName('nowplaying')
+        .setDescription('Current Radio Station'),
+    async execute(interaction, client, Discord, command) {
         let message = {};
-        const radio = client.radio.get(msg.guild.id);
-        if (!radio) return msg.channel.send('There is nothing playing.');
+        const radio = client.radio.get(interaction.guild.id);
+        if (!radio) return interaction.reply('There is nothing playing.');
 		if(!client.stations) {
 			message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
-			return msg.channel.send(client.messageEmojis["error"] + message.errorToGetPlaylist);
+			return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
 		}
         const completed = (radio.connection.dispatcher.streamTime.toFixed(0));
 
@@ -25,6 +30,6 @@ module.exports = {
             .setColor(client.config.embedColor)
             .setDescription(message.nowplayingDescription)
             .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-        return msg.channel.send({ embeds: [embed] });
+        return interaction.reply({ embeds: [embed] });
     }
 };

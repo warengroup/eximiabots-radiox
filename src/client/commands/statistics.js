@@ -1,3 +1,5 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
 module.exports = {
     name: 'statistics',
     alias: 'stats',
@@ -5,15 +7,18 @@ module.exports = {
     description: 'Show usage statistics.',
     permission: 'none',
     category: 'info',
-    execute(msg, args, client, Discord, command) {
+    data: new SlashCommandBuilder()
+        .setName('statistics')
+        .setDescription('Show usage statistics.'),
+    execute(interaction, client, Discord, command) {
         let message = {};
         let stations = client.stations;
-        let currentGuild = client.datastore.getEntry(msg.guild.id);
+        let currentGuild = client.datastore.getEntry(interaction.guild.id);
         let statistics = "";
         
 		if(!client.stations) {
 			message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
-			return msg.channel.send(client.messageEmojis["error"] + message.errorToGetPlaylist);
+			return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
 		}
 
         if(!currentGuild || currentGuild && !currentGuild.statistics){
@@ -34,6 +39,6 @@ module.exports = {
             .setColor(client.config.embedColor)
             .setDescription(statistics)
             .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-        return msg.channel.send({ embeds: [embed] });
+        return interaction.reply({ embeds: [embed] });
     }
 };

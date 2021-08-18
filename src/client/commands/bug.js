@@ -1,3 +1,5 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
 module.exports = {
     name: 'bug',
     alias: 'none',
@@ -5,7 +7,10 @@ module.exports = {
     description: 'Report a bug',
     permission: 'none',
     category: 'info',
-    async execute(msg, args, client, Discord, command) {
+    data: new SlashCommandBuilder()
+		.setName('bug')
+		.setDescription('Report a bug'),
+    async execute(interaction, client, Discord, command) {
         let message = {};
 
         message.bugTitle = client.messages.bugTitle.replace("%client.user.username%", client.user.username);
@@ -17,7 +22,7 @@ module.exports = {
             .setColor(client.config.embedColor)
             .setDescription(message.bugDescription)
             .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-        msg.channel.send({ embeds: [embed] });
+        interaction.reply({ embeds: [embed] });
 
     }
 };

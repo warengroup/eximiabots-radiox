@@ -4,28 +4,37 @@ const {
     getVoiceConnection,
     joinVoiceChannel
 } = require("@discordjs/voice");
+const { SlashCommandBuilder } = require('@discordjs/builders');
 const { createDiscordJSAdapter } = require("../utils/adapter");
 
 module.exports = {
     name: "play",
     alias: "p",
     usage: "<song name>",
-    description: "Play some music.",
+    description: "Play radio.",
     permission: "none",
     category: "radio",
-    async execute(msg, args, client, Discord, command) {
+    data: new SlashCommandBuilder()
+        .setName('play')
+        .setDescription('Play radio.')
+        .addStringOption(option =>
+            option.setName('query')
+                .setDescription('Select station')
+                .setRequired(true)),
+    async execute(interaction, client, Discord, command) {
         let message = {};
-        let url = args[1] ? args[1].replace(/<(.+)>/g, "$1") : "";
-        const radio = client.radio.get(msg.guild.id);
-        const voiceChannel = msg.member.voice.channel;
+        let query = interaction.options.getString("query");
+        let url = query ? query.replace(/<(.+)>/g, "$1") : "";
+        const radio = client.radio.get(interaction.guild.id);
+        const voiceChannel = interaction.member.voice.channel;
         if (!radio) {
-            if (!msg.member.voice.channel)
-                return msg.channel.send(
+            if (!interaction.member.voice.channel)
+                return interaction.reply(
                     client.messageEmojis["error"] + client.messages.noVoiceChannel
                 );
         } else {
             if (voiceChannel !== radio.voiceChannel)
-                return msg.channel.send(
+                return interaction.reply(
                     client.messageEmojis["error"] + client.messages.wrongVoiceChannel
                 );
         }
@@ -34,25 +43,25 @@ module.exports = {
                 "%client.config.supportGuild%",
                 client.config.supportGuild
             );
-            return msg.channel.send(client.messageEmojis["error"] + message.errorToGetPlaylist);
+            return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
         }
-        if (!args[1]) return msg.channel.send(client.messages.noQuery);
-        const permissions = voiceChannel.permissionsFor(msg.client.user);
+        if (!query) return interaction.reply(client.messages.noQuery);
+        const permissions = voiceChannel.permissionsFor(interaction.client.user);
         if (!permissions.has("CONNECT")) {
-            return msg.channel.send(client.messageEmojis["error"] + client.messages.noPermsConnect);
+            return interaction.reply(client.messageEmojis["error"] + client.messages.noPermsConnect);
         }
         if (!permissions.has("SPEAK")) {
-            return msg.channel.send(client.messageEmojis["error"] + client.messages.noPermsSpeak);
+            return interaction.reply(client.messageEmojis["error"] + client.messages.noPermsSpeak);
         }
         let station;
-        const number = parseInt(args[1] - 1);
+        const number = parseInt(query - 1);
         if (url.startsWith("http")) {
-            return msg.channel.send(
+            return interaction.reply(
                 client.messageEmojis["error"] + client.messages.errorStationURL
             );
         } else if (!isNaN(number)) {
             if (number > client.stations.length - 1) {
-                return msg.channel.send(
+                return interaction.reply(
                     client.messageEmojis["error"] + client.messages.wrongStationNumber
                 );
             } else {
@@ -60,13 +69,13 @@ module.exports = {
                 station = client.stations[number];
             }
         } else {
-            if (args[1].length < 3)
-                return msg.channel.send(
+            if (query.length < 3)
+                return interaction.reply(
                     client.messageEmojis["error"] + client.messages.tooShortSearch
                 );
-            const sstation = await searchStation(args.slice(1).join(" "), client);
+            const sstation = await searchStation(query.slice(1), client);
             if (!sstation)
-                return msg.channel.send(
+                return interaction.reply(
                     client.messageEmojis["error"] + client.messages.noSearchResults
                 );
             url = sstation.stream[sstation.stream.default];
@@ -74,24 +83,24 @@ module.exports = {
         }
 
         if (radio) {
-            client.funcs.statisticsUpdate(client, msg.guild, radio);
+            client.funcs.statisticsUpdate(client, interaction.guild, radio);
             radio.audioPlayer.stop();
             
             radio.station = station;
-            radio.textChannel = msg.channel;
-            play(msg.guild, client, url);
+            radio.textChannel = interaction.channel;
+            play(interaction.guild, client, url);
 
             return;
         }
 
         const construct = {
-            textChannel: msg.channel,
+            textChannel: interaction.channel,
             voiceChannel: voiceChannel,
             connection: null,
             audioPlayer: createAudioPlayer(),
             station: station
         };
-        client.radio.set(msg.guild.id, construct);
+        client.radio.set(interaction.guild.id, construct);
 
         try {
             const connection =
@@ -104,21 +113,21 @@ module.exports = {
             construct.connection = connection;
             let date = new Date();
             construct.startTime = date.getTime();
-            play(msg.guild, client, url);
+            play(interaction.guild, client, url);
 
-            client.datastore.checkEntry(msg.guild.id);
-            construct.currentGuild = client.datastore.getEntry(msg.guild.id);
+            client.datastore.checkEntry(interaction.guild.id);
+            construct.currentGuild = client.datastore.getEntry(interaction.guild.id);
 
             if (!construct.currentGuild.statistics[construct.station.name]) {
                 construct.currentGuild.statistics[construct.station.name] = {};
                 construct.currentGuild.statistics[construct.station.name].time = 0;
                 construct.currentGuild.statistics[construct.station.name].used = 0;
-                client.datastore.updateEntry(msg.guild, construct.currentGuild);
+                client.datastore.updateEntry(interaction.guild, construct.currentGuild);
             }
         } catch (error) {
             console.log(error);
-            client.radio.delete(msg.guild.id);
-            return msg.channel.send(client.messageEmojis["error"] + `An error occured: ${error}`);
+            client.radio.delete(interaction.guild.id);
+            return interaction.reply(client.messageEmojis["error"] + `An error occured: ${error}`);
         }
     }
 };

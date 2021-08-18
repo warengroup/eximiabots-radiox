@@ -1,3 +1,5 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
 module.exports = {
     name: 'maintenance',
     alias: 'm',
@@ -5,14 +7,17 @@ module.exports = {
     description: 'Bot Maintenance',
     permission: 'none',
     category: 'info',
-    execute(msg, args, client, Discord, command) {
+    data: new SlashCommandBuilder()
+        .setName('maintenance')
+        .setDescription('Bot Maintenance'),
+    execute(interaction, client, Discord, command) {
         let message = {};
 
-        if(!client.funcs.isDev(client.config.devId, msg.author.id)) return msg.channel.send(client.messageEmojis["error"] + client.messages.notAllowed);
+        if(!client.funcs.isDev(client.config.devId, interaction.user.id)) return interaction.reply(client.messageEmojis["error"] + client.messages.notAllowed);
 
         if(!client.stations) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
-            return msg.channel.send(client.messageEmojis["error"] + message.errorToGetPlaylist);
+            return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
         }
         
         let currentRadios = client.radio.keys();
@@ -48,6 +53,6 @@ module.exports = {
         .setColor(client.config.embedColor)
         .setDescription("Stopped all radios" + "\n" + stoppedRadios)
         .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-        return msg.channel.send({ embeds: [embed] });
+        return interaction.reply({ embeds: [embed] });
     }
 };
