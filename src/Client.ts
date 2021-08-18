@@ -11,12 +11,10 @@ const GatewayIntents = new Discord.Intents();
 GatewayIntents.add(
     1 << 0, // GUILDS
     1 << 7, // GUILD_VOICE_STATES
-    1 << 9 // GUILD_MESSAGES
 );
 
 class RadioClient extends Client {
     readonly commands: Collection<string, command>;
-    readonly commandAliases: Collection<string, command>;
     readonly radio: Map<string, radio>;
     public funcs: any;
     readonly config = config;
@@ -27,7 +25,6 @@ class RadioClient extends Client {
             intents: GatewayIntents
         });
         this.commands = new Collection();
-        this.commandAliases = new Collection();
         this.radio = new Map();
         this.datastore = null;
 
@@ -41,17 +38,15 @@ class RadioClient extends Client {
         const commandFiles = fs.readdirSync(path.join("./src/client/commands")).filter(f => f.endsWith(".js"));
         for (const file of commandFiles) {
             const command = require(`./client/commands/${file}`);
-            command.uses = 0;
             this.commands.set(command.name, command);
-            this.commandAliases.set(command.alias, command);
         }
 
         this.on("ready", () => {
             require(`${events}ready`).execute(this, Discord);
             this.datastore = new Datastore();
         });
-        this.on("messageCreate", msg => {
-            require(`${events}msg`).execute(this, msg, Discord);
+        this.on("interactionCreate", interaction => {
+            require(`${events}interactionCreate`).execute(this, interaction, Discord);
         });
         this.on("voiceStateUpdate", (oldState, newState) => {
             require(`${events}voiceStateUpdate`).execute(this, oldState, newState);
