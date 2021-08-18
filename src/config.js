@@ -21,6 +21,7 @@ module.exports = {
 
     //Settings
     prefix: process.env.RADIOX_PREFIX || "rx-",
-    version: process.env.RADIOX_VERSION || process.env.npm_package_version
+    version: process.env.RADIOX_VERSION || process.env.npm_package_version,
+    debug: process.env.DEBUG_MODE || false
 
 }
