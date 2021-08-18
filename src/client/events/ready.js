@@ -44,5 +44,7 @@ module.exports = {
         client.datastore.calculateGlobal(client);
         require(`../emojis.js`).execute(client);
 
+        require(`../commands.js`).execute(client.user.id);
+
     }
 }
