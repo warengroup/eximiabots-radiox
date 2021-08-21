@@ -16,6 +16,7 @@ module.exports = {
 
             if (newState.channel === null) {
                 client.funcs.statisticsUpdate(client, newState.guild, radio);
+                radio.connection = null;
                 radio.audioPlayer?.stop();
                 return client.radio.delete(newState.guild.id);
             }

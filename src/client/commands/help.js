@@ -32,8 +32,9 @@ module.exports = {
             interaction.reply({ embeds: [embed] });
         } else {
             const categories = [];
+            let commandsToArray = Array.from(client.commands.values());
             for (let i = 0; i < client.commands.size; i++) {
-                if (!categories.includes(client.commands.array()[i].category)) categories.push(client.commands.array()[i].category);
+                if (!categories.includes(commandsToArray[i].category)) categories.push(commandsToArray[i].category);
             }
             let commands = '';
             for (let i = 0; i < categories.length; i++) {
