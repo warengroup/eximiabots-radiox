@@ -4,7 +4,7 @@ module.exports = {
     name: 'ready',
     async execute(client, Discord) {
 
-        console.log('RadioX');
+        console.log('RadioX ' + client.config.version);
         console.log('Internet Radio to your Discord guild');
         console.log('(c)2020-2021 EximiaBots by Warén Group');
 
