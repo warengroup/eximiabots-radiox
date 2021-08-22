@@ -21,19 +21,25 @@ module.exports = {
         }
 
         try {
+            client.funcs.logger('Stations', 'Started fetching list – ' + client.config.stationslistUrl);
             client.stations = await fetch(client.config.stationslistUrl)
                 .then(client.funcs.checkFetchStatus)
                 .then(response => response.json());
+            client.funcs.logger('Stations', 'Successfully fetched list' + "\n");
         } catch (error) {
-            //console.error(error);
+            client.funcs.logger('Stations', ' Fetching list failed');
+            console.error(error + "\n");
         }
         
         setInterval(async () => {
             try {
+                client.funcs.logger('Stations' + 'Started fetching list – ' + client.config.stationslistUrl);
                 client.stations = await fetch(client.config.stationslistUrl)
                     .then(client.funcs.checkFetchStatus)
                     .then(response => response.json());
+                console.log('Stations', 'Successfully fetched list' + "\n");
             } catch (error) {
+                client.funcs.logger('Stations', 'Fetching list failed');
                 //console.error(error);
             }
         }, 3600000);
