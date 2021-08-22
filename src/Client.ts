@@ -5,7 +5,7 @@ import Datastore from "./client/datastore.js";
 import { command, radio } from "./client/utils/typings.js";
 import config from "./config.js";
 import messages from "./client/messages.js";
-import path from "path"
+import path from "path";
 
 const GatewayIntents = new Discord.Intents();
 GatewayIntents.add(
@@ -32,6 +32,7 @@ class RadioClient extends Client {
         this.funcs.check = require("./client/funcs/check.js");
         this.funcs.checkFetchStatus = require("./client/funcs/checkFetchStatus.js");
         this.funcs.isDev = require("./client/funcs/isDev.js");
+        this.funcs.logger = require("./client/funcs/logger.js");
         this.funcs.msToTime = require("./client/funcs/msToTime.js");
         this.funcs.statisticsUpdate = require("./client/funcs/statisticsUpdate.js");
 
