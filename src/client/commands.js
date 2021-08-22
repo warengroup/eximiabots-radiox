@@ -18,7 +18,7 @@ module.exports = {
 
         (async () => {
             try {
-                console.log('[Slash Commands] Started refreshing application (/) commands.');
+                client.funcs.logger('Slash Commands', 'Started refreshing application (/) commands.');
 
                 if(version.includes("-dev")){
                     await rest.put(
@@ -44,9 +44,9 @@ module.exports = {
                     );
                 }
 
-                console.log('[Slash Commands] Successfully reloaded application (/) commands.' + "\n");
+                client.funcs.logger('Slash Commands', 'Successfully reloaded application (/) commands.' + "\n");
             } catch (error) {
-                console.log('[Slash Commands] Reloading application (/) commands failed.' + "\n");
+                client.funcs.logger('Slash Commands', 'Reloading application (/) commands failed.' + "\n");
                 console.error(error);
             }
         })();
