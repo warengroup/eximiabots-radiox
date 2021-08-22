@@ -13,7 +13,7 @@ module.exports = {
     execute(interaction, client, Discord, command) {
         let message = {};
 
-        if (args[1]) {
+        /*if (args[1]) {
             if (!client.commands.has(args[1]) || (client.commands.has(args[1]) && client.commands.get(args[1]).omitFromHelp === true)) return interaction.reply('That command does not exist');
             const command = client.commands.get(args[1]);
 
@@ -30,7 +30,7 @@ module.exports = {
                 .setDescription(message.helpCommandDescription)
                 .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
             interaction.reply({ embeds: [embed] });
-        } else {
+        } else {*/
             const categories = [];
             let commandsToArray = Array.from(client.commands.values());
             for (let i = 0; i < client.commands.size; i++) {
@@ -52,6 +52,6 @@ module.exports = {
                 .setDescription(message.helpDescription)
                 .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
             interaction.reply({ embeds: [embed] });
-        }
+        /*}*/
     }
 };
