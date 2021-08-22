@@ -140,10 +140,10 @@ function play(interaction, guild, client, url) {
     radio.audioPlayer.play(resource);
     resource.playStream
         .on("readable", () => {
-            console.log("[Radio] Stream started" + " / " + guild.id + " / " + radio.station.name);
+            client.funcs.logger('Radio', 'Stream started' + " / " + guild.id + " / " + radio.station.name);
         })
         .on("finish", () => {
-            console.log("[Radio] Stream finished" + " / " + guild.id);
+            client.funcs.logger('Radio', 'Stream finished' + " / " + guild.id);
             client.funcs.statisticsUpdate(client, guild, radio);
             radio.connection?.destroy();
             radio.audioPlayer?.stop();
@@ -151,7 +151,7 @@ function play(interaction, guild, client, url) {
             return;
         })
         .on("error", error => {
-            console.log("[Radio] Stream errored");
+            client.funcs.logger('Radio', 'Stream errored');
             console.error(error);
             radio.connection?.destroy();
             radio.audioPlayer?.stop();
