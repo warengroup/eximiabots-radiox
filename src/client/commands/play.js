@@ -88,7 +88,7 @@ module.exports = {
             
             radio.station = station;
             radio.textChannel = interaction.channel;
-            play(interaction.guild, client, url);
+            play(interaction, interaction.guild, client, url);
 
             return;
         }
@@ -131,6 +131,7 @@ module.exports = {
         }
     }
 };
+
 function play(interaction, guild, client, url) {
     let message = {};
     const radio = client.radio.get(guild.id);
@@ -139,18 +140,21 @@ function play(interaction, guild, client, url) {
     radio.audioPlayer.play(resource);
     resource.playStream
         .on("readable", () => {
-            console.log("Stream started");
+            console.log("[Radio] Stream started" + " / " + guild.id + " / " + radio.station.name);
         })
         .on("finish", () => {
-            console.log("Stream finished");
+            console.log("[Radio] Stream finished" + " / " + guild.id);
             client.funcs.statisticsUpdate(client, guild, radio);
-            radio.connection.destroy();
+            radio.connection?.destroy();
+            radio.audioPlayer?.stop();
             client.radio.delete(guild.id);
             return;
         })
         .on("error", error => {
+            console.log("[Radio] Stream errored");
             console.error(error);
-            radio.connection.destroy();
+            radio.connection?.destroy();
+            radio.audioPlayer?.stop();
             client.radio.delete(guild.id);
             return interaction.reply(client.messages.errorPlaying);
         });

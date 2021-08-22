@@ -7,6 +7,7 @@ module.exports = {
         console.log('RadioX ' + client.config.version);
         console.log('Internet Radio to your Discord guild');
         console.log('(c)2020-2021 EximiaBots by Warén Group');
+        console.log('');
 
         client.developers = "";
         let user = "";
@@ -24,7 +25,7 @@ module.exports = {
                 .then(client.funcs.checkFetchStatus)
                 .then(response => response.json());
         } catch (error) {
-            console.error(error);
+            //console.error(error);
         }
         
         setInterval(async () => {
@@ -33,7 +34,7 @@ module.exports = {
                     .then(client.funcs.checkFetchStatus)
                     .then(response => response.json());
             } catch (error) {
-                console.error(error);
+                //console.error(error);
             }
         }, 3600000);
 
