@@ -16,6 +16,7 @@ module.exports = {
             client.funcs.statisticsUpdate(client, interaction.guild, radio);
 			radio.connection?.destroy();
 			radio.audioPlayer?.stop();
+			client.funcs.logger('Radio', 'Stream stopped' + " / " + interaction.guild.id);
 			client.radio.delete(interaction.guild.id);
 			interaction.reply(client.messageEmojis["stop"] + client.messages.stop);
 		}
