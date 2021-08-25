@@ -27,7 +27,7 @@ module.exports = {
             Object.keys(stations).forEach(function(station) {
                 if(currentGuild.statistics[stations[station].name] && currentGuild.statistics[stations[station].name].time && parseInt(currentGuild.statistics[stations[station].name].time) > 0 && currentGuild.statistics[stations[station].name].used && parseInt(currentGuild.statistics[stations[station].name].used) > 0){
                     statistics += `**${parseInt(station) + 1}** ` + stations[station].name + " \n";
-                    statistics += "Time: " + client.funcs.msToTime(currentGuild.statistics[stations[station].name].time, "dd:hh:mm:ss") + "\n";
+                    statistics += "Time: " + client.funcs.msToTime(currentGuild.statistics[stations[station].name].time) + "\n";
                     statistics += "Used: " + currentGuild.statistics[stations[station].name].used + "\n";
                 }
             });

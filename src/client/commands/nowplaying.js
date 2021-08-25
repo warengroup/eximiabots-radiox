@@ -22,7 +22,7 @@ module.exports = {
 
         message.nowplayingDescription = client.messages.nowplayingDescription.replace("%radio.station.name%", radio.station.name);
         message.nowplayingDescription = message.nowplayingDescription.replace("%radio.station.owner%", radio.station.owner);
-        message.nowplayingDescription = message.nowplayingDescription.replace("%client.funcs.msToTime(completed, \"hh:mm:ss\")%", client.funcs.msToTime(completed, "hh:mm:ss"));
+        message.nowplayingDescription = message.nowplayingDescription.replace("%client.funcs.msToTime(completed)%", client.funcs.msToTime(completed));
 
         const embed = new Discord.MessageEmbed()
             .setTitle(client.messages.nowplayingTitle)
