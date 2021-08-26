@@ -7,10 +7,10 @@ module.exports = {
     category: 'radio',
     execute(interaction, client, Discord, command) {
         let message = {};
-		if(!client.stations) {
-			message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
-			return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
-		}
+        if(!client.stations) {
+            message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
+            return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
+        }
         let stations = `${client.stations.map(s => `**#** ${s.name}`).join('\n')}`
         const hashs = stations.split('**#**').length;
         for (let i = 0; i < hashs; i++) {

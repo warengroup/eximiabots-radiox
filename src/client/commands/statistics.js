@@ -11,10 +11,10 @@ module.exports = {
         let currentGuild = client.datastore.getEntry(interaction.guild.id);
         let statistics = "";
         
-		if(!client.stations) {
-			message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
-			return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
-		}
+        if(!client.stations) {
+            message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
+            return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
+        }
 
         if(!currentGuild || currentGuild && !currentGuild.statistics){
             statistics = "You have not listened any radio station";
