@@ -13,7 +13,11 @@ module.exports = {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
             return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
         }
-        const completed = (radio.connection.dispatcher.streamTime.toFixed(0));
+
+        let date = new Date();
+        radio.currentTime = date.getTime();
+        radio.playTime = parseInt(radio.currentTime)-parseInt(radio.startTime);
+        const completed = (radio.playTime);
 
         message.nowplayingDescription = client.messages.nowplayingDescription.replace("%radio.station.name%", radio.station.name);
         message.nowplayingDescription = message.nowplayingDescription.replace("%radio.station.owner%", radio.station.owner);
