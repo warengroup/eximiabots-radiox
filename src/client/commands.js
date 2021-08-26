@@ -15,8 +15,16 @@ module.exports = {
             command.data = new SlashCommandBuilder()
                 .setName(command.name)
                 .setDescription(command.description);
-            if(command.options) command.data.options = command.options;
-            commands.push(command.data.toJSON());
+            
+            command.data = command.data.toJSON();
+            if(command.options) {
+                command.options.forEach(function(option) {
+                    if(option.type == "STRING") option.type = 3;
+                    command.data.options.push(option);
+                });
+            }
+
+            commands.push(command.data);
         }
 
         const rest = new REST({ version: '9' }).setToken(token);
