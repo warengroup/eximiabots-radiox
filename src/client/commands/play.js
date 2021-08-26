@@ -76,7 +76,7 @@ module.exports = {
                     content: client.messageEmojis["error"] + client.messages.tooShortSearch,
                     ephemeral: true
                 });
-            const sstation = await searchStation(query.slice(1), client);
+            const sstation = await searchStation(query, client);
             if (!sstation)
                 return interaction.reply({
                     content: client.messageEmojis["error"] + client.messages.noSearchResults,
