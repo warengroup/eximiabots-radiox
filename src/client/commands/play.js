@@ -24,21 +24,26 @@ module.exports = {
         const voiceChannel = interaction.member.voice.channel;
         if (!radio) {
             if (!interaction.member.voice.channel)
-                return interaction.reply(
-                    client.messageEmojis["error"] + client.messages.noVoiceChannel
-                );
+                return interaction.reply({
+                    content: client.messageEmojis["error"] + client.messages.noVoiceChannel,
+                    ephemeral: true
+                });
         } else {
             if (voiceChannel !== radio.voiceChannel)
-                return interaction.reply(
-                    client.messageEmojis["error"] + client.messages.wrongVoiceChannel
-                );
+                return interaction.reply({
+                    content: client.messageEmojis["error"] + client.messages.wrongVoiceChannel,
+                    ephemeral: true
+                });
         }
         if (!client.stations) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace(
                 "%client.config.supportGuild%",
                 client.config.supportGuild
             );
-            return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
+            return interaction.reply({
+                content: client.messageEmojis["error"] + message.errorToGetPlaylist,
+                ephemeral: true
+            });
         }
         if (!query) return interaction.reply(client.messages.noQuery);
         const permissions = voiceChannel.permissionsFor(interaction.client.user);
@@ -51,28 +56,32 @@ module.exports = {
         let station;
         const number = parseInt(query - 1);
         if (url.startsWith("http")) {
-            return interaction.reply(
-                client.messageEmojis["error"] + client.messages.errorStationURL
-            );
+            return interaction.reply({
+                content: client.messageEmojis["error"] + client.messages.errorStationURL,
+                ephemeral: true
+            });
         } else if (!isNaN(number)) {
             if (number > client.stations.length - 1) {
-                return interaction.reply(
-                    client.messageEmojis["error"] + client.messages.wrongStationNumber
-                );
+                return interaction.reply({
+                    content: client.messageEmojis["error"] + client.messages.wrongStationNumber,
+                    ephemeral: true
+                });
             } else {
                 url = client.stations[number].stream[client.stations[number].stream.default];
                 station = client.stations[number];
             }
         } else {
             if (query.length < 3)
-                return interaction.reply(
-                    client.messageEmojis["error"] + client.messages.tooShortSearch
-                );
+                return interaction.reply({
+                    content: client.messageEmojis["error"] + client.messages.tooShortSearch,
+                    ephemeral: true
+                });
             const sstation = await searchStation(query.slice(1), client);
             if (!sstation)
-                return interaction.reply(
-                    client.messageEmojis["error"] + client.messages.noSearchResults
-                );
+                return interaction.reply({
+                    content: client.messageEmojis["error"] + client.messages.noSearchResults,
+                    ephemeral: true
+                });
             url = sstation.stream[sstation.stream.default];
             station = sstation;
         }
@@ -163,7 +172,15 @@ function searchStation(key, client) {
     let foundStations = [];
     if (!key) return false;
     if (key == "radio") return false;
-    if (key.startsWith("radio ")) key = key.slice(6);
+    /*client.stations
+        .filter(
+            x => x.name.toUpperCase().includes(key.toUpperCase()) || x === key
+        )
+        .forEach(x =>
+            foundStations.push({ station: x, name: x.name, probability: probabilityIncrement })
+        );*/
+
+    //if (key.startsWith("radio ")) key = key.slice(6);
     const probabilityIncrement = 100 / key.split(" ").length / 2;
     for (let i = 0; i < key.split(" ").length; i++) {
         client.stations
