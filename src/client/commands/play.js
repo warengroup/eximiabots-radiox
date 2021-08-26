@@ -4,7 +4,6 @@ const {
     getVoiceConnection,
     joinVoiceChannel
 } = require("@discordjs/voice");
-const { createDiscordJSAdapter } = require("../utils/adapter");
 
 module.exports = {
     name: "play",
@@ -92,7 +91,7 @@ module.exports = {
             
             radio.station = station;
             radio.textChannel = interaction.channel;
-            play(interaction, interaction.guild, client, url);
+            play(interaction, interaction.guild, client, url, Discord);
 
             return;
         }
@@ -101,6 +100,7 @@ module.exports = {
             textChannel: interaction.channel,
             voiceChannel: voiceChannel,
             connection: null,
+            message: null,
             audioPlayer: createAudioPlayer(),
             station: station
         };
@@ -112,12 +112,12 @@ module.exports = {
                 joinVoiceChannel({
                     channelId: voiceChannel.id,
                     guildId: voiceChannel.guild.id,
-                    adapterCreator: createDiscordJSAdapter(voiceChannel)
+                    adapterCreator: voiceChannel.guild.voiceAdapterCreator
                 });
             construct.connection = connection;
             let date = new Date();
             construct.startTime = date.getTime();
-            play(interaction, interaction.guild, client, url);
+            play(interaction, interaction.guild, client, url, Discord);
 
             client.datastore.checkEntry(interaction.guild.id);
             construct.currentGuild = client.datastore.getEntry(interaction.guild.id);
@@ -136,7 +136,7 @@ module.exports = {
     }
 };
 
-function play(interaction, guild, client, url) {
+async function play(interaction, guild, client, url, Discord) {
     let message = {};
     const radio = client.radio.get(guild.id);
     const resource = createAudioResource(url);
@@ -163,8 +163,32 @@ function play(interaction, guild, client, url) {
             return interaction.reply(client.messages.errorPlaying);
         });
 
-    message.play = client.messages.play.replace("%radio.station.name%", radio.station.name);
-    interaction.reply(client.messageEmojis["play"] + message.play);
+    message.nowplayingDescription = client.messages.nowplayingDescription.replace("%radio.station.name%", radio.station.name);
+    message.nowplayingDescription = message.nowplayingDescription.replace("%radio.station.owner%", radio.station.owner);
+    message.nowplayingDescription = message.nowplayingDescription.replace("%client.funcs.msToTime(completed)%", "--:--");
+
+    const embed = new Discord.MessageEmbed()
+        .setTitle("RadioX")
+        .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["play"].replace(/[^0-9]+/g, ''))
+        .setColor(client.config.embedColor)
+        .setDescription(message.nowplayingDescription)
+        .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
+    
+    if(!radio.message){
+        radio.message = await radio.textChannel.send({ embeds: [embed] });
+    } else {
+        radio.message.edit({ embeds: [embed] });
+    }
+
+    setTimeout(function() {
+        message.play = client.messages.play.replace("%radio.station.name%", radio.station.name);
+    
+        interaction.reply({
+            content: client.messageEmojis["play"] + message.play,
+            ephemeral: true
+        });
+    }, 1500)
+    
 }
 
 function searchStation(key, client) {
