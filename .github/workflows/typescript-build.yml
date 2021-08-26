@@ -13,8 +13,6 @@ jobs:
       uses: actions/setup-node@v2.3.1
       with:
         node-version: 16
-    - name: npm install -g npm
-      run: npm install -g npm
     - name: npm install
       run: npm install
     - name: tsc
