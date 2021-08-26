@@ -1,15 +1,10 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-
 module.exports = {
 	name: 'stop',
-	description: 'Stop radio.',
+	description: 'Stop radio',
 	alias: 's',
 	usage: '',
 	permission: 'none',
 	category: 'radio',
-	data: new SlashCommandBuilder()
-		.setName('stop')
-		.setDescription('Stop radio.'),
 	execute(interaction, client, Discord, command) {
 		const radio = client.radio.get(interaction.guild.id);
 		if (client.funcs.check(client, interaction, command)) {

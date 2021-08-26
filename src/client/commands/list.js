@@ -1,15 +1,10 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-
 module.exports = {
     name: 'list',
     alias: 'l',
     usage: '',
-    description: 'List radio stations.',
+    description: 'List radio stations',
     permission: 'none',
     category: 'radio',
-    data: new SlashCommandBuilder()
-        .setName('list')
-        .setDescription('List radio stations.'),
     execute(interaction, client, Discord, command) {
         let message = {};
 		if(!client.stations) {

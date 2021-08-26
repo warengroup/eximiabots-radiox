@@ -1,15 +1,10 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-
 module.exports = {
     name: 'statistics',
     alias: 'stats',
     usage: '',
-    description: 'Show usage statistics.',
+    description: 'Show statistics',
     permission: 'none',
     category: 'info',
-    data: new SlashCommandBuilder()
-        .setName('statistics')
-        .setDescription('Show usage statistics.'),
     execute(interaction, client, Discord, command) {
         let message = {};
         let stations = client.stations;

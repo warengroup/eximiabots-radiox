@@ -1,5 +1,3 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-
 module.exports = {
     name: 'status',
     alias: 'st',
@@ -7,9 +5,6 @@ module.exports = {
     description: 'Bot Status',
     permission: 'none',
     category: 'info',
-    data: new SlashCommandBuilder()
-        .setName('status')
-        .setDescription('Bot Status'),
     async execute(interaction, client, Discord, command) {
         let message = {};
 

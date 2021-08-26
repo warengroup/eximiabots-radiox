@@ -1,5 +1,3 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-
 module.exports = {
     name: 'invite',
     alias: 'i',
@@ -7,9 +5,6 @@ module.exports = {
     description: 'Invite Bot',
     permission: 'none',
     category: 'info',
-    data: new SlashCommandBuilder()
-        .setName('invite')
-        .setDescription('Invite Bot'),
     execute(interaction, client, Discord, command) {
         let message = {};
         message.inviteTitle = client.messages.inviteTitle.replace("%client.user.username%", client.user.username);

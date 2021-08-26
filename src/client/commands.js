@@ -1,3 +1,4 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { token, version } = require('../config.js');
@@ -11,6 +12,10 @@ module.exports = {
 
         for (const file of commandFiles) {
             const command = require(`./commands/${file}`);
+            command.data = new SlashCommandBuilder()
+                .setName(command.name)
+                .setDescription(command.description);
+            if(command.options) command.data.options = command.options;
             commands.push(command.data.toJSON());
         }
 

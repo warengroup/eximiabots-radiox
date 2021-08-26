@@ -1,5 +1,3 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-
 module.exports = {
     name: 'bug',
     alias: 'none',
@@ -7,9 +5,6 @@ module.exports = {
     description: 'Report a bug',
     permission: 'none',
     category: 'info',
-    data: new SlashCommandBuilder()
-		.setName('bug')
-		.setDescription('Report a bug'),
     async execute(interaction, client, Discord, command) {
         let message = {};
 

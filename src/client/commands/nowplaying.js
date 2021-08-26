@@ -1,5 +1,3 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-
 module.exports = {
     name: 'nowplaying',
     alias: 'np',
@@ -7,9 +5,6 @@ module.exports = {
     description: 'Current Radio Station',
     permission: 'none',
     category: 'radio',
-    data: new SlashCommandBuilder()
-        .setName('nowplaying')
-        .setDescription('Current Radio Station'),
     async execute(interaction, client, Discord, command) {
         let message = {};
         const radio = client.radio.get(interaction.guild.id);

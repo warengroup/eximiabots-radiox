@@ -4,23 +4,18 @@ const {
     getVoiceConnection,
     joinVoiceChannel
 } = require("@discordjs/voice");
-const { SlashCommandBuilder } = require('@discordjs/builders');
 const { createDiscordJSAdapter } = require("../utils/adapter");
 
 module.exports = {
     name: "play",
     alias: "p",
     usage: "<song name>",
-    description: "Play radio.",
+    description: "Play radio",
+    options: [
+        { type: "STRING", name: "query", description: "Select station", required: true}
+    ],
     permission: "none",
     category: "radio",
-    data: new SlashCommandBuilder()
-        .setName('play')
-        .setDescription('Play radio.')
-        .addStringOption(option =>
-            option.setName('query')
-                .setDescription('Select station')
-                .setRequired(true)),
     async execute(interaction, client, Discord, command) {
         let message = {};
         let query = interaction.options.getString("query");

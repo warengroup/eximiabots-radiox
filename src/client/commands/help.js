@@ -1,5 +1,3 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-
 module.exports = {
     name: 'help',
     alias: 'h',
@@ -7,9 +5,6 @@ module.exports = {
     description: 'Get help using bot',
     permission: 'none',
     category: 'info',
-    data: new SlashCommandBuilder()
-        .setName('help')
-        .setDescription('Get help using bot'),
     execute(interaction, client, Discord, command) {
         let message = {};
 
