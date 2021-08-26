@@ -172,15 +172,16 @@ function searchStation(key, client) {
     let foundStations = [];
     if (!key) return false;
     if (key == "radio") return false;
-    /*client.stations
+
+    client.stations
         .filter(
             x => x.name.toUpperCase().includes(key.toUpperCase()) || x === key
         )
         .forEach(x =>
-            foundStations.push({ station: x, name: x.name, probability: probabilityIncrement })
-        );*/
+            foundStations.push({ station: x, name: x.name, probability: 100 })
+        );
 
-    //if (key.startsWith("radio ")) key = key.slice(6);
+    if (key.startsWith("radio ")) key = key.slice(6);
     const probabilityIncrement = 100 / key.split(" ").length / 2;
     for (let i = 0; i < key.split(" ").length; i++) {
         client.stations
