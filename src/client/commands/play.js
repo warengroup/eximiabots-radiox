@@ -168,10 +168,10 @@ async function play(interaction, guild, client, url, Discord) {
     message.nowplayingDescription = message.nowplayingDescription.replace("%client.funcs.msToTime(completed)%", "--:--");
 
     const embed = new Discord.MessageEmbed()
-        .setTitle("RadioX")
+        .setTitle(client.user.username)
         .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["play"].replace(/[^0-9]+/g, ''))
         .setColor(client.config.embedColor)
-        .setDescription(message.nowplayingDescription)
+        .addField(client.messages.nowplayingTitle, message.nowplayingDescription, true)
         .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
     
     if(!radio.message){
@@ -180,14 +180,12 @@ async function play(interaction, guild, client, url, Discord) {
         radio.message.edit({ embeds: [embed] });
     }
 
-    setTimeout(function() {
-        message.play = client.messages.play.replace("%radio.station.name%", radio.station.name);
+    message.play = client.messages.play.replace("%radio.station.name%", radio.station.name);
     
-        interaction.reply({
-            content: client.messageEmojis["play"] + message.play,
-            ephemeral: true
-        });
-    }, 1500)
+    interaction.reply({
+        content: client.messageEmojis["play"] + message.play,
+        ephemeral: true
+    });
     
 }
 
