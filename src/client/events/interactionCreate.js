@@ -1,6 +1,8 @@
+import Discord from "discord.js";
+
 module.exports = {
     name: 'interactionCreate',
-    async execute(client, interaction, Discord) {
+    async execute(client, interaction) {
         if (!interaction.isCommand()) return;
 
         const commandName = interaction.commandName;

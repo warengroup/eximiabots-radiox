@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 
 module.exports = {
     name: 'ready',
-    async execute(client, Discord) {
+    async execute(client) {
 
         console.log('RadioX ' + client.config.version);
         console.log('Internet Radio to your Discord guild');
