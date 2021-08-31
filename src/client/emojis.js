@@ -9,7 +9,9 @@ module.exports = {
             stop: "<:RadioXStop:688541155377414168>",
             statistics: "<:RadioXStatistics:694954485507686421>",
             maintenance: "<:RadioXMaintenance:695043843057254493>",
-            error: "<:RadioXError:688541155792781320>"
+            error: "<:RadioXError:688541155792781320>",
+            prev: "<:RadioXPrev:882153637370023957>",
+            next: "<:RadioXNext:882153637474893834>"
         };
 
         let fallbackEmojis = {
@@ -20,7 +22,9 @@ module.exports = {
             stop: "⏹️",
             statistics: "📊",
             maintenance: "🛠️",
-            error: "❌"
+            error: "❌",
+            prev: "⏪",
+            next: "⏩"
         };
 
         client.messageEmojis = {};
