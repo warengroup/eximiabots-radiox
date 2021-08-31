@@ -17,7 +17,7 @@ module.exports = {
     category: "radio",
     async execute(interaction, client, Discord, command) {
         let message = {};
-        let query = interaction.options.getString("query");
+        let query = interaction.options?.getString("query");
         let url = query ? query.replace(/<(.+)>/g, "$1") : "";
         const radio = client.radio.get(interaction.guild.id);
         const voiceChannel = interaction.member.voice.channel;
@@ -182,7 +182,6 @@ async function play(interaction, guild, client, url, Discord) {
                 .setCustomId('list')
                 .setEmoji(client.messageEmojis["list"])
                 .setStyle('PRIMARY')
-                .setDisabled(true)
         )
         .addComponents(
             new Discord.MessageButton()
@@ -193,10 +192,9 @@ async function play(interaction, guild, client, url, Discord) {
         )
         .addComponents(
             new Discord.MessageButton()
-                .setCustomId('play')
+                .setCustomId('stop')
                 .setEmoji(client.messageEmojis["stop"])
                 .setStyle('PRIMARY')
-                .setDisabled(true)
         )
         .addComponents(
             new Discord.MessageButton()
@@ -210,7 +208,6 @@ async function play(interaction, guild, client, url, Discord) {
                 .setCustomId('statistics')
                 .setEmoji(client.messageEmojis["statistics"])
                 .setStyle('PRIMARY')
-                .setDisabled(true)
         );
 
     if(!radio.message){
