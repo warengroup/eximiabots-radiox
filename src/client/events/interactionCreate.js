@@ -19,13 +19,11 @@ module.exports = {
                 interaction.reply(client.messages.runningCommandFailed);
                 console.error(error);
             }
-        } else if (interaction.isSelectMenu()){
-
-        } else if (interaction.isButton()){
+        } else if (interaction.isSelectMenu() || interaction.isButton()){
             const commandName = interaction.customId;
             const command = client.commands.get(commandName);
             if (!command) return;
-    
+
             try {
                 command.execute(interaction, client, Discord, command);
             } catch (error) {
