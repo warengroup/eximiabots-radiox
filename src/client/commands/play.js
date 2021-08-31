@@ -4,7 +4,6 @@ const {
     getVoiceConnection,
     joinVoiceChannel
 } = require("@discordjs/voice");
-const { createDiscordJSAdapter } = require("../utils/adapter");
 
 module.exports = {
     name: "play",
@@ -99,7 +98,7 @@ module.exports = {
                 joinVoiceChannel({
                     channelId: voiceChannel.id,
                     guildId: voiceChannel.guild.id,
-                    adapterCreator: createDiscordJSAdapter(voiceChannel)
+                    adapterCreator: voiceChannel.guild.voiceAdapterCreator
                 });
             construct.connection = connection;
             let date = new Date();
