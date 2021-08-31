@@ -17,7 +17,55 @@ module.exports = {
     category: "radio",
     async execute(interaction, client, Discord, command) {
         let message = {};
-        let query = interaction.options?.getString("query");
+        let query = interaction.options?.getString("query") ?? interaction.values?.[0];
+        if(!query){
+            if(!client.stations) {
+                message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
+                return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
+            }
+
+            let stations = new Array();
+
+            let options = new Array();
+            options[1] = new Array();
+            options[2] = new Array();
+
+            stations[1] = client.stations.slice(0,24).forEach(station => {
+                station = {
+                    label: station.name,
+                    description: station.owner,
+                    value: station.name
+                };
+                options[1].push(station);
+            });
+
+            stations[2] = client.stations.slice(25).forEach(station => {
+                station = {
+                    label: station.name,
+                    description: station.owner,
+                    value: station.name
+                };
+                options[2].push(station);
+            });
+
+            const menu = new Discord.MessageActionRow()
+                .addComponents(
+                    new Discord.MessageSelectMenu()
+                        .setCustomId('play')
+                        .setPlaceholder('Nothing selected')
+                        .addOptions(options[1])
+                        .addOptions(options[2])
+                );
+
+            stations = null;
+            options = null;
+
+		    return interaction.reply({
+                content: '**Select station:**',
+                components: [menu],
+                ephemeral: true
+            });
+        }
         let url = query ? query.replace(/<(.+)>/g, "$1") : "";
         const radio = client.radio.get(interaction.guild.id);
         const voiceChannel = interaction.member.voice.channel;
