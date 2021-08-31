@@ -229,33 +229,33 @@ async function play(interaction, guild, client, url, Discord) {
             new Discord.MessageButton()
                 .setCustomId('list')
                 .setEmoji(client.messageEmojis["list"])
-                .setStyle('PRIMARY')
+                .setStyle('SECONDARY')
         )
         .addComponents(
             new Discord.MessageButton()
                 .setCustomId('prev')
                 .setEmoji(client.messageEmojis["prev"])
-                .setStyle('PRIMARY')
+                .setStyle('SECONDARY')
                 .setDisabled(true)
         )
         .addComponents(
             new Discord.MessageButton()
                 .setCustomId('stop')
                 .setEmoji(client.messageEmojis["stop"])
-                .setStyle('PRIMARY')
+                .setStyle('SECONDARY')
         )
         .addComponents(
             new Discord.MessageButton()
                 .setCustomId('next')
                 .setEmoji(client.messageEmojis["next"])
-                .setStyle('PRIMARY')
+                .setStyle('SECONDARY')
                 .setDisabled(true)
         )
         .addComponents(
             new Discord.MessageButton()
                 .setCustomId('statistics')
                 .setEmoji(client.messageEmojis["statistics"])
-                .setStyle('PRIMARY')
+                .setStyle('SECONDARY')
         );
 
     if(!radio.message){
