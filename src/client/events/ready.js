@@ -9,6 +9,7 @@ module.exports = {
         console.log('(c)2020-2021 EximiaBots by Warén Group');
         console.log('');
 
+        /*DEVELOPERS*/
         client.developers = "";
         let user = "";
         for (let i = 0; i < client.config.devId.length; i++) {
@@ -20,11 +21,19 @@ module.exports = {
             }
         }
 
+        /*STATIONS*/
         try {
             client.funcs.logger('Stations', 'Started fetching list – ' + client.config.stationslistUrl);
             client.stations = await fetch(client.config.stationslistUrl)
                 .then(client.funcs.checkFetchStatus)
                 .then(response => response.json());
+
+            client.funcs.logger('Stations', 'List');
+            client.stations.forEach(station => {
+                console.log("   - " + station.name);
+            });
+            console.log("\n");
+
             client.funcs.logger('Stations', 'Successfully fetched list');
         } catch (error) {
             client.funcs.logger('Stations', 'Fetching list failed');
@@ -37,6 +46,7 @@ module.exports = {
                 client.stations = await fetch(client.config.stationslistUrl)
                     .then(client.funcs.checkFetchStatus)
                     .then(response => response.json());
+
                 client.funcs.logger('Stations', 'Successfully fetched list');
             } catch (error) {
                 client.funcs.logger('Stations', 'Fetching list failed');
@@ -48,9 +58,25 @@ module.exports = {
             client.user.setStatus('dnd');
         }
         
+        /*GUILDS*/
+        client.funcs.logger('Guilds', 'Started fetching list');
+
+        client.funcs.logger('Guilds', 'List');
+        let guilds = await client.guilds.fetch();
+        guilds.forEach(guild => {
+            console.log("   - " + guild.id + ": " + guild.name);
+        });
+        console.log("\n");
+
+        client.funcs.logger('Guilds', 'Successfully fetched list');
+
+        /*STATISTICS*/
         client.datastore.calculateGlobal(client);
+
+        /*EMOJIS*/
         require(`../emojis.js`).execute(client);
 
+        /*COMMANDS*/
         require(`../commands.js`).execute(client);
 
     }
