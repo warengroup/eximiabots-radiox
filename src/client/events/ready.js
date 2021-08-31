@@ -27,7 +27,7 @@ module.exports = {
                 .then(response => response.json());
             client.funcs.logger('Stations', 'Successfully fetched list');
         } catch (error) {
-            client.funcs.logger('Stations', ' Fetching list failed');
+            client.funcs.logger('Stations', 'Fetching list failed');
             console.error(error + "\n");
         }
         
