@@ -17,13 +17,13 @@ module.exports = {
                 .setTitle(client.user.username)
                 .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["stop"].replace(/[^0-9]+/g, ''))
                 .setColor(client.config.embedColor)
-                .addField(client.messages.nowplayingTitle, "Nothing", true)
+                .addField(client.messages.nowplayingTitle, "-", true)
                 .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-    
+
             if(!radio.message){
-                radio.message = await radio.textChannel.send({ embeds: [embed] });
+                radio.message = await radio.textChannel.send({ embeds: [embed], components: [] });
             } else {
-                radio.message.edit({ embeds: [embed] });
+                radio.message.edit({ embeds: [embed], components: [] });
             }
 
             setTimeout(function() {
