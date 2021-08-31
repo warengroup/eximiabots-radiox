@@ -11,7 +11,7 @@ module.exports = {
     usage: "<song name>",
     description: "Play radio",
     options: [
-        { type: "STRING", name: "query", description: "Select station", required: true}
+        { type: "STRING", name: "query", description: "Select station", required: false}
     ],
     permission: "none",
     category: "radio",
@@ -165,7 +165,9 @@ async function play(interaction, guild, client, url, Discord) {
 
     message.nowplayingDescription = client.messages.nowplayingDescription.replace("%radio.station.name%", radio.station.name);
     message.nowplayingDescription = message.nowplayingDescription.replace("%radio.station.owner%", radio.station.owner);
-    message.nowplayingDescription = message.nowplayingDescription.replace("%client.funcs.msToTime(completed)%", "--:--");
+    message.nowplayingDescription = message.nowplayingDescription.replace("%client.funcs.msToTime(completed)%", "");
+    message.nowplayingDescription = message.nowplayingDescription.replace("**", "");
+    message.nowplayingDescription = message.nowplayingDescription.replace("**", "");
 
     const embed = new Discord.MessageEmbed()
         .setTitle(client.user.username)
@@ -174,10 +176,47 @@ async function play(interaction, guild, client, url, Discord) {
         .addField(client.messages.nowplayingTitle, message.nowplayingDescription, true)
         .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
     
+    const buttons = new Discord.MessageActionRow()
+        .addComponents(
+            new Discord.MessageButton()
+                .setCustomId('list')
+                .setEmoji(client.messageEmojis["list"])
+                .setStyle('PRIMARY')
+                .setDisabled(true)
+        )
+        .addComponents(
+            new Discord.MessageButton()
+                .setCustomId('prev')
+                .setEmoji(client.messageEmojis["prev"])
+                .setStyle('PRIMARY')
+                .setDisabled(true)
+        )
+        .addComponents(
+            new Discord.MessageButton()
+                .setCustomId('play')
+                .setEmoji(client.messageEmojis["stop"])
+                .setStyle('PRIMARY')
+                .setDisabled(true)
+        )
+        .addComponents(
+            new Discord.MessageButton()
+                .setCustomId('next')
+                .setEmoji(client.messageEmojis["next"])
+                .setStyle('PRIMARY')
+                .setDisabled(true)
+        )
+        .addComponents(
+            new Discord.MessageButton()
+                .setCustomId('statistics')
+                .setEmoji(client.messageEmojis["statistics"])
+                .setStyle('PRIMARY')
+                .setDisabled(true)
+        );
+
     if(!radio.message){
-        radio.message = await radio.textChannel.send({ embeds: [embed] });
+        radio.message = await radio.textChannel.send({ embeds: [embed], components: [buttons] });
     } else {
-        radio.message.edit({ embeds: [embed] });
+        radio.message.edit({ embeds: [embed], components: [buttons] });
     }
 
     message.play = client.messages.play.replace("%radio.station.name%", radio.station.name);
