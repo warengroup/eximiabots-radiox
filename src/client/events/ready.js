@@ -10,16 +10,20 @@ module.exports = {
         console.log('');
 
         /*DEVELOPERS*/
+        client.funcs.logger('Developers', 'List');
+        
         client.developers = "";
         let user = "";
         for (let i = 0; i < client.config.devId.length; i++) {
             user = await client.users.fetch(client.config.devId[i]);
+            console.log("   - " + user.tag);
             if (i == client.config.devId.length - 1) {
                 client.developers += user.tag;
             } else {
                 client.developers += user.tag + " & ";
             }
         }
+        console.log("\n");
 
         /*STATIONS*/
         try {
