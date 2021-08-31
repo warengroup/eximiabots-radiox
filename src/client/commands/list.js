@@ -14,7 +14,7 @@ module.exports = {
         let stations = `${client.stations.map(s => `**#** ${s.name}`).join('\n')}`
         const hashs = stations.split('**#**').length;
         for (let i = 0; i < hashs; i++) {
-            stations = stations.replace('**#**', `**${i + 1}**`);
+            stations = stations.replace('**#**', `**${i + 1}.**`);
         }
 
         const embed = new Discord.MessageEmbed()
