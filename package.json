@@ -1,6 +1,6 @@
 {
   "name": "eximiabots-radiox",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "description": "Internet Radio to your Discord guild",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,9 @@
     "url": "https://github.com/warengroup/eximiabots-radiox/issues"
   },
   "dependencies": {
+    "@discordjs/builders": "^0.6.0",
     "@discordjs/opus": "^0.6.0",
+    "@discordjs/rest": "^0.1.1-canary.0",
     "@discordjs/voice": "^0.6.0",
     "discord-api-types": "^0.22.0",
     "discord.js": "^13.1.0",
@@ -28,19 +30,19 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
-    "@types/node": "^16.6.1",
+    "@types/node": "^16.7.8",
     "@types/ws": "^7.4.7",
-    "@typescript-eslint/eslint-plugin": "^4.29.2",
-    "@typescript-eslint/parser": "^4.29.2",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^3.4.1",
+    "eslint-plugin-prettier": "^4.0.0",
     "nodemon": "^2.0.12",
     "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
     "ts-node": "^10.2.1",
     "tsc-watch": "^4.5.0",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.2"
   },
   "engines": {
       "node": ">=16.6.0",

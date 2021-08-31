@@ -5,19 +5,23 @@ module.exports = {
     description: 'Current Radio Station',
     permission: 'none',
     category: 'radio',
-    async execute(msg, args, client, Discord, command) {
+    async execute(interaction, client, Discord, command) {
         let message = {};
-        const radio = client.radio.get(msg.guild.id);
-        if (!radio) return msg.channel.send('There is nothing playing.');
-		if(!client.stations) {
-			message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
-			return msg.channel.send(client.messageEmojis["error"] + message.errorToGetPlaylist);
-		}
-        const completed = (radio.connection.dispatcher.streamTime.toFixed(0));
+        const radio = client.radio.get(interaction.guild.id);
+        if (!radio) return interaction.reply('There is nothing playing.');
+        if(!client.stations) {
+            message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
+            return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
+        }
+
+        let date = new Date();
+        radio.currentTime = date.getTime();
+        radio.playTime = parseInt(radio.currentTime)-parseInt(radio.startTime);
+        const completed = (radio.playTime);
 
         message.nowplayingDescription = client.messages.nowplayingDescription.replace("%radio.station.name%", radio.station.name);
         message.nowplayingDescription = message.nowplayingDescription.replace("%radio.station.owner%", radio.station.owner);
-        message.nowplayingDescription = message.nowplayingDescription.replace("%client.funcs.msToTime(completed, \"hh:mm:ss\")%", client.funcs.msToTime(completed, "hh:mm:ss"));
+        message.nowplayingDescription = message.nowplayingDescription.replace("%client.funcs.msToTime(completed)%", client.funcs.msToTime(completed));
 
         const embed = new Discord.MessageEmbed()
             .setTitle(client.messages.nowplayingTitle)
@@ -25,6 +29,10 @@ module.exports = {
             .setColor(client.config.embedColor)
             .setDescription(message.nowplayingDescription)
             .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-        return msg.channel.send({ embeds: [embed] });
+        
+        interaction.reply({
+            embeds: [embed],
+            ephemeral: true
+        });
     }
 };
