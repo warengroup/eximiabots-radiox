@@ -4,7 +4,6 @@ module.exports = {
     name: 'SIGINT',
     async execute(client) {
         setTimeout(async function () {
-            client.user.setStatus('idle');
             let message = {};
 
             if (!client.stations) return process.exit();
