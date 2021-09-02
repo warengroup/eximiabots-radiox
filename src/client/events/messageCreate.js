@@ -44,7 +44,10 @@ module.exports = {
                 msg.delete();
             }, 30000);
         } catch (error) {
-            msg.reply(client.messages.runningCommandFailed);
+            msg.reply({
+                content: client.messages.runningCommandFailed,
+                ephemeral: true
+            });
             console.error(error);
         }
     }

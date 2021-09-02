@@ -16,7 +16,10 @@ module.exports = {
             try {
                 command.execute(interaction, client, Discord, command);
             } catch (error) {
-                interaction.reply(client.messages.runningCommandFailed);
+                interaction.reply({
+                    content: client.messages.runningCommandFailed,
+                    ephemeral: true
+                });
                 console.error(error);
             }
         } else if (interaction.isSelectMenu() || interaction.isButton()){
@@ -27,7 +30,10 @@ module.exports = {
             try {
                 command.execute(interaction, client, Discord, command);
             } catch (error) {
-                interaction.reply(client.messages.runningCommandFailed);
+                interaction.reply({
+                    content: client.messages.runningCommandFailed,
+                    ephemeral: true
+                });
                 console.error(error);
             }
         }
