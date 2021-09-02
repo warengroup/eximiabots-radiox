@@ -3,7 +3,6 @@ import Discord from "discord.js";
 module.exports = {
     name: 'interactionCreate',
     async execute(client, interaction) {
-        /*if (!interaction.isCommand()) return;*/
 
         const permissions = interaction.channel.permissionsFor(interaction.client.user);
         if (!permissions.has('EMBED_LINKS')) return interaction.send(client.messages.noPermsEmbed);
