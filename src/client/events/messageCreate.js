@@ -27,8 +27,18 @@ module.exports = {
         const permissions = msg.channel.permissionsFor(msg.client.user);
         if (!permissions.has('EMBED_LINKS')) return msg.channel.send(client.messages.noPermsEmbed);
         try {
+            let message = {};
 
+            message.messageCommandsDeprecatedTitle = client.messages.messageCommandsDeprecatedTitle.replace("%client.user.username%", client.user.username);
+    
+            const embed = new Discord.MessageEmbed()
+                .setTitle(message.messageCommandsDeprecatedTitle)
+                .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["logo"].replace(/[^0-9]+/g, ''))
+                .setColor(client.config.embedColor)
+                .setDescription(client.messages.messageCommandsDeprecatedDescription)
+                .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
 
+            msg.channel.send({ embeds: [embed] });
         } catch (error) {
             msg.reply(client.messages.runningCommandFailed);
             console.error(error);

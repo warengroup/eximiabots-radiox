@@ -36,5 +36,7 @@ module.exports = {
     statusField3: "Uptime",
     statusField4: "Version",
     statusField5: "Hosted by",
-    errorStationURL: "Station can't be URL"
+    errorStationURL: "Station can't be URL",
+    messageCommandsDeprecatedTitle: "%client.user.username%",
+    messageCommandsDeprecatedDescription: "We recommend you to reauthorize our bot with clicking invite link because Discord is planning to remove message content from verified bots [Read More](https://support-dev.discord.com/hc/en-us/articles/4404772028055) \n\n  **Invite Bot** \n https://wgi.fi/radiox_invite \n\n This bot is now supporting slash commands, you need to start to use them instead. Type / into message box in Discord and select bot you want to use. Remember to be careful because there are a few bugs here and there in Discord."
 };
