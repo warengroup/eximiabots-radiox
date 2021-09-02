@@ -21,13 +21,6 @@ module.exports = {
                     currentRadio.connection?.destroy();
                     currentRadio.audioPlayer?.stop();
                     currentRadio.message?.delete();
-                    const cembed = new Discord.MessageEmbed()
-                        .setTitle(client.messages.maintenanceTitle)
-                        .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["maintenance"].replace(/[^0-9]+/g, ''))
-                        .setColor(client.config.embedColor)
-                        .setDescription(client.messages.sendedMaintenanceMessage)
-                        .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-                    currentRadio.textChannel.send({ embeds: [cembed] });
                     client.radio.delete(radio.value);
                 }
                 
