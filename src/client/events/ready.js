@@ -10,7 +10,7 @@ module.exports = {
         console.log('');
 
         /*DEVELOPERS*/
-        client.funcs.logger('Developers', 'List');
+        client.funcs.logger('Developers');
         
         client.developers = "";
         let user = "";
@@ -32,7 +32,7 @@ module.exports = {
                 .then(client.funcs.checkFetchStatus)
                 .then(response => response.json());
 
-            client.funcs.logger('Stations', 'List');
+            client.funcs.logger('Stations');
             client.stations.forEach(station => {
                 console.log("   - " + station.name);
             });
@@ -65,7 +65,7 @@ module.exports = {
         /*GUILDS*/
         client.funcs.logger('Guilds', 'Started fetching list');
 
-        client.funcs.logger('Guilds', 'List');
+        client.funcs.logger('Guilds');
         let guilds = await client.guilds.fetch();
         guilds.forEach(guild => {
             console.log("   - " + guild.id + ": " + guild.name);
