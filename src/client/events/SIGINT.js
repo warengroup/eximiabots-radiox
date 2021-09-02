@@ -11,15 +11,13 @@ module.exports = {
 
             let currentRadios = client.radio.keys();
             let radio = currentRadios.next();
-            let stoppedRadios = "";
-            client.user.setStatus('idle');
 
             while (!radio.done) {
-                let currentRadio = await client.radio.get(radio.value);
-                currentRadio.guild = await client.datastore.getEntry(radio.value).guild;
+                let currentRadio = client.radio.get(radio.value);
+                currentRadio.guild = client.datastore.getEntry(radio.value).guild;
 
                 if (currentRadio) {
-                    await client.funcs.statisticsUpdate(client, currentRadio.guild, currentRadio);
+                    client.funcs.statisticsUpdate(client, currentRadio.guild, currentRadio);
                     currentRadio.connection?.destroy();
                     currentRadio.audioPlayer?.stop();
                     currentRadio.message?.delete();
@@ -33,7 +31,7 @@ module.exports = {
                     client.radio.delete(radio.value);
                 }
                 
-                radio = await currentRadios.next();
+                radio = currentRadios.next();
             }
 
             
@@ -44,9 +42,11 @@ module.exports = {
 
             client.user.setStatus('dnd');
 
-            setTimeout(function () {
-                process.exit();
-            }, 5000);
+            setInterval(() => {
+                if(radio.done){
+                    process.exit();
+                }
+            }, 1000);
         }, 5000);
     }
 }
