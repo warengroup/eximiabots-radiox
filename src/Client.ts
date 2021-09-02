@@ -1,11 +1,12 @@
 import Discord, { Client, Collection } from "discord.js";
 import fs from "fs";
-const events = "./client/events/";
 import Datastore from "./client/datastore.js";
 import { command, radio } from "./client/utils/typings.js";
 import config from "./config.js";
 import messages from "./client/messages.js";
 import path from "path";
+
+const events = "./client/events/";
 
 const GatewayIntents = new Discord.Intents();
 GatewayIntents.add(
