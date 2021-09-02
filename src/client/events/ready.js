@@ -1,10 +1,15 @@
-const fetch = require('node-fetch');
+import Datastore from "../datastore.js";
+import fetch from "node-fetch";
 
 module.exports = {
     name: 'ready',
     async execute(client) {
 
         client.funcs.logger("Bot", "Ready");
+
+        /*Datastore*/
+        client.funcs.logger('Datastore', 'Initialize');
+        client.datastore = new Datastore();
 
         /*DEVELOPERS*/
         client.funcs.logger('Developers');
@@ -70,7 +75,7 @@ module.exports = {
         console.log("\n");
 
         client.funcs.logger('Guilds', 'Successfully fetched list');
-
+        
         /*STATISTICS*/
         client.datastore.calculateGlobal(client);
 
@@ -79,6 +84,11 @@ module.exports = {
 
         /*COMMANDS*/
         require(`../commands.js`).execute(client);
+
+        setTimeout(function () {
+            /*RESTORE RADIO*/
+            require(`../restoreradio.js`).execute(client, guilds);
+        }, 5000);
 
     }
 }
