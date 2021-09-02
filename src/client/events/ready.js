@@ -4,10 +4,7 @@ module.exports = {
     name: 'ready',
     async execute(client) {
 
-        console.log('RadioX ' + client.config.version);
-        console.log('Internet Radio to your Discord guild');
-        console.log('(c)2020-2021 EximiaBots by Warén Group');
-        console.log('');
+        client.funcs.logger("Bot", "Ready");
 
         /*DEVELOPERS*/
         client.funcs.logger('Developers');
@@ -16,7 +13,7 @@ module.exports = {
         let user = "";
         for (let i = 0; i < client.config.devId.length; i++) {
             user = await client.users.fetch(client.config.devId[i]);
-            console.log("   - " + user.tag);
+            console.log("- " + user.tag);
             if (i == client.config.devId.length - 1) {
                 client.developers += user.tag;
             } else {
@@ -34,7 +31,7 @@ module.exports = {
 
             client.funcs.logger('Stations');
             client.stations.forEach(station => {
-                console.log("   - " + station.name);
+                console.log("- " + station.name);
             });
             console.log("\n");
 
@@ -68,7 +65,7 @@ module.exports = {
         client.funcs.logger('Guilds');
         let guilds = await client.guilds.fetch();
         guilds.forEach(guild => {
-            console.log("   - " + guild.id + ": " + guild.name);
+            console.log("- " + guild.id + ": " + guild.name);
         });
         console.log("\n");
 
