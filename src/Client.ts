@@ -37,6 +37,8 @@ class RadioClient extends Client {
         this.funcs.logger = require("./client/funcs/logger.js");
         this.funcs.msToTime = require("./client/funcs/msToTime.js");
         this.funcs.statisticsUpdate = require("./client/funcs/statisticsUpdate.js");
+        this.funcs.saveState = require("./client/funcs/saveState.js");
+        this.funcs.loadState = require("./client/funcs/loadState.js");
 
         console.log('RadioX ' + this.config.version);
         console.log('Internet Radio to your Discord guild');
@@ -53,7 +55,6 @@ class RadioClient extends Client {
 
         this.on("ready", () => {
             require(`${events}ready`).execute(this);
-            this.datastore = new Datastore();
         });
 
         this.on("messageCreate", msg => {
