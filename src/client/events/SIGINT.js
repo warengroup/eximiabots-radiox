@@ -3,7 +3,8 @@ import Discord from "discord.js";
 module.exports = {
     name: 'SIGINT',
     async execute(client) {
-        /*setTimeout(function () {
+        setTimeout(async function () {
+            client.user.setStatus('idle');
             let message = {};
 
             if (!client.stations) return process.exit();
@@ -14,12 +15,11 @@ module.exports = {
             client.user.setStatus('idle');
 
             while (!radio.done) {
-
-                let currentRadio = client.radio.get(radio.value);
-                currentRadio.guild = client.datastore.getEntry(radio.value).guild;
+                let currentRadio = await client.radio.get(radio.value);
+                currentRadio.guild = await client.datastore.getEntry(radio.value).guild;
 
                 if (currentRadio) {
-                    client.funcs.statisticsUpdate(client, currentRadio.guild, currentRadio);
+                    await client.funcs.statisticsUpdate(client, currentRadio.guild, currentRadio);
                     currentRadio.connection?.destroy();
                     currentRadio.audioPlayer?.stop();
                     currentRadio.message?.delete();
@@ -31,16 +31,22 @@ module.exports = {
                         .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
                     currentRadio.textChannel.send({ embeds: [cembed] });
                     client.radio.delete(radio.value);
-                    stoppedRadios += "-" + radio.value + ": " + currentRadio.guild.name + "\n";
                 }
-                radio = currentRadios.next();
+                
+                radio = await currentRadios.next();
             }
+
+            
 
             console.log("\n");
             client.funcs.logger("Bot", "Closing");
-            console.log("\n");*/
+            console.log("\n");
 
-            process.exit();
-        /*}, 5000);*/
+            client.user.setStatus('dnd');
+
+            setTimeout(function () {
+                process.exit();
+            }, 5000);
+        }, 5000);
     }
 }
