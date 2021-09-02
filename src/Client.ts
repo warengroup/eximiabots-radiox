@@ -37,6 +37,13 @@ class RadioClient extends Client {
         this.funcs.msToTime = require("./client/funcs/msToTime.js");
         this.funcs.statisticsUpdate = require("./client/funcs/statisticsUpdate.js");
 
+        console.log('RadioX ' + this.config.version);
+        console.log('Internet Radio to your Discord guild');
+        console.log('(c)2020-2021 EximiaBots by Warén Group');
+        console.log('');
+
+        this.funcs.logger("Bot", "Starting");
+
         const commandFiles = fs.readdirSync(path.join("./src/client/commands")).filter(f => f.endsWith(".js"));
         for (const file of commandFiles) {
             const command = require(`./client/commands/${file}`);
@@ -62,6 +69,10 @@ class RadioClient extends Client {
         
         this.on("voiceStateUpdate", (oldState, newState) => {
             require(`${events}voiceStateUpdate`).execute(this, oldState, newState);
+        });
+        
+        process.on('SIGINT', () => {
+            require(`${events}SIGINT`).execute(this);
         });
         
         this.on("error", error => {
