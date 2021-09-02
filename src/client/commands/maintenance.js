@@ -29,13 +29,7 @@ module.exports = {
                 client.funcs.statisticsUpdate(client, currentRadio.guild, currentRadio);
                 currentRadio.connection?.destroy();
                 currentRadio.audioPlayer?.stop();
-                const cembed = new Discord.MessageEmbed()
-                    .setTitle(client.messages.maintenanceTitle)
-                    .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["maintenance"].replace(/[^0-9]+/g, ''))
-                    .setColor(client.config.embedColor)
-                    .setDescription(client.messages.sendedMaintenanceMessage)
-                    .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-                currentRadio.textChannel.send({ embeds: [cembed] });
+                currentRadio.message?.delete();
                 client.radio.delete(radio.value);
                 stoppedRadios += "-" + radio.value + ": " + currentRadio.guild.name + "\n";
             }
