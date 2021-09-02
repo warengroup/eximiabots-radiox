@@ -27,8 +27,6 @@ module.exports = {
                 radio = currentRadios.next();
             }
 
-            
-
             console.log("\n");
             client.funcs.logger("Bot", "Closing");
             console.log("\n");
