@@ -26,7 +26,7 @@ module.exports = {
             currentRadio.guild = client.datastore.getEntry(radio.value).guild;
 
             if(currentRadio){
-                client.funcs.statisticsUpdate(client, currentRadio.currentGuild.guild, currentRadio);
+                client.funcs.statisticsUpdate(client, currentRadio.guild, currentRadio);
                 currentRadio.connection?.destroy();
                 currentRadio.audioPlayer?.stop();
                 const cembed = new Discord.MessageEmbed()
@@ -37,7 +37,7 @@ module.exports = {
                     .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
                 currentRadio.textChannel.send({ embeds: [cembed] });
                 client.radio.delete(radio.value);
-                stoppedRadios += "-" + radio.value + ": " + currentRadio.currentGuild.guild.name + "\n";
+                stoppedRadios += "-" + radio.value + ": " + currentRadio.guild.name + "\n";
             }
             radio = currentRadios.next();
         }
