@@ -8,7 +8,7 @@ module.exports = {
     bugDescription: "Join the support server \n %client.config.supportGuild%",
     helpTitle: "%client.user.username% help:",
     helpDescription: "%commands%",
-    helpCommandTitle: "%client.config.prefix%%command.name% %command.usage%",
+    helpCommandTitle: "%command.name% %command.usage%",
     helpCommandDescription: "%command.description% \n Command Alias: %command.alias%",
     inviteTitle: "Invite %client.user.username% to your Discord server!",
     listTitle: "Radio Stations",
