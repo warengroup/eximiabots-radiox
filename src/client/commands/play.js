@@ -214,6 +214,7 @@ async function play(interaction, guild, client, url, Discord) {
     message.nowplayingDescription = client.messages.nowplayingDescription.replace("%radio.station.name%", radio.station.name);
     message.nowplayingDescription = message.nowplayingDescription.replace("%radio.station.owner%", radio.station.owner);
     message.nowplayingDescription = message.nowplayingDescription.replace("%client.funcs.msToTime(completed)%", "");
+    message.nowplayingDescription = message.nowplayingDescription.replace("Owner: ", "");
     message.nowplayingDescription = message.nowplayingDescription.replace("**", "");
     message.nowplayingDescription = message.nowplayingDescription.replace("**", "");
 
