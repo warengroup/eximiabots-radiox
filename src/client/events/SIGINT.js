@@ -17,6 +17,7 @@ module.exports = {
 
                 if (currentRadio) {
                     client.funcs.statisticsUpdate(client, currentRadio.guild, currentRadio);
+                    client.funcs.saveState(client, currentRadio.guild, currentRadio);
                     currentRadio.connection?.destroy();
                     currentRadio.audioPlayer?.stop();
                     currentRadio.message?.delete();
