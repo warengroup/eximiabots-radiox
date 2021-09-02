@@ -7,7 +7,7 @@ module.exports = {
 
         client.funcs.logger("Bot", "Ready");
 
-        /*Datastore*/
+        /*DATASTORE*/
         client.funcs.logger('Datastore', 'Initialize');
         client.datastore = new Datastore();
 
