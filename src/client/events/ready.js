@@ -1,22 +1,24 @@
+import Datastore from "../datastore.js";
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 module.exports = {
     name: 'ready',
     async execute(client) {
 
-        console.log('RadioX ' + client.config.version);
-        console.log('Internet Radio to your Discord guild');
-        console.log('(c)2020-2021 EximiaBots by Warén Group');
-        console.log('');
+        client.funcs.logger("Bot", "Ready");
+
+        /*DATASTORE*/
+        client.funcs.logger('Datastore', 'Initialize');
+        client.datastore = new Datastore();
 
         /*DEVELOPERS*/
-        client.funcs.logger('Developers', 'List');
+        client.funcs.logger('Developers');
         
         client.developers = "";
         let user = "";
         for (let i = 0; i < client.config.devId.length; i++) {
             user = await client.users.fetch(client.config.devId[i]);
-            console.log("   - " + user.tag);
+            console.log("- " + user.tag);
             if (i == client.config.devId.length - 1) {
                 client.developers += user.tag;
             } else {
@@ -32,9 +34,9 @@ module.exports = {
                 .then(client.funcs.checkFetchStatus)
                 .then(response => response.json());
 
-            client.funcs.logger('Stations', 'List');
+            client.funcs.logger('Stations');
             client.stations.forEach(station => {
-                console.log("   - " + station.name);
+                console.log("- " + station.name);
             });
             console.log("\n");
 
@@ -65,15 +67,15 @@ module.exports = {
         /*GUILDS*/
         client.funcs.logger('Guilds', 'Started fetching list');
 
-        client.funcs.logger('Guilds', 'List');
+        client.funcs.logger('Guilds');
         let guilds = await client.guilds.fetch();
         guilds.forEach(guild => {
-            console.log("   - " + guild.id + ": " + guild.name);
+            console.log("- " + guild.id + ": " + guild.name);
         });
         console.log("\n");
 
         client.funcs.logger('Guilds', 'Successfully fetched list');
-
+        
         /*STATISTICS*/
         client.datastore.calculateGlobal(client);
 
@@ -82,6 +84,11 @@ module.exports = {
 
         /*COMMANDS*/
         require(`../commands.js`).execute(client);
+
+        setTimeout(function () {
+            /*RESTORE RADIO*/
+            require(`../restoreradio.js`).execute(client, guilds);
+        }, 5000);
 
     }
 }

@@ -3,7 +3,6 @@ import Discord from "discord.js";
 module.exports = {
     name: 'interactionCreate',
     async execute(client, interaction) {
-        /*if (!interaction.isCommand()) return;*/
 
         const permissions = interaction.channel.permissionsFor(interaction.client.user);
         if (!permissions.has('EMBED_LINKS')) return interaction.send(client.messages.noPermsEmbed);
@@ -16,7 +15,10 @@ module.exports = {
             try {
                 command.execute(interaction, client, Discord, command);
             } catch (error) {
-                interaction.reply(client.messages.runningCommandFailed);
+                interaction.reply({
+                    content: client.messages.runningCommandFailed,
+                    ephemeral: true
+                });
                 console.error(error);
             }
         } else if (interaction.isSelectMenu() || interaction.isButton()){
@@ -27,7 +29,10 @@ module.exports = {
             try {
                 command.execute(interaction, client, Discord, command);
             } catch (error) {
-                interaction.reply(client.messages.runningCommandFailed);
+                interaction.reply({
+                    content: client.messages.runningCommandFailed,
+                    ephemeral: true
+                });
                 console.error(error);
             }
         }

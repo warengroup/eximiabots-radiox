@@ -1,16 +1,18 @@
 import Discord, { Client, Collection } from "discord.js";
 import fs from "fs";
-const events = "./client/events/";
 import Datastore from "./client/datastore.js";
 import { command, radio } from "./client/utils/typings.js";
 import config from "./config.js";
 import messages from "./client/messages.js";
 import path from "path";
 
+const events = "./client/events/";
+
 const GatewayIntents = new Discord.Intents();
 GatewayIntents.add(
     1 << 0, // GUILDS
     1 << 7, // GUILD_VOICE_STATES
+    1 << 9 // GUILD_MESSAGES
 );
 
 class RadioClient extends Client {
@@ -35,6 +37,15 @@ class RadioClient extends Client {
         this.funcs.logger = require("./client/funcs/logger.js");
         this.funcs.msToTime = require("./client/funcs/msToTime.js");
         this.funcs.statisticsUpdate = require("./client/funcs/statisticsUpdate.js");
+        this.funcs.saveState = require("./client/funcs/saveState.js");
+        this.funcs.loadState = require("./client/funcs/loadState.js");
+
+        console.log('RadioX ' + this.config.version);
+        console.log('Internet Radio to your Discord guild');
+        console.log('(c)2020-2021 EximiaBots by Warén Group');
+        console.log('');
+
+        this.funcs.logger("Bot", "Starting");
 
         const commandFiles = fs.readdirSync(path.join("./src/client/commands")).filter(f => f.endsWith(".js"));
         for (const file of commandFiles) {
@@ -44,14 +55,32 @@ class RadioClient extends Client {
 
         this.on("ready", () => {
             require(`${events}ready`).execute(this);
-            this.datastore = new Datastore();
         });
+
+        this.on("messageCreate", msg => {
+            require(`${events}messageCreate`).execute(this, msg);
+        });
+
+        this.on("messageDelete", msg => {
+            require(`${events}messageDelete`).execute(this, msg);
+        });
+
         this.on("interactionCreate", interaction => {
             require(`${events}interactionCreate`).execute(this, interaction);
         });
+        
         this.on("voiceStateUpdate", (oldState, newState) => {
             require(`${events}voiceStateUpdate`).execute(this, oldState, newState);
         });
+        
+        process.on('SIGINT', () => {
+            require(`${events}SIGINT`).execute(this);
+        });
+
+        process.on('SIGTERM', () => {
+            require(`${events}SIGTERM`).execute(this);
+        });
+        
         this.on("error", error => {
             console.error(error);
         });
