@@ -52,6 +52,10 @@ class RadioClient extends Client {
             require(`${events}messageCreate`).execute(this, msg);
         });
 
+        this.on("messageDelete", msg => {
+            require(`${events}messageDelete`).execute(this, msg);
+        });
+
         this.on("interactionCreate", interaction => {
             require(`${events}interactionCreate`).execute(this, interaction);
         });
