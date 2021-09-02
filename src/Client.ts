@@ -11,6 +11,7 @@ const GatewayIntents = new Discord.Intents();
 GatewayIntents.add(
     1 << 0, // GUILDS
     1 << 7, // GUILD_VOICE_STATES
+    1 << 9 // GUILD_MESSAGES
 );
 
 class RadioClient extends Client {
@@ -46,12 +47,19 @@ class RadioClient extends Client {
             require(`${events}ready`).execute(this);
             this.datastore = new Datastore();
         });
+
+        this.on("messageCreate", msg => {
+            require(`${events}messageCreate`).execute(this, msg);
+        });
+
         this.on("interactionCreate", interaction => {
             require(`${events}interactionCreate`).execute(this, interaction);
         });
+        
         this.on("voiceStateUpdate", (oldState, newState) => {
             require(`${events}voiceStateUpdate`).execute(this, oldState, newState);
         });
+        
         this.on("error", error => {
             console.error(error);
         });
