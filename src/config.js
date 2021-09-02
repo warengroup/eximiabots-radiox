@@ -20,7 +20,6 @@ module.exports = {
     hostedBy: "[Warén Group](https://waren.io)",
 
     //Settings
-    prefix: process.env.RADIOX_PREFIX || "rx-",
     version: process.env.RADIOX_VERSION || process.env.npm_package_version,
     debug: process.env.DEBUG_MODE || false
 

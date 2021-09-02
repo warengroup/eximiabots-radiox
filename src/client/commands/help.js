@@ -19,7 +19,6 @@ module.exports = {
 
         message.helpTitle = client.messages.helpTitle.replace("%client.user.username%", client.user.username);
         message.helpDescription = client.messages.helpDescription.replace("%commands%", commands);
-        message.helpDescription = message.helpDescription.replace("%client.config.prefix%", client.config.prefix);
 
         const embed = new Discord.MessageEmbed()
             .setTitle(message.helpTitle)

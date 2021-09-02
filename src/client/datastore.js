@@ -80,6 +80,7 @@ module.exports = class {
         newData.guild = {};
         newData.guild.id = id;
         newData.statistics = {};
+        newData.state = {};
         this.map.set(id, newData);
         this.saveEntry(id, newData);
     }
@@ -90,6 +91,10 @@ module.exports = class {
     
     updateEntry(guild, newData) {
         newData.guild.name = guild.name;
+
+        let date = new Date();
+        newData.updated = date.toISOString().substring(0, 10)
+        
         this.map.set(guild.id, newData);
         this.saveEntry(guild.id, newData);
         //this.showEntry(this.getEntry(guild.id));
@@ -110,6 +115,9 @@ module.exports = class {
                     "time": 0,
                     "used": 0
                 }
+            },
+            "state": {
+
             }
         }
         
@@ -118,7 +126,7 @@ module.exports = class {
     
     saveEntry(file, data) {
         data = JSON.stringify(data, null, 4);
-        
+
         fs.writeFile(path.join(path.dirname(__dirname), '../datastore') + "/" + file + ".json", data, 'utf8', function(err) {
             if (err) {
                 //console.log(err);

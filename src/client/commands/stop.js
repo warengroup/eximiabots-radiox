@@ -21,13 +21,13 @@ module.exports = {
                 .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
 
             if(!radio.message){
-                radio.message = await radio.textChannel.send({ embeds: [embed], components: [] });
+                radio.message = radio.textChannel.send({ embeds: [embed], components: [] });
             } else {
                 radio.message.edit({ embeds: [embed], components: [] });
             }
 
-            setTimeout(function() {
-                radio.message.delete();
+            setTimeout(async function() {
+                await radio.message?.delete();
             }, 5000);
 
             client.radio.delete(interaction.guild.id);
