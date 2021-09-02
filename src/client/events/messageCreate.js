@@ -39,6 +39,10 @@ module.exports = {
                 .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
 
             msg.channel.send({ embeds: [embed] });
+
+            setTimeout(function() {
+                msg.delete();
+            }, 30000);
         } catch (error) {
             msg.reply(client.messages.runningCommandFailed);
             console.error(error);
