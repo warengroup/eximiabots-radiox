@@ -5,6 +5,12 @@ const { token, version } = require('../../config.js');
 module.exports = {
     name: 'SIGINT',
     async execute(client) {
+        client.user.setStatus('dnd');
+
+        console.log("\n");
+        client.funcs.logger("Bot", "Closing");
+        console.log("\n");
+        
         setTimeout(async function () {
             let message = {};
 
@@ -28,12 +34,6 @@ module.exports = {
                 
                 radio = currentRadios.next();
             }
-
-            console.log("\n");
-            client.funcs.logger("Bot", "Closing");
-            console.log("\n");
-
-            client.user.setStatus('dnd');
 
             const rest = new REST({ version: '9' }).setToken(token);
             if(version.includes("-dev")){
