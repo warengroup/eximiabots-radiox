@@ -8,6 +8,8 @@ const {
 
 module.exports = {
     async execute(client, guilds) {
+        if(!client.stations) return;
+        
         guilds.forEach(async guild => {
             let state = client.funcs.loadState(client, guild);
             if(!state) return;
