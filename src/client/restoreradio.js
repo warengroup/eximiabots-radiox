@@ -8,6 +8,8 @@ const {
 
 module.exports = {
     async execute(client, guilds) {
+        if(!client.stations) return;
+
         guilds.forEach(async guild => {
             let state = client.funcs.loadState(client, guild);
             if(!state) return;
@@ -94,9 +96,10 @@ async function play(interaction, guild, client, url, Discord) {
 
     const embed = new Discord.MessageEmbed()
         .setTitle(client.user.username)
-        .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["play"].replace(/[^0-9]+/g, ''))
+        .setThumbnail((radio.station.logo || "https://cdn.discordapp.com/emojis/" + client.messageEmojis["play"].replace(/[^0-9]+/g, '')))
         .setColor(client.config.embedColor)
         .addField(client.messages.nowplayingTitle, message.nowplayingDescription, true)
+        .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
         .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
     
     const buttons = new Discord.MessageActionRow()
