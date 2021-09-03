@@ -1,8 +1,16 @@
-import Discord from "discord.js";
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
+const { token, version } = require('../../config.js');
 
 module.exports = {
     name: 'SIGINT',
     async execute(client) {
+        client.user.setStatus('dnd');
+
+        console.log("\n");
+        client.funcs.logger("Bot", "Closing");
+        console.log("\n");
+        
         setTimeout(async function () {
             let message = {};
 
@@ -16,8 +24,8 @@ module.exports = {
                 currentRadio.guild = client.datastore.getEntry(radio.value).guild;
 
                 if (currentRadio) {
-                    client.funcs.statisticsUpdate(client, currentRadio.guild, currentRadio);
-                    client.funcs.saveState(client, currentRadio.guild, currentRadio);
+                    await client.funcs.statisticsUpdate(client, currentRadio.guild, currentRadio);
+                    await client.funcs.saveState(client, currentRadio.guild, currentRadio);
                     currentRadio.connection?.destroy();
                     currentRadio.audioPlayer?.stop();
                     currentRadio.message?.delete();
@@ -27,11 +35,25 @@ module.exports = {
                 radio = currentRadios.next();
             }
 
-            console.log("\n");
-            client.funcs.logger("Bot", "Closing");
-            console.log("\n");
+            const rest = new REST({ version: '9' }).setToken(token);
+            if(version.includes("-dev")){
+                await rest.put(
+                    Routes.applicationCommands(client.user.id),
+                    { body: [] },
+                );
 
-            client.user.setStatus('dnd');
+                let guilds = await client.guilds.fetch();
+                guilds.forEach(async guild => {
+                    try {
+                        await rest.put(
+                            Routes.applicationGuildCommands(client.user.id, guild.id),
+                            { body: [] },
+                        );
+                    } catch (DiscordAPIError) {
+
+                    }
+                });
+            }
 
             setInterval(() => {
                 if(radio.done){
