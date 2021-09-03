@@ -25,7 +25,7 @@ module.exports = {
 
         const embed = new Discord.MessageEmbed()
             .setTitle(client.messages.nowplayingTitle)
-            .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["play"].replace(/[^0-9]+/g, ''))
+            .setThumbnail((radio.station.logo || "https://cdn.discordapp.com/emojis/" + client.messageEmojis["play"].replace(/[^0-9]+/g, '')))
             .setColor(client.config.embedColor)
             .setDescription(message.nowplayingDescription)
             .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
