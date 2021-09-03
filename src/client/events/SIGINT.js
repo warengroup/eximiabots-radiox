@@ -1,4 +1,3 @@
-import Discord from "discord.js";
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { token, version } = require('../../config.js');
