@@ -36,6 +36,7 @@ module.exports = {
                 .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["logo"].replace(/[^0-9]+/g, ''))
                 .setColor(client.config.embedColor)
                 .setDescription(client.messages.messageCommandsDeprecatedDescription)
+                .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
                 .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
 
             msg.channel.send({ embeds: [embed] });

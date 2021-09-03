@@ -97,6 +97,7 @@ async function play(interaction, guild, client, url, Discord) {
         .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["play"].replace(/[^0-9]+/g, ''))
         .setColor(client.config.embedColor)
         .addField(client.messages.nowplayingTitle, message.nowplayingDescription, true)
+        .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
         .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
     
     const buttons = new Discord.MessageActionRow()
