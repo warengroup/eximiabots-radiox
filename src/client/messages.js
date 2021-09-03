@@ -5,13 +5,13 @@ module.exports = {
     runningCommandFailed: "Running this command failed!",
     noPermsEmbed: "I cannot send embeds (Embed links).",
     bugTitle: "Found a bug with %client.user.username%?",
-    bugDescription: "Join the support server \n %client.config.supportGuild%",
+    bugDescription: "Join the support server" + "\n" + "%client.config.supportGuild%",
     helpTitle: "%client.user.username% help:",
     helpDescription: "%commands%",
     inviteTitle: "Invite %client.user.username% to your Discord server!",
     listTitle: "Radio Stations",
     nowplayingTitle: "Now Playing",
-    nowplayingDescription: "**%radio.station.name%** \n Owner: %radio.station.owner% \n %client.funcs.msToTime(completed)%",
+    nowplayingDescription: "**%radio.station.name%**" + "\n"+ "Owner: %radio.station.owner%" + "\n" + "%client.funcs.msToTime(completed)%",
     noVoiceChannel: "You need to be in a voice channel to play radio!",
     noQuery: "You need to use a number or search for a supported station!",
     noPermsConnect: "I cannot connect to your voice channel.",
@@ -36,5 +36,5 @@ module.exports = {
     statusField5: "Hosted by",
     errorStationURL: "Station can't be URL",
     messageCommandsDeprecatedTitle: "%client.user.username%",
-    messageCommandsDeprecatedDescription: "We recommend you to reauthorize our bot by clicking the invite link down below, because Discord is planning to remove message content from verified bots [Read More](https://support-dev.discord.com/hc/en-us/articles/4404772028055) \n\n  **Invite Bot** \n https://wgi.fi/radiox_invite \n\n This bot now supports slash commands, you should start using them instead. Type / into the message box and select the bot you wish to use. Remember to be careful as there are a few bugs here and there on Discord. \n\n We will remove this deprecation message in March of 2022 when RadioX 1.0.0 is released."
+    messageCommandsDeprecatedDescription: "We recommend you to reauthorize our bot by clicking the invite link down below, because Discord is planning to remove message content from verified bots [Read More](https://support-dev.discord.com/hc/en-us/articles/4404772028055)" + "\n\n" + "**Invite Bot**" + "\n" + "https://wgi.fi/radiox_invite" + "\n\n" + "This bot now supports slash commands, you should start using them instead. Type / into the message box and select the bot you wish to use. Remember to be careful as there are a few bugs here and there on Discord." + "\n\n" + "We will remove this deprecation message in March of 2022 when RadioX 1.0.0 is released."
 };
