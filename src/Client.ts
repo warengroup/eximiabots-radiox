@@ -39,6 +39,7 @@ class RadioClient extends Client {
         this.funcs.statisticsUpdate = require("./client/funcs/statisticsUpdate.js");
         this.funcs.saveState = require("./client/funcs/saveState.js");
         this.funcs.loadState = require("./client/funcs/loadState.js");
+        this.funcs.searchStations = require("./client/funcs/searchStations.js");
 
         console.log('RadioX ' + this.config.version);
         console.log('Internet Radio to your Discord guild');
