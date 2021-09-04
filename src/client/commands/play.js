@@ -6,7 +6,6 @@ const {
 
 module.exports = {
     name: "play",
-    alias: "p",
     usage: "<song name>",
     description: "Play radio",
     options: [

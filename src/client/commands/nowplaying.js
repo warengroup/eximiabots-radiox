@@ -1,7 +1,5 @@
 module.exports = {
     name: 'nowplaying',
-    alias: 'np',
-    usage: '',
     description: 'Current Radio Station',
     permission: 'none',
     category: 'radio',

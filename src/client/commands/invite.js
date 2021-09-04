@@ -1,7 +1,5 @@
 module.exports = {
     name: 'invite',
-    alias: 'i',
-    usage: '',
     description: 'Invite Bot',
     permission: 'none',
     category: 'info',

@@ -1,7 +1,5 @@
 module.exports = {
     name: 'statistics',
-    alias: 'stats',
-    usage: '',
     description: 'Show statistics',
     permission: 'none',
     category: 'info',

@@ -1,6 +1,5 @@
 module.exports = {
     name: 'previous',
-    usage: '',
     description: 'Previous Station',
     permission: 'none',
     category: 'info',

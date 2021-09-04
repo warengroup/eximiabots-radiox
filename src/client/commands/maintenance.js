@@ -1,7 +1,5 @@
 module.exports = {
     name: 'maintenance',
-    alias: 'm',
-    usage: '',
     description: 'Bot Maintenance',
     permission: 'none',
     category: 'info',

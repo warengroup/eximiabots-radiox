@@ -1,6 +1,5 @@
 module.exports = {
     name: 'next',
-    usage: '',
     description: 'Next Station',
     permission: 'none',
     category: 'info',

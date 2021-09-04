@@ -1,7 +1,5 @@
 module.exports = {
     name: 'status',
-    alias: 'st',
-    usage: '',
     description: 'Bot Status',
     permission: 'none',
     category: 'info',

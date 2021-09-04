@@ -1,7 +1,5 @@
 module.exports = {
     name: 'help',
-    alias: 'h',
-    usage: '<command(opt)>',
     description: 'Get help using bot',
     permission: 'none',
     category: 'info',

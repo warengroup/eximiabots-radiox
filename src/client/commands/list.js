@@ -1,7 +1,5 @@
 module.exports = {
     name: 'list',
-    alias: 'l',
-    usage: '',
     description: 'List radio stations',
     permission: 'none',
     category: 'radio',

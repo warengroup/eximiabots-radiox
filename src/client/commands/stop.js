@@ -1,8 +1,6 @@
 module.exports = {
     name: 'stop',
     description: 'Stop radio',
-    alias: 's',
-    usage: '',
     permission: 'none',
     category: 'radio',
     async execute(interaction, client, Discord, command) {
