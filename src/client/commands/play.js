@@ -1,6 +1,5 @@
 const {
     createAudioPlayer,
-    createAudioResource,
     getVoiceConnection,
     joinVoiceChannel
 } = require("@discordjs/voice");
@@ -141,7 +140,7 @@ module.exports = {
             radio.station = station;
             radio.textChannel = interaction.channel;
             radio.startTime = date.getTime();
-            play(interaction, interaction.guild, client, url, Discord);
+            client.funcs.play(interaction, interaction.guild, client, url, Discord);
 
             return;
         }

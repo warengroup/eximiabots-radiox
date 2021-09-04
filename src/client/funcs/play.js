@@ -1,3 +1,7 @@
+const {
+    createAudioResource
+} = require("@discordjs/voice");
+
 module.exports = async function play(interaction, guild, client, url, Discord) {
     let message = {};
     const radio = client.radio.get(guild.id);

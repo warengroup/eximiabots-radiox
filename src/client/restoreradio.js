@@ -1,7 +1,6 @@
 import Discord from "discord.js";
 const {
     createAudioPlayer,
-    createAudioResource,
     getVoiceConnection,
     joinVoiceChannel
 } = require("@discordjs/voice");
