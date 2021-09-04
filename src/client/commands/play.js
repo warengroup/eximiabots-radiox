@@ -240,7 +240,6 @@ async function play(interaction, guild, client, url, Discord) {
                 .setCustomId('prev')
                 .setEmoji(client.messageEmojis["prev"])
                 .setStyle('SECONDARY')
-                .setDisabled(true)
         )
         .addComponents(
             new Discord.MessageButton()
@@ -253,7 +252,6 @@ async function play(interaction, guild, client, url, Discord) {
                 .setCustomId('next')
                 .setEmoji(client.messageEmojis["next"])
                 .setStyle('SECONDARY')
-                .setDisabled(true)
         )
         .addComponents(
             new Discord.MessageButton()
