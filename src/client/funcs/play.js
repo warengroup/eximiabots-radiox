@@ -80,7 +80,7 @@ module.exports = async function play(interaction, guild, client, url, Discord) {
 
     message.play = client.messages.play.replace("%radio.station.name%", radio.station.name);
     
-    interaction.reply({
+    interaction?.reply({
         content: client.messageEmojis["play"] + message.play,
         ephemeral: true
     });
