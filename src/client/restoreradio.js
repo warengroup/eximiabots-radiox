@@ -13,6 +13,10 @@ module.exports = {
             let state = client.funcs.loadState(client, guild);
             if(!state) return;
             if(!state.station || !state.channels.voice || !state.channels.text) return;
+            let voiceChannel = client.channels.cache.get(state.channels.voice);
+            if(!voiceChannel) return;
+            if(voiceChannel.members.size === 0) return;
+
 
             const sstation = await client.funcs.searchStation(state.station.name, client);
             let url = sstation.stream[sstation.stream.default];
@@ -29,7 +33,6 @@ module.exports = {
             client.radio.set(guild.id, construct);
 
             try {
-                let voiceChannel = client.channels.cache.get(state.channels.voice);
                 const connection =
                     getVoiceConnection(guild.id) ??
                     joinVoiceChannel({
