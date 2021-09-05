@@ -13,7 +13,7 @@ module.exports = {
             if (!command) return;
     
             try {
-                command.execute(interaction, client, Discord, command);
+                command.execute(interaction, client, Discord);
             } catch (error) {
                 interaction.reply({
                     content: client.messages.runningCommandFailed,
@@ -27,7 +27,7 @@ module.exports = {
             if (!command) return;
 
             try {
-                command.execute(interaction, client, Discord, command);
+                command.execute(interaction, client, Discord);
             } catch (error) {
                 interaction.reply({
                     content: client.messages.runningCommandFailed,

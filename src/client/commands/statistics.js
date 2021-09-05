@@ -3,7 +3,7 @@ module.exports = {
     description: 'Show statistics',
     permission: 'none',
     category: 'info',
-    execute(interaction, client, Discord, command) {
+    execute(interaction, client, Discord) {
         let message = {};
         let stations = client.stations;
         let currentGuild = client.datastore.getEntry(interaction.guild.id);

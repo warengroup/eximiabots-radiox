@@ -3,7 +3,7 @@ module.exports = {
     description: 'Bot Status',
     permission: 'none',
     category: 'info',
-    async execute(interaction, client, Discord, command) {
+    async execute(interaction, client, Discord) {
         let message = {};
 
         message.statusTitle = client.messages.statusTitle.replace("%client.user.username%", client.user.username);

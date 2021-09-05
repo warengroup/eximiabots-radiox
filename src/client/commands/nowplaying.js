@@ -3,7 +3,7 @@ module.exports = {
     description: 'Current Radio Station',
     permission: 'none',
     category: 'radio',
-    async execute(interaction, client, Discord, command) {
+    async execute(interaction, client, Discord) {
         let message = {};
         const radio = client.radio.get(interaction.guild.id);
         if (!radio) return interaction.reply({

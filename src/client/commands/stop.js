@@ -3,7 +3,7 @@ module.exports = {
     description: 'Stop radio',
     permission: 'none',
     category: 'radio',
-    async execute(interaction, client, Discord, command) {
+    async execute(interaction, client, Discord) {
         const radio = client.radio.get(interaction.guild.id);
         if (client.funcs.check(client, interaction, command)) {
             client.funcs.statisticsUpdate(client, interaction.guild, radio);
