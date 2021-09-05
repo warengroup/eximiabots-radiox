@@ -22,47 +22,7 @@ module.exports = {
                 return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
             }
 
-            let stations = new Array();
-
-            let options = new Array();
-            options[1] = new Array();
-            options[2] = new Array();
-
-            stations[1] = client.stations.slice(0,24).forEach(station => {
-                station = {
-                    label: station.name,
-                    description: station.owner,
-                    value: station.name
-                };
-                options[1].push(station);
-            });
-
-            stations[2] = client.stations.slice(25).forEach(station => {
-                station = {
-                    label: station.name,
-                    description: station.owner,
-                    value: station.name
-                };
-                options[2].push(station);
-            });
-
-            const menu = new Discord.MessageActionRow()
-                .addComponents(
-                    new Discord.MessageSelectMenu()
-                        .setCustomId('play')
-                        .setPlaceholder('Nothing selected')
-                        .addOptions(options[1])
-                        .addOptions(options[2])
-                );
-
-            stations = null;
-            options = null;
-
-		    return interaction.reply({
-                content: '**Select station:**',
-                components: [menu],
-                ephemeral: true
-            });
+            client.funcs.listStations(client, interaction);
         }
         let url = query ? query.replace(/<(.+)>/g, "$1") : "";
         const radio = client.radio.get(interaction.guild.id);
@@ -139,7 +99,7 @@ module.exports = {
             radio.station = station;
             radio.textChannel = interaction.channel;
             radio.startTime = date.getTime();
-            client.funcs.play(interaction, interaction.guild, client, url, Discord);
+            client.funcs.play(interaction, interaction.guild, client, url);
 
             return;
         }
@@ -165,7 +125,7 @@ module.exports = {
             construct.connection = connection;
             let date = new Date();
             construct.startTime = date.getTime();
-            client.funcs.play(interaction, interaction.guild, client, url, Discord);
+            client.funcs.play(interaction, interaction.guild, client, url);
 
             client.datastore.checkEntry(interaction.guild.id);
             construct.currentGuild = client.datastore.getEntry(interaction.guild.id);

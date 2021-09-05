@@ -3,7 +3,7 @@ module.exports = {
     description: 'List radio stations',
     permission: 'none',
     category: 'radio',
-    execute(interaction, client, Discord, command) {
+    execute(interaction, client, Discord) {
         let message = {};
         if(!client.stations) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
@@ -13,49 +13,7 @@ module.exports = {
         const radio = client.radio.get(interaction.guild.id);
         
         if(radio){
-            let menu = [];
-
-            let stations = new Array();
-
-            let options = new Array();
-            options[1] = new Array();
-            options[2] = new Array();
-
-            stations[1] = client.stations.slice(0,24).forEach(station => {
-                station = {
-                    label: station.name,
-                    description: station.owner,
-                    value: station.name
-                };
-                options[1].push(station);
-            });
-
-            stations[2] = client.stations.slice(25).forEach(station => {
-                station = {
-                    label: station.name,
-                    description: station.owner,
-                    value: station.name
-                };
-                options[2].push(station);
-            });
-
-            menu = new Discord.MessageActionRow()
-                .addComponents(
-                    new Discord.MessageSelectMenu()
-                        .setCustomId('play')
-                        .setPlaceholder('Change station')
-                        .addOptions(options[1])
-                        .addOptions(options[2])
-                );
-
-            stations = null;
-            options = null;
-
-            interaction.reply({
-                content: '**Select station:**',
-                components: [menu],
-                ephemeral: true
-            });
+            client.funcs.listStations(client, interaction);
         } else {
             let stations = `${client.stations.map(s => `**#** ${s.name}`).join('\n')}`
             const hashs = stations.split('**#**').length;
