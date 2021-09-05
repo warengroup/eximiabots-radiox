@@ -4,20 +4,9 @@ module.exports = {
     permission: 'none',
     category: 'info',
     async execute(interaction, client) {
-        let message = {};
-        const radio = client.radio.get(interaction.guild.id);
-        if (!radio) return interaction.reply({
-            content: 'There is nothing playing.',
-            ephemeral: true
-        });
-        if(!client.stations) {
-            message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
-            return interaction.reply({
-                content: client.messageEmojis["error"] + message.errorToGetPlaylist,
-                ephemeral: true
-            });
+        if (client.funcs.check(client, interaction, command)) {
+            const radio = client.radio.get(interaction.guild.id);
+            console.log(client.stations.find(station => station.name == radio.station.name));
         }
-
-        
     }
 }

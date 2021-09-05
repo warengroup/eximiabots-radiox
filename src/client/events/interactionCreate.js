@@ -25,7 +25,7 @@ module.exports = {
             if (!command) return;
 
             try {
-                command.execute(interaction, client);
+                command.execute(interaction, client, command);
             } catch (error) {
                 interaction.reply({
                     content: client.messages.runningCommandFailed,

@@ -5,7 +5,7 @@ module.exports = {
     description: 'Current Radio Station',
     permission: 'none',
     category: 'radio',
-    async execute(interaction, client) {
+    async execute(interaction, client, command) {
         if (client.funcs.check(client, interaction, command)) {
             let message = {};
             const radio = client.radio.get(interaction.guild.id);
