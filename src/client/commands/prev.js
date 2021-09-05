@@ -2,7 +2,7 @@ module.exports = {
     name: 'prev',
     description: 'Previous Station',
     permission: 'none',
-    category: 'info',
+    category: 'radio',
     async execute(interaction, client, command) {
         if (client.funcs.check(client, interaction, command)) {
             const radio = client.radio.get(interaction.guild.id);
