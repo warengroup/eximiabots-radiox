@@ -4,10 +4,11 @@ module.exports = function (client, interaction, command) {
     const permissions = interaction.channel.permissionsFor(interaction.user);
     if(!client.stations) {
         message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
-        return interaction.reply({
+        interaction.reply({
             content: client.messageEmojis["error"] + message.errorToGetPlaylist,
             ephemeral: true
         });
+        return false;
     }
     if (!radio) {
         interaction.reply({
