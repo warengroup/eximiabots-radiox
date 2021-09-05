@@ -35,7 +35,7 @@ module.exports = {
                 radio = currentRadios.next();
             }
 
-            const rest = new REST({ version: '9' }).setToken(token);
+            /*const rest = new REST({ version: '9' }).setToken(token);
             if(version.includes("-dev")){
                 await rest.put(
                     Routes.applicationCommands(client.user.id),
@@ -47,13 +47,13 @@ module.exports = {
                     try {
                         await rest.put(
                             Routes.applicationGuildCommands(client.user.id, guild.id),
-                            { body: [] },
+                            { body: [] }
                         );
                     } catch (DiscordAPIError) {
 
                     }
                 });
-            }
+            }*/
 
             setInterval(() => {
                 if(radio.done){

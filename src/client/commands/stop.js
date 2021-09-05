@@ -1,11 +1,11 @@
+import Discord from "discord.js";
+
 module.exports = {
     name: 'stop',
     description: 'Stop radio',
-    alias: 's',
-    usage: '',
     permission: 'none',
     category: 'radio',
-    async execute(interaction, client, Discord, command) {
+    async execute(interaction, client, command) {
         const radio = client.radio.get(interaction.guild.id);
         if (client.funcs.check(client, interaction, command)) {
             client.funcs.statisticsUpdate(client, interaction.guild, radio);

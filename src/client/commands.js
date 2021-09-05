@@ -44,16 +44,17 @@ module.exports = {
                         try {
                             await rest.put(
                                 Routes.applicationGuildCommands(client.user.id, guild.id),
-                                { body: commands },
+                                { body: commands }
                             );
+                            client.funcs.logger('Slash Commands', 'Guild Applications – Successful' + "\n" + guild.id + " / " + guild.name);
                         } catch (DiscordAPIError) {
-
+                            client.funcs.logger('Slash Commands', 'Guild Applications – Failed' + "\n" + guild.id + " / " + guild.name);
                         }
                     });
                 } else {
                     await rest.put(
                         Routes.applicationCommands(client.user.id),
-                        { body: commands },
+                        { body: commands }
                     );
                 }
 

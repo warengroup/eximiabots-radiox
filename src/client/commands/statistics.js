@@ -1,14 +1,15 @@
+import Discord from "discord.js";
+
 module.exports = {
     name: 'statistics',
-    alias: 'stats',
-    usage: '',
     description: 'Show statistics',
     permission: 'none',
     category: 'info',
-    execute(interaction, client, Discord, command) {
+    execute(interaction, client) {
         let message = {};
         let stations = client.stations;
         let currentGuild = client.datastore.getEntry(interaction.guild.id);
+        let global = client.datastore.getEntry("global");
         let statistics = "";
         
         if(!client.stations) {
@@ -21,9 +22,13 @@ module.exports = {
         } else {
             Object.keys(stations).forEach(function(station) {
                 if(currentGuild.statistics[stations[station].name] && currentGuild.statistics[stations[station].name].time && parseInt(currentGuild.statistics[stations[station].name].time) > 0 && currentGuild.statistics[stations[station].name].used && parseInt(currentGuild.statistics[stations[station].name].used) > 0){
-                    statistics += `**${parseInt(station) + 1}** ` + stations[station].name + " \n";
-                    statistics += "Time: " + client.funcs.msToTime(currentGuild.statistics[stations[station].name].time) + "\n";
-                    statistics += "Used: " + currentGuild.statistics[stations[station].name].used + "\n";
+                    statistics += `**${parseInt(station) + 1}. ` + stations[station].name + "** \n";
+                    if(global && global.statistics[stations[station].name] && global.statistics[stations[station].name].time && parseInt(global.statistics[stations[station].name].time) > 0 && global.statistics[stations[station].name].used && parseInt(global.statistics[stations[station].name].used) > 0){
+                        statistics += "Guild – Time: " + client.funcs.msToTime(currentGuild.statistics[stations[station].name].time) + " (" + ((currentGuild.statistics[stations[station].name].time / global.statistics[stations[station].name].time) * 100) + "%" + ")" + " / " + "Used: " + currentGuild.statistics[stations[station].name].used + " (" + ((currentGuild.statistics[stations[station].name].used / global.statistics[stations[station].name].used) * 100) + "%" + ")" + "\n";
+                        statistics += "Global – Time: " + client.funcs.msToTime(global.statistics[stations[station].name].time) + " / " + "Used: " + global.statistics[stations[station].name].used + "\n\n";
+                    } else {
+                        statistics += "Time: " + client.funcs.msToTime(currentGuild.statistics[stations[station].name].time) + " / " + "Used: " + currentGuild.statistics[stations[station].name].used + "\n\n";
+                    }
                 }
             });
         }

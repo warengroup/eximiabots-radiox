@@ -22,7 +22,7 @@ module.exports = {
         if (!args[0]) return;
         const commandName = args[0].toLowerCase();
         if (commandName === 'none') return;
-        const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName)) || client.commandAliases.get(commandName);
+        const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
         if (!command && message.content !== `${prefix}`) return;
         const permissions = message.channel.permissionsFor(message.client.user);
         if (!permissions.has('EMBED_LINKS')) return message.channel.send(client.messages.noPermsEmbed);

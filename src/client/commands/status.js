@@ -1,11 +1,11 @@
+import Discord from "discord.js";
+
 module.exports = {
     name: 'status',
-    alias: 'st',
-    usage: '',
     description: 'Bot Status',
     permission: 'none',
     category: 'info',
-    async execute(interaction, client, Discord, command) {
+    async execute(interaction, client) {
         let message = {};
 
         message.statusTitle = client.messages.statusTitle.replace("%client.user.username%", client.user.username);
