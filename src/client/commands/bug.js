@@ -1,11 +1,11 @@
+import Discord from "discord.js";
+
 module.exports = {
     name: 'bug',
-    alias: 'none',
-    usage: '',
     description: 'Report a bug',
     permission: 'none',
     category: 'info',
-    async execute(interaction, client, Discord, command) {
+    async execute(interaction, client) {
         let message = {};
 
         message.bugTitle = client.messages.bugTitle.replace("%client.user.username%", client.user.username);
