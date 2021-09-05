@@ -1,9 +1,11 @@
+import Discord from "discord.js";
+
 module.exports = {
     name: 'statistics',
     description: 'Show statistics',
     permission: 'none',
     category: 'info',
-    execute(interaction, client, Discord) {
+    execute(interaction, client) {
         let message = {};
         let stations = client.stations;
         let currentGuild = client.datastore.getEntry(interaction.guild.id);

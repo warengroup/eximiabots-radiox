@@ -1,5 +1,3 @@
-import Discord from "discord.js";
-
 module.exports = {
     name: 'interactionCreate',
     async execute(client, interaction) {
@@ -13,7 +11,7 @@ module.exports = {
             if (!command) return;
     
             try {
-                command.execute(interaction, client, Discord);
+                command.execute(interaction, client);
             } catch (error) {
                 interaction.reply({
                     content: client.messages.runningCommandFailed,
@@ -27,7 +25,7 @@ module.exports = {
             if (!command) return;
 
             try {
-                command.execute(interaction, client, Discord);
+                command.execute(interaction, client);
             } catch (error) {
                 interaction.reply({
                     content: client.messages.runningCommandFailed,

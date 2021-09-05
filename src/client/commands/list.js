@@ -1,9 +1,11 @@
+import Discord from "discord.js";
+
 module.exports = {
     name: 'list',
     description: 'List radio stations',
     permission: 'none',
     category: 'radio',
-    execute(interaction, client, Discord) {
+    execute(interaction, client) {
         let message = {};
         if(!client.stations) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);

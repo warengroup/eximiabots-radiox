@@ -1,9 +1,11 @@
+import Discord from "discord.js";
+
 module.exports = {
     name: 'maintenance',
     description: 'Bot Maintenance',
     permission: 'none',
     category: 'info',
-    execute(interaction, client, Discord, command) {
+    execute(interaction, client) {
         let message = {};
 
         if(!client.funcs.isDev(client.config.devId, interaction.user.id)) return interaction.reply(client.messageEmojis["error"] + client.messages.notAllowed);

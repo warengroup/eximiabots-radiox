@@ -1,9 +1,11 @@
+import Discord from "discord.js";
+
 module.exports = {
     name: 'help',
     description: 'Get help using bot',
     permission: 'none',
     category: 'info',
-    execute(interaction, client, Discord, command) {
+    execute(interaction, client) {
         let message = {};
 
         const categories = [];

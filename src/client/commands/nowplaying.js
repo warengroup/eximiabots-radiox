@@ -1,9 +1,11 @@
+import Discord from "discord.js";
+
 module.exports = {
     name: 'nowplaying',
     description: 'Current Radio Station',
     permission: 'none',
     category: 'radio',
-    async execute(interaction, client, Discord) {
+    async execute(interaction, client) {
         let message = {};
         const radio = client.radio.get(interaction.guild.id);
         if (!radio) return interaction.reply({

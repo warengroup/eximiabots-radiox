@@ -1,9 +1,11 @@
+import Discord from "discord.js";
+
 module.exports = {
     name: 'invite',
     description: 'Invite Bot',
     permission: 'none',
     category: 'info',
-    execute(interaction, client, Discord, command) {
+    execute(interaction, client) {
         let message = {};
         message.inviteTitle = client.messages.inviteTitle.replace("%client.user.username%", client.user.username);
         const embed = new Discord.MessageEmbed()

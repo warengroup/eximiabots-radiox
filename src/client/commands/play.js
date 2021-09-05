@@ -13,7 +13,7 @@ module.exports = {
     ],
     permission: "none",
     category: "radio",
-    async execute(interaction, client, Discord, command) {
+    async execute(interaction, client) {
         let message = {};
         let query = interaction.options?.getString("query") ?? interaction.values?.[0];
         if(!query){
