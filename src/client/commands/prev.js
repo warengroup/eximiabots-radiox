@@ -1,7 +1,6 @@
 module.exports = {
     name: 'prev',
     description: 'Previous Station',
-    permission: 'none',
     category: 'radio',
     async execute(interaction, client, command) {
         if (client.funcs.check(client, interaction, command)) {

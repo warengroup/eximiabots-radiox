@@ -3,7 +3,6 @@ import Discord from "discord.js";
 module.exports = {
     name: 'list',
     description: 'List radio stations',
-    permission: 'none',
     category: 'radio',
     execute(interaction, client) {
         let message = {};

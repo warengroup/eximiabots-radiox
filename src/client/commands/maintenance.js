@@ -4,7 +4,6 @@ import fetch from "node-fetch";
 module.exports = {
     name: 'maintenance',
     description: 'Bot Maintenance',
-    permission: 'none',
     category: 'info',
     options: [
         { type: "NUMBER", name: "action", description: "Select action", required: false}

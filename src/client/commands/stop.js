@@ -3,7 +3,6 @@ import Discord from "discord.js";
 module.exports = {
     name: 'stop',
     description: 'Stop radio',
-    permission: 'none',
     category: 'radio',
     async execute(interaction, client, command) {
         const radio = client.radio.get(interaction.guild.id);

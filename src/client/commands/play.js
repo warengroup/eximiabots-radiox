@@ -11,7 +11,6 @@ module.exports = {
     options: [
         { type: "STRING", name: "query", description: "Select station", required: false}
     ],
-    permission: "none",
     category: "radio",
     async execute(interaction, client) {
         let message = {};

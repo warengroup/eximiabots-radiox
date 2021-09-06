@@ -24,14 +24,6 @@ module.exports = function (client, interaction, command) {
         });
         return false;
     }
-    if(!command.permission == 'none'){
-        if (!permissions.has(command.permission)) {
-            message.noPerms = client.messages.noPerms.replace("%command.permission%", command.permission);
-            interaction.reply({
-                content: client.messageEmojis["error"] + message.noPerms,
-                ephemeral: true
-            });
-            return false;
-        } else return true;
-    } else return true;
+
+    return true;
 };
