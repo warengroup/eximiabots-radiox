@@ -17,7 +17,10 @@ module.exports = {
         let message = {};
         if(!client.stations) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
-            return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
+            return interaction.reply({
+                content: client.messageEmojis["error"] + message.errorToGetPlaylist,
+                ephemeral: true
+            });
         }
 
         let query = interaction.options?.getString("query") ?? interaction.values?.[0];
@@ -28,7 +31,7 @@ module.exports = {
         const radio = client.radio.get(interaction.guild.id);
         const voiceChannel = interaction.member.voice.channel;
         if (!radio) {
-            if (!interaction.member.voice.channel)
+            if (!voiceChannel)
                 return interaction.reply({
                     content: client.messageEmojis["error"] + client.messages.noVoiceChannel,
                     ephemeral: true
