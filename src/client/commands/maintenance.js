@@ -42,6 +42,12 @@ module.exports = {
                 value: "6"
             },
             {
+                emoji: "<:RadioXList:688541155519889482>",
+                label: "Reload Stations",
+                description: "",
+                value: "7"
+            },
+            {
                 emoji: "<:dnd:746069698139127831>",
                 label: "Enable Maintenance Mode",
                 description: "",
@@ -107,6 +113,18 @@ module.exports = {
                 client.user.setStatus('idle');
                 require(`../commands.js`).execute(client);
                 client.user.setStatus('online');
+                break;
+            case "7":
+                try {
+                    client.funcs.logger('Stations', 'Started fetching list – ' + client.config.stationslistUrl);
+                    client.stations = await fetch(client.config.stationslistUrl)
+                        .then(client.funcs.checkFetchStatus)
+                        .then(response => response.json());
+    
+                    client.funcs.logger('Stations', 'Successfully fetched list');
+                } catch (error) {
+                    client.funcs.logger('Stations', 'Fetching list failed');
+                }
                 break;
             case "8":
                 client.user.setStatus('dnd');
