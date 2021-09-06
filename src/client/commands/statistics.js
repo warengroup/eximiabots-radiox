@@ -4,7 +4,6 @@ import Discord from "discord.js";
 module.exports = {
     name: 'statistics',
     description: 'Show statistics',
-    permission: 'none',
     category: 'info',
     execute(interaction, client) {
         let message = {};
@@ -15,7 +14,10 @@ module.exports = {
         
         if(!client.stations) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
-            return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
+            return interaction.reply({
+                content: client.messageEmojis["error"] + message.errorToGetPlaylist,
+                ephemeral: true
+            });
         }
 
         if(!currentGuild || currentGuild && !currentGuild.statistics){

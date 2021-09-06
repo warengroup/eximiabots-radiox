@@ -1,0 +1,7 @@
+dependencies:
+- package-lock.json
+
+documentation:
+- README.md
+- LICENSE
+- .env_example

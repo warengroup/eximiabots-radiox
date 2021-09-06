@@ -3,13 +3,15 @@ import Discord from "discord.js";
 module.exports = {
     name: 'list',
     description: 'List radio stations',
-    permission: 'none',
     category: 'radio',
     execute(interaction, client) {
         let message = {};
         if(!client.stations) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
-            return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
+            return interaction.reply({
+                content: client.messageEmojis["error"] + message.errorToGetPlaylist,
+                ephemeral: true
+            });
         }
         
         const radio = client.radio.get(interaction.guild.id);

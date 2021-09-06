@@ -3,7 +3,6 @@ import Discord from "discord.js";
 module.exports = {
     name: 'status',
     description: 'Bot Status',
-    permission: 'none',
     category: 'info',
     async execute(interaction, client) {
         let message = {};

@@ -3,7 +3,6 @@ import Discord from "discord.js";
 module.exports = {
     name: 'nowplaying',
     description: 'Current Radio Station',
-    permission: 'none',
     category: 'radio',
     async execute(interaction, client, command) {
         if (client.funcs.check(client, interaction, command)) {

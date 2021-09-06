@@ -1,9 +1,9 @@
 import Discord from "discord.js";
+import fetch from "node-fetch";
 
 module.exports = {
     name: 'maintenance',
     description: 'Bot Maintenance',
-    permission: 'none',
     category: 'info',
     options: [
         { type: "NUMBER", name: "action", description: "Select action", required: false}
@@ -11,7 +11,10 @@ module.exports = {
     async execute(interaction, client) {
         let message = {};
 
-        if(!client.funcs.isDev(client.config.devId, interaction.user.id)) return interaction.reply(client.messageEmojis["error"] + client.messages.notAllowed);
+        if(!client.funcs.isDev(client.config.devId, interaction.user.id)) return interaction.reply({
+            content: client.messageEmojis["error"] + client.messages.notAllowed,
+            ephemeral: true
+        });
         let action = interaction.options?.getNumber("action") ?? interaction.values?.[0];
         const options = new Array(
             {
@@ -37,6 +40,12 @@ module.exports = {
                 label: "Reload Commands",
                 description: "",
                 value: "6"
+            },
+            {
+                emoji: "<:RadioXList:688541155519889482>",
+                label: "Reload Stations",
+                description: "",
+                value: "7"
             },
             {
                 emoji: "<:dnd:746069698139127831>",
@@ -87,23 +96,31 @@ module.exports = {
                 break;
             case "4":
                 client.user.setStatus('idle');
-                setTimeout(function () {
-                    client.funcs.saveRadios(client);
-                }, 5000);
+                client.funcs.saveRadios(client);
                 client.user.setStatus('online');
                 break;
             case "5":
                 client.user.setStatus('idle');
                 let guilds = await client.guilds.fetch();
-                setTimeout(function () {
-                    client.funcs.restoreRadios(client, guilds);
-                }, 5000);
+                client.funcs.restoreRadios(client, guilds);
                 client.user.setStatus('online');
                 break;
             case "6":
                 client.user.setStatus('idle');
                 require(`../commands.js`).execute(client);
                 client.user.setStatus('online');
+                break;
+            case "7":
+                try {
+                    client.funcs.logger('Stations', 'Started fetching list – ' + client.config.stationslistUrl);
+                    client.stations = await fetch(client.config.stationslistUrl)
+                        .then(client.funcs.checkFetchStatus)
+                        .then(response => response.json());
+    
+                    client.funcs.logger('Stations', 'Successfully fetched list');
+                } catch (error) {
+                    client.funcs.logger('Stations', 'Fetching list failed');
+                }
                 break;
             case "8":
                 client.user.setStatus('dnd');

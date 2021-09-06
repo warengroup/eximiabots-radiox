@@ -11,13 +11,15 @@ module.exports = {
     options: [
         { type: "STRING", name: "query", description: "Select station", required: false}
     ],
-    permission: "none",
     category: "radio",
     async execute(interaction, client) {
         let message = {};
         if(!client.stations) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
-            return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
+            return interaction.reply({
+                content: client.messageEmojis["error"] + message.errorToGetPlaylist,
+                ephemeral: true
+            });
         }
 
         let query = interaction.options?.getString("query") ?? interaction.values?.[0];
@@ -27,26 +29,32 @@ module.exports = {
         let url = query ? query.replace(/<(.+)>/g, "$1") : "";
         const radio = client.radio.get(interaction.guild.id);
         const voiceChannel = interaction.member.voice.channel;
-        if (!radio) {
-            if (!interaction.member.voice.channel)
-                return interaction.reply({
-                    content: client.messageEmojis["error"] + client.messages.noVoiceChannel,
-                    ephemeral: true
-                });
-        } else {
-            if (voiceChannel !== radio.voiceChannel)
-                return interaction.reply({
-                    content: client.messageEmojis["error"] + client.messages.wrongVoiceChannel,
-                    ephemeral: true
-                });
+        if (!voiceChannel) return interaction.reply({
+            content: client.messageEmojis["error"] + client.messages.noVoiceChannel,
+            ephemeral: true
+        });
+        if (radio) {
+            if (voiceChannel !== radio.voiceChannel) return interaction.reply({
+                content: client.messageEmojis["error"] + client.messages.wrongVoiceChannel,
+                ephemeral: true
+            });
         }
-        if (!query) return interaction.reply(client.messages.noQuery);
+        if (!query) return interaction.reply({
+            content: client.messages.noQuery,
+            ephemeral: true
+        });
         const permissions = voiceChannel.permissionsFor(interaction.client.user);
         if (!permissions.has("CONNECT")) {
-            return interaction.reply(client.messageEmojis["error"] + client.messages.noPermsConnect);
+            return interaction.reply({
+                content: client.messageEmojis["error"] + client.messages.noPermsConnect,
+                ephemeral: true
+            });
         }
         if (!permissions.has("SPEAK")) {
-            return interaction.reply(client.messageEmojis["error"] + client.messages.noPermsSpeak);
+            return interaction.reply({
+                content: client.messageEmojis["error"] + client.messages.noPermsSpeak,
+                ephemeral: true
+            });
         }
         let station;
         const number = parseInt(query - 1);
@@ -66,17 +74,15 @@ module.exports = {
                 station = client.stations[number];
             }
         } else {
-            if (query.length < 3)
-                return interaction.reply({
-                    content: client.messageEmojis["error"] + client.messages.tooShortSearch,
-                    ephemeral: true
-                });
+            if (query.length < 3) return interaction.reply({
+                content: client.messageEmojis["error"] + client.messages.tooShortSearch,
+                ephemeral: true
+            });
             const sstation = await client.funcs.searchStation(query, client);
-            if (!sstation)
-                return interaction.reply({
-                    content: client.messageEmojis["error"] + client.messages.noSearchResults,
-                    ephemeral: true
-                });
+            if (!sstation) return interaction.reply({
+                content: client.messageEmojis["error"] + client.messages.noSearchResults,
+                ephemeral: true
+            });
             url = sstation.stream[sstation.stream.default];
             station = sstation;
         }
@@ -129,7 +135,10 @@ module.exports = {
         } catch (error) {
             console.log(error);
             client.radio.delete(interaction.guild.id);
-            return interaction.reply(client.messageEmojis["error"] + `An error occured: ${error}`);
+            return interaction.reply({
+                content: client.messageEmojis["error"] + `An error occured: ${error}`,
+                ephemeral: true
+            });
         }
     }
 };

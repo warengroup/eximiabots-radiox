@@ -3,7 +3,6 @@ import Discord from "discord.js";
 module.exports = {
     name: 'bug',
     description: 'Report a bug',
-    permission: 'none',
     category: 'info',
     async execute(interaction, client) {
         let message = {};
