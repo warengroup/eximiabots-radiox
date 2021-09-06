@@ -27,7 +27,10 @@ module.exports = async function play(interaction, guild, client, url) {
             radio.connection?.destroy();
             radio.audioPlayer?.stop();
             client.radio.delete(guild.id);
-            return interaction.reply(client.messages.errorPlaying);
+            return interaction.reply({
+                content: client.messages.errorPlaying,
+                ephemeral: true
+            });
         });
 
     message.nowplayingDescription = client.messages.nowplayingDescription.replace("%radio.station.name%", radio.station.name);

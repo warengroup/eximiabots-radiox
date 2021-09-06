@@ -1,23 +1,18 @@
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
-const { token, version } = require('../../config.js');
-
 module.exports = {
     name: 'SIGINT',
-    async execute(client) {
+    execute(client) {
         client.user.setStatus('dnd');
 
         console.log("\n");
         client.funcs.logger("Bot", "Closing");
         console.log("\n");
+
+        client.funcs.saveRadios(client);
         
-        setTimeout(async function () {
-            let message = {};
-
-            if (!client.stations) return process.exit();
-
-            await client.funcs.saveRadios(client);
-            await process.exit();
-        }, 5000);
+        setInterval(() => {
+            if(client.radio.size == 0){
+                process.exit();
+            }
+        }, 500);
     }
 }

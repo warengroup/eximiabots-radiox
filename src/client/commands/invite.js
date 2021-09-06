@@ -3,7 +3,6 @@ import Discord from "discord.js";
 module.exports = {
     name: 'invite',
     description: 'Invite Bot',
-    permission: 'none',
     category: 'info',
     execute(interaction, client) {
         let message = {};

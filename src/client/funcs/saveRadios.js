@@ -1,4 +1,4 @@
-module.exports =  async function saveRadios(client) {
+module.exports =  function saveRadios(client) {
     let currentRadios = client.radio.keys();
     let radio = currentRadios.next();
     
@@ -7,8 +7,8 @@ module.exports =  async function saveRadios(client) {
         currentRadio.guild = client.datastore.getEntry(radio.value).guild;
     
         if (currentRadio) {
-            await client.funcs.statisticsUpdate(client, currentRadio.guild, currentRadio);
-            await client.funcs.saveState(client, currentRadio.guild, currentRadio);
+            client.funcs.statisticsUpdate(client, currentRadio.guild, currentRadio);
+            client.funcs.saveState(client, currentRadio.guild, currentRadio);
             currentRadio.connection?.destroy();
             currentRadio.audioPlayer?.stop();
             currentRadio.message?.delete();

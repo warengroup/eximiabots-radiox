@@ -1,6 +1,6 @@
 module.exports = {
     name: 'SIGTERM',
-    async execute(client) {
+    execute(client) {
         process.emit('SIGINT');
     }
 }
