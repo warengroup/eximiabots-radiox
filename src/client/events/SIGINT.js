@@ -16,50 +16,8 @@ module.exports = {
 
             if (!client.stations) return process.exit();
 
-            let currentRadios = client.radio.keys();
-            let radio = currentRadios.next();
-
-            while (!radio.done) {
-                let currentRadio = client.radio.get(radio.value);
-                currentRadio.guild = client.datastore.getEntry(radio.value).guild;
-
-                if (currentRadio) {
-                    await client.funcs.statisticsUpdate(client, currentRadio.guild, currentRadio);
-                    await client.funcs.saveState(client, currentRadio.guild, currentRadio);
-                    currentRadio.connection?.destroy();
-                    currentRadio.audioPlayer?.stop();
-                    currentRadio.message?.delete();
-                    client.radio.delete(radio.value);
-                }
-                
-                radio = currentRadios.next();
-            }
-
-            /*const rest = new REST({ version: '9' }).setToken(token);
-            if(version.includes("-dev")){
-                await rest.put(
-                    Routes.applicationCommands(client.user.id),
-                    { body: [] },
-                );
-
-                let guilds = await client.guilds.fetch();
-                guilds.forEach(async guild => {
-                    try {
-                        await rest.put(
-                            Routes.applicationGuildCommands(client.user.id, guild.id),
-                            { body: [] }
-                        );
-                    } catch (DiscordAPIError) {
-
-                    }
-                });
-            }*/
-
-            setInterval(() => {
-                if(radio.done){
-                    process.exit();
-                }
-            }, 1000);
+            await client.funcs.saveRadios(client);
+            await process.exit();
         }, 5000);
     }
 }

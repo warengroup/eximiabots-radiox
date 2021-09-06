@@ -94,8 +94,8 @@ module.exports = {
         require(`../commands.js`).execute(client);
 
         setTimeout(function () {
-            /*RESTORE RADIO*/
-            require(`../restoreradio.js`).execute(client, guilds);
+            /*RESTORE RADIOS*/
+            client.funcs.restoreRadios(client, guilds);
         }, 5000);
 
     }

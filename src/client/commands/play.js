@@ -15,14 +15,14 @@ module.exports = {
     category: "radio",
     async execute(interaction, client) {
         let message = {};
+        if(!client.stations) {
+            message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
+            return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
+        }
+
         let query = interaction.options?.getString("query") ?? interaction.values?.[0];
         if(!query){
-            if(!client.stations) {
-                message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
-                return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
-            }
-
-            client.funcs.listStations(client, interaction);
+            return client.funcs.listStations(client, interaction);
         }
         let url = query ? query.replace(/<(.+)>/g, "$1") : "";
         const radio = client.radio.get(interaction.guild.id);
@@ -39,16 +39,6 @@ module.exports = {
                     content: client.messageEmojis["error"] + client.messages.wrongVoiceChannel,
                     ephemeral: true
                 });
-        }
-        if (!client.stations) {
-            message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace(
-                "%client.config.supportGuild%",
-                client.config.supportGuild
-            );
-            return interaction.reply({
-                content: client.messageEmojis["error"] + message.errorToGetPlaylist,
-                ephemeral: true
-            });
         }
         if (!query) return interaction.reply(client.messages.noQuery);
         const permissions = voiceChannel.permissionsFor(interaction.client.user);
