@@ -30,18 +30,15 @@ module.exports = {
         let url = query ? query.replace(/<(.+)>/g, "$1") : "";
         const radio = client.radio.get(interaction.guild.id);
         const voiceChannel = interaction.member.voice.channel;
-        if (!radio) {
-            if (!voiceChannel)
-                return interaction.reply({
-                    content: client.messageEmojis["error"] + client.messages.noVoiceChannel,
-                    ephemeral: true
-                });
-        } else {
-            if (voiceChannel !== radio.voiceChannel)
-                return interaction.reply({
-                    content: client.messageEmojis["error"] + client.messages.wrongVoiceChannel,
-                    ephemeral: true
-                });
+        if (!voiceChannel) return interaction.reply({
+            content: client.messageEmojis["error"] + client.messages.noVoiceChannel,
+            ephemeral: true
+        });
+        if (radio) {
+            if (voiceChannel !== radio.voiceChannel) return interaction.reply({
+                content: client.messageEmojis["error"] + client.messages.wrongVoiceChannel,
+                ephemeral: true
+            });
         }
         if (!query) return interaction.reply({
             content: client.messages.noQuery,
