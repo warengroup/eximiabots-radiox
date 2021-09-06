@@ -85,6 +85,10 @@ class RadioClient extends Client {
         process.on('SIGTERM', () => {
             require(`${events}SIGTERM`).execute(this);
         });
+
+        process.on('uncaughtException', (error) => {
+            require(`${events}uncaughtException`).execute(this, error);
+        });
         
         this.on("error", error => {
             console.error(error);
