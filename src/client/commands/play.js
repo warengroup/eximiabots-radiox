@@ -43,7 +43,10 @@ module.exports = {
                     ephemeral: true
                 });
         }
-        if (!query) return interaction.reply(client.messages.noQuery);
+        if (!query) return interaction.reply({
+            content: client.messages.noQuery,
+            ephemeral: true
+        });
         const permissions = voiceChannel.permissionsFor(interaction.client.user);
         if (!permissions.has("CONNECT")) {
             return interaction.reply({
@@ -75,17 +78,15 @@ module.exports = {
                 station = client.stations[number];
             }
         } else {
-            if (query.length < 3)
-                return interaction.reply({
-                    content: client.messageEmojis["error"] + client.messages.tooShortSearch,
-                    ephemeral: true
-                });
+            if (query.length < 3) return interaction.reply({
+                content: client.messageEmojis["error"] + client.messages.tooShortSearch,
+                ephemeral: true
+            });
             const sstation = await client.funcs.searchStation(query, client);
-            if (!sstation)
-                return interaction.reply({
-                    content: client.messageEmojis["error"] + client.messages.noSearchResults,
-                    ephemeral: true
-                });
+            if (!sstation) return interaction.reply({
+                content: client.messageEmojis["error"] + client.messages.noSearchResults,
+                ephemeral: true
+            });
             url = sstation.stream[sstation.stream.default];
             station = sstation;
         }
