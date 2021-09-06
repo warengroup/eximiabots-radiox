@@ -1,6 +1,5 @@
 dependencies:
-- any: ['package-lock.json']
-  all: ['!package.json']
+- package-lock.json
 
 documentation:
 - README.md
