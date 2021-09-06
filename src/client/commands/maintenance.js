@@ -11,7 +11,10 @@ module.exports = {
     async execute(interaction, client) {
         let message = {};
 
-        if(!client.funcs.isDev(client.config.devId, interaction.user.id)) return interaction.reply(client.messageEmojis["error"] + client.messages.notAllowed);
+        if(!client.funcs.isDev(client.config.devId, interaction.user.id)) return interaction.reply({
+            content: client.messageEmojis["error"] + client.messages.notAllowed,
+            ephemeral: true
+        });
         let action = interaction.options?.getNumber("action") ?? interaction.values?.[0];
         const options = new Array(
             {

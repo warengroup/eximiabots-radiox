@@ -43,10 +43,16 @@ module.exports = {
         if (!query) return interaction.reply(client.messages.noQuery);
         const permissions = voiceChannel.permissionsFor(interaction.client.user);
         if (!permissions.has("CONNECT")) {
-            return interaction.reply(client.messageEmojis["error"] + client.messages.noPermsConnect);
+            return interaction.reply({
+                content: client.messageEmojis["error"] + client.messages.noPermsConnect,
+                ephemeral: true
+            });
         }
         if (!permissions.has("SPEAK")) {
-            return interaction.reply(client.messageEmojis["error"] + client.messages.noPermsSpeak);
+            return interaction.reply({
+                content: client.messageEmojis["error"] + client.messages.noPermsSpeak,
+                ephemeral: true
+            });
         }
         let station;
         const number = parseInt(query - 1);
@@ -129,7 +135,10 @@ module.exports = {
         } catch (error) {
             console.log(error);
             client.radio.delete(interaction.guild.id);
-            return interaction.reply(client.messageEmojis["error"] + `An error occured: ${error}`);
+            return interaction.reply({
+                content: client.messageEmojis["error"] + `An error occured: ${error}`,
+                ephemeral: true
+            });
         }
     }
 };
