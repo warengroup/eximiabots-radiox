@@ -97,17 +97,13 @@ module.exports = {
                 break;
             case "4":
                 client.user.setStatus('idle');
-                setTimeout(function () {
-                    client.funcs.saveRadios(client);
-                }, 5000);
+                client.funcs.saveRadios(client);
                 client.user.setStatus('online');
                 break;
             case "5":
                 client.user.setStatus('idle');
                 let guilds = await client.guilds.fetch();
-                setTimeout(function () {
-                    client.funcs.restoreRadios(client, guilds);
-                }, 5000);
+                client.funcs.restoreRadios(client, guilds);
                 client.user.setStatus('online');
                 break;
             case "6":
