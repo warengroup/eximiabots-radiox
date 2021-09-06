@@ -20,6 +20,7 @@ module.exports = {
             if(command.options) {
                 command.options.forEach(function(option) {
                     if(option.type == "STRING") option.type = 3;
+                    if(option.type == "NUMBER") option.type = 10;
                     command.data.options.push(option);
                 });
             }
@@ -49,6 +50,7 @@ module.exports = {
                             client.funcs.logger('Slash Commands', 'Guild Applications – Successful' + "\n" + guild.id + " / " + guild.name);
                         } catch (DiscordAPIError) {
                             client.funcs.logger('Slash Commands', 'Guild Applications – Failed' + "\n" + guild.id + " / " + guild.name);
+                            if(DiscordAPIError.name != "DiscordAPIError[50001]") console.error(DiscordAPIError.message + "\n\n");
                         }
                     });
                 } else {
