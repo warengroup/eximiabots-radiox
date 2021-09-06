@@ -1,0 +1,8 @@
+dependencies:
+- any: ['package-lock.json']
+  all: ['!package.json']
+
+documentation:
+- README.md
+- LICENSE
+- .env_example
