@@ -61,7 +61,7 @@ module.exports = {
         );
 
         if(!action){
-            interaction.reply({
+            return interaction.reply({
                 content: "**" + client.messages.maintenanceTitle + "**",
                 components: [menu],
                 ephemeral: true
