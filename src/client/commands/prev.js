@@ -16,8 +16,6 @@ module.exports = {
                 ephemeral: true
             });
 
-            interaction.deferUpdate();
-
             let url = station.stream[station.stream.default];
 
             client.funcs.statisticsUpdate(client, interaction.guild, radio);
@@ -27,7 +25,14 @@ module.exports = {
             radio.station = station;
             radio.textChannel = interaction.channel;
             radio.startTime = date.getTime();
-            client.funcs.play(null, interaction.guild, client, url);
+            
+            if(interaction.isCommand()) {
+                client.funcs.play(interaction, interaction.guild, client, url);
+            }
+            if(interaction.isButton()) {
+                interaction.deferUpdate();
+                client.funcs.play(null, interaction.guild, client, url);
+            }
 
         }
     }
