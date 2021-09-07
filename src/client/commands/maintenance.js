@@ -1,5 +1,6 @@
 import Discord from "discord.js";
-import fetch from "node-fetch";
+const _importDynamic = new Function('modulePath', 'return import(modulePath)');
+const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
 
 module.exports = {
     name: 'maintenance',

@@ -1,5 +1,6 @@
 import Datastore from "../datastore.js";
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const _importDynamic = new Function('modulePath', 'return import(modulePath)');
+const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
 
 module.exports = {
     name: 'ready',
