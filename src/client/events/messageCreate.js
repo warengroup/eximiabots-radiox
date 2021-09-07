@@ -41,8 +41,11 @@ module.exports = {
 
             let msg = await message.channel.send({ embeds: [embed] });
 
-            setTimeout(function() {
-                msg.delete();
+            setTimeout(async function() {
+                try {
+                    await msg.delete();
+                } catch (DiscordAPIError) {
+                }
             }, 30000);
         } catch (error) {
             message.reply({
