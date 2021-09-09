@@ -4,5 +4,6 @@ dependencies:
 documentation:
 - README.md
 - SECURITY.md
+- CONTRIBUTING.md
 - LICENSE
 - .env_example
