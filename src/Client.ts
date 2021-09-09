@@ -82,7 +82,9 @@ class RadioClient extends Client {
         });
 
         this.on("error", error => {
+            this.funcs.logger("Discord Client / Error");
             console.error(error);
+            console.log('');
         });
 
         process.on('SIGINT', () => {
@@ -102,13 +104,7 @@ class RadioClient extends Client {
         });
 
         process.on('warning', (warning) => {
-            if(warning.name == "ExperimentalWarning" && warning.message.startsWith("stream/web")) return;
-
-            this.funcs.logger("Warning");
-            console.warn(warning.name);
-            console.warn(warning.message);
-            console.warn(warning.stack);
-            console.log('');
+            require(`${events}warning`).execute(this, warning);
         });
 
         this.login(this.config.token).catch(err => console.log("Failed to login: " + err));
