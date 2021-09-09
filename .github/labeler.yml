@@ -3,5 +3,6 @@ dependencies:
 
 documentation:
 - README.md
+- SECURITY.md
 - LICENSE
 - .env_example
