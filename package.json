@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "rimraf ./build && tsc",
-    "start": "node build/index.js",
-    "start:dev": "npm run build && node build/index.js"
+    "start": "node --no-warnings build/index.js",
+    "start:dev": "npm run build && node --no-warnings build/index.js"
   },
   "repository": {
     "type": "git",
