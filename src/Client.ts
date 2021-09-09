@@ -107,7 +107,11 @@ class RadioClient extends Client {
             require(`${events}warning`).execute(this, warning);
         });
 
-        this.login(this.config.token).catch(err => console.log("Failed to login: " + err));
+        this.login(this.config.token).catch((err) => {
+            this.funcs.logger("Discord Client / Error");
+            console.log(err);
+            console.log('');
+        });
     }
 }
 
