@@ -6,7 +6,7 @@ module.exports = class {
         this.map = new Map();
         this.loadData();
     }
-    
+
     loadData() {
         const dir = path.join(path.dirname(__dirname), '../datastore');
         if (!fs.existsSync(dir)) {
@@ -33,7 +33,7 @@ module.exports = class {
         var statistics = {};
 
         if(!client.stations) return;
-        
+
         let calculation = guilds.next();
 
         while (!calculation.done) {
@@ -47,7 +47,7 @@ module.exports = class {
                                 statistics[stations[station].name].time = 0;
                                 statistics[stations[station].name].used = 0;
                             }
-                        
+
                             statistics[stations[station].name].time = parseInt(statistics[stations[station].name].time)+parseInt(currentGuild.statistics[stations[station].name].time);
                             statistics[stations[station].name].used = parseInt(statistics[stations[station].name].used)+parseInt(currentGuild.statistics[stations[station].name].used);
                         }
@@ -84,26 +84,26 @@ module.exports = class {
         this.map.set(id, newData);
         this.saveEntry(id, newData);
     }
-    
+
     getEntry(id){
         return this.map.get(id);
     }
-    
+
     updateEntry(guild, newData) {
         newData.guild.name = guild.name;
 
         let date = new Date();
         newData.updated = date.toISOString().substring(0, 10)
-        
+
         this.map.set(guild.id, newData);
         this.saveEntry(guild.id, newData);
         //this.showEntry(this.getEntry(guild.id));
     }
-    
+
     showEntry(data){
         console.log(data);
     }
-    
+
     createTestFile () {
         let newData = {
             "guild": {
@@ -120,10 +120,10 @@ module.exports = class {
 
             }
         }
-        
+
         this.updateEntry(newData.guild, newData);
     }
-    
+
     saveEntry(file, data) {
         data = JSON.stringify(data, null, 4);
 

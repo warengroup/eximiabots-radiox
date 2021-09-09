@@ -13,9 +13,9 @@ module.exports = {
                 ephemeral: true
             });
         }
-        
+
         const radio = client.radio.get(interaction.guild.id);
-        
+
         if(radio){
             client.funcs.listStations(client, interaction);
         } else {

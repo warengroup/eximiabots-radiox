@@ -73,11 +73,11 @@ class RadioClient extends Client {
         this.on("interactionCreate", interaction => {
             require(`${events}interactionCreate`).execute(this, interaction);
         });
-        
+
         this.on("voiceStateUpdate", (oldState, newState) => {
             require(`${events}voiceStateUpdate`).execute(this, oldState, newState);
         });
-        
+
         process.on('SIGINT', () => {
             require(`${events}SIGINT`).execute(this);
         });
@@ -89,7 +89,11 @@ class RadioClient extends Client {
         process.on('uncaughtException', (error) => {
             require(`${events}uncaughtException`).execute(this, error);
         });
-        
+
+        process.on('exit', () => {
+            this.funcs.logger("Bot", "Stopping");
+        });
+
         this.on("error", error => {
             console.error(error);
         });

@@ -4,7 +4,7 @@ module.exports = {
 
         const permissions = interaction.channel.permissionsFor(interaction.client.user);
         if (!permissions.has('VIEW_CHANNEL')) return;
-        
+
         if (!permissions.has('EMBED_LINKS')) return interaction.reply({
             content: client.messages.noPermsEmbed,
             ephemeral: true
@@ -14,7 +14,7 @@ module.exports = {
             const commandName = interaction.commandName;
             const command = client.commands.get(commandName);
             if (!command) return;
-    
+
             try {
                 command.execute(interaction, client);
             } catch (error) {

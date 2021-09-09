@@ -90,7 +90,7 @@ module.exports = {
         if (radio) {
             client.funcs.statisticsUpdate(client, interaction.guild, radio);
             radio.audioPlayer.stop();
-            
+
             let date = new Date();
             radio.station = station;
             radio.textChannel = interaction.channel;

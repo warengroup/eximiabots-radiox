@@ -47,7 +47,7 @@ module.exports = async function play(interaction, guild, client, url) {
         .addField(client.messages.nowplayingTitle, message.nowplayingDescription, true)
         .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
         .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-    
+
     const buttons = new Discord.MessageActionRow()
         .addComponents(
             new Discord.MessageButton()
@@ -87,10 +87,10 @@ module.exports = async function play(interaction, guild, client, url) {
     }
 
     message.play = client.messages.play.replace("%radio.station.name%", radio.station.name);
-    
+
     interaction?.reply({
         content: client.messageEmojis["play"] + message.play,
         ephemeral: true
     });
-    
+
 }

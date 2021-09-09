@@ -61,7 +61,7 @@ module.exports = {
                 value: "9"
             }
         );
-        
+
         const menu = new Discord.MessageActionRow()
         .addComponents(
             new Discord.MessageSelectMenu()
@@ -85,7 +85,7 @@ module.exports = {
             .setColor(client.config.embedColor)
             .setDescription(options.find(option => option.value == action).label)
             .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-        
+
         interaction.reply({
             embeds: [embed],
             ephemeral: true
@@ -117,7 +117,7 @@ module.exports = {
                     client.stations = await fetch(client.config.stationslistUrl)
                         .then(client.funcs.checkFetchStatus)
                         .then(response => response.json());
-    
+
                     client.funcs.logger('Stations', 'Successfully fetched list');
                 } catch (error) {
                     client.funcs.logger('Stations', 'Fetching list failed');
@@ -132,47 +132,6 @@ module.exports = {
             default:
 
         }
-
-        
-        /*
-        if(!client.stations) {
-            message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
-            return interaction.reply(client.messageEmojis["error"] + message.errorToGetPlaylist);
-        }
-        
-        let currentRadios = client.radio.keys();
-        let radio = currentRadios.next();
-        let stoppedRadios = "";
-
-        client.user.setStatus('dnd');
-        
-        while (!radio.done) {
-            let currentRadio = client.radio.get(radio.value);
-            currentRadio.guild = client.datastore.getEntry(radio.value).guild;
-
-            if(currentRadio){
-                client.funcs.statisticsUpdate(client, currentRadio.guild, currentRadio);
-                currentRadio.connection?.destroy();
-                currentRadio.audioPlayer?.stop();
-                currentRadio.message?.delete();
-                client.radio.delete(radio.value);
-                stoppedRadios += "-" + radio.value + ": " + currentRadio.guild.name + "\n";
-            }
-            radio = currentRadios.next();
-        }
-
-        const embed = new Discord.MessageEmbed()
-        .setTitle(client.messages.maintenanceTitle)
-        .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["maintenance"].replace(/[^0-9]+/g, ''))
-        .setColor(client.config.embedColor)
-        .setDescription("Stopped all radios" + "\n" + stoppedRadios)
-        .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
-        .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-
-        interaction.reply({
-            embeds: [embed],
-            ephemeral: true
-        });*/
 
     }
 };

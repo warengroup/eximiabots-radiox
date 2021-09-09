@@ -1,6 +1,6 @@
 module.exports = function saveState(client, guild, radio){
     client.datastore.checkEntry(guild.id);
-    
+
     let date = new Date();
 
     let data = client.datastore.getEntry(guild.id);
