@@ -99,5 +99,11 @@ module.exports = {
             client.funcs.restoreRadios(client, guilds);
         }, 5000);
 
+        setTimeout(function () {
+            /*MAINTENANCE MODE*/
+            client.funcs.logger("Maintenance Mode", "Disabled");
+            client.config.maintenance = false;
+        }, 10000);
+
     }
 }
