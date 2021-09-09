@@ -3,10 +3,6 @@ module.exports = {
     execute(client) {
         client.user.setStatus('dnd');
 
-        console.log("\n");
-        client.funcs.logger("Bot", "Closing");
-        console.log("\n");
-
         client.funcs.saveRadios(client);
         
         setInterval(() => {
