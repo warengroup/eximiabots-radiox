@@ -21,7 +21,7 @@ module.exports = {
 
         /*DEVELOPERS*/
         client.funcs.logger('Developers');
-        
+
         client.developers = "";
         let user = "";
         for (let i = 0; i < client.config.devId.length; i++) {
@@ -53,7 +53,7 @@ module.exports = {
             client.funcs.logger('Stations', 'Fetching list failed');
             console.error(error + "\n");
         }
-        
+
         setInterval(async () => {
             try {
                 client.funcs.logger('Stations', 'Started fetching list – ' + client.config.stationslistUrl);
@@ -71,7 +71,7 @@ module.exports = {
         if(!client.stations) {
             client.user.setStatus('dnd');
         }
-        
+
         /*GUILDS*/
         client.funcs.logger('Guilds', 'Started fetching list');
 
@@ -83,7 +83,7 @@ module.exports = {
         console.log("\n");
 
         client.funcs.logger('Guilds', 'Successfully fetched list');
-        
+
         /*STATISTICS*/
         client.datastore.calculateGlobal(client);
 

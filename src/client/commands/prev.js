@@ -20,12 +20,12 @@ module.exports = {
 
             client.funcs.statisticsUpdate(client, interaction.guild, radio);
             radio.audioPlayer.stop();
-            
+
             let date = new Date();
             radio.station = station;
             radio.textChannel = interaction.channel;
             radio.startTime = date.getTime();
-            
+
             if(interaction.isCommand()) {
                 client.funcs.play(interaction, interaction.guild, client, url);
             }

@@ -60,7 +60,7 @@ module.exports = {
                 value: "9"
             }
         );
-        
+
         const menu = new Discord.MessageActionRow()
         .addComponents(
             new Discord.MessageSelectMenu()
@@ -84,7 +84,7 @@ module.exports = {
             .setColor(client.config.embedColor)
             .setDescription(options.find(option => option.value == action).label)
             .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
-        
+
         interaction.reply({
             embeds: [embed],
             ephemeral: true
@@ -116,7 +116,7 @@ module.exports = {
                     client.stations = await fetch(client.config.stationslistUrl)
                         .then(client.funcs.checkFetchStatus)
                         .then(response => response.json());
-    
+
                     client.funcs.logger('Stations', 'Successfully fetched list');
                 } catch (error) {
                     client.funcs.logger('Stations', 'Fetching list failed');

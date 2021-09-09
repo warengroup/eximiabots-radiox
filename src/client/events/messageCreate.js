@@ -16,7 +16,7 @@ module.exports = {
         } else {
             return;
         }
-        
+
         const args = message.content.slice(prefix.length).split(' ');
         if (!message.content.startsWith(prefix)) return;
         if (!args[0]) return;
@@ -30,7 +30,7 @@ module.exports = {
             let newMessage = {};
 
             newMessage.messageCommandsDeprecatedTitle = client.messages.messageCommandsDeprecatedTitle.replace("%client.user.username%", client.user.username);
-    
+
             const embed = new Discord.MessageEmbed()
                 .setTitle(newMessage.messageCommandsDeprecatedTitle)
                 .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["logo"].replace(/[^0-9]+/g, ''))
