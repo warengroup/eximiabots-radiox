@@ -81,6 +81,10 @@ class RadioClient extends Client {
             require(`${events}voiceStateUpdate`).execute(this, oldState, newState);
         });
 
+        this.on("error", error => {
+            console.error(error);
+        });
+
         process.on('SIGINT', () => {
             require(`${events}SIGINT`).execute(this);
         });
@@ -97,8 +101,14 @@ class RadioClient extends Client {
             this.funcs.logger("Bot", "Stopping");
         });
 
-        this.on("error", error => {
-            console.error(error);
+        process.on('warning', (warning) => {
+            if(warning.name == "ExperimentalWarning" && warning.message.startsWith("stream/web")) return;
+
+            this.funcs.logger("Warning");
+            console.warn(warning.name);
+            console.warn(warning.message);
+            console.warn(warning.stack);
+            console.log('');
         });
 
         this.login(this.config.token).catch(err => console.log("Failed to login: " + err));
