@@ -89,6 +89,10 @@ class RadioClient extends Client {
         process.on('uncaughtException', (error) => {
             require(`${events}uncaughtException`).execute(this, error);
         });
+
+        process.on('exit', () => {
+            this.funcs.logger("Bot", "Stopping");
+        });
         
         this.on("error", error => {
             console.error(error);
