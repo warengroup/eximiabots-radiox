@@ -21,6 +21,6 @@ module.exports = {
 
     //Settings
     version: process.env.RADIOX_VERSION || process.env.npm_package_version,
-    debug: process.env.DEBUG_MODE || false
-
+    debug: process.env.DEBUG_MODE || false,
+    maintenance: false
 }

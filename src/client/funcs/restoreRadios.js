@@ -43,7 +43,7 @@ module.exports = async function restoreRadios(client, guilds) {
             construct.connection = connection;
             let date = new Date();
             construct.startTime = date.getTime();
-            
+
             client.funcs.play(null, guild, client, url, Discord);
 
             client.datastore.checkEntry(guild.id);

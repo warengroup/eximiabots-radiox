@@ -5,8 +5,8 @@ module.exports = {
     description: 'Stop radio',
     category: 'radio',
     async execute(interaction, client, command) {
-        const radio = client.radio.get(interaction.guild.id);
         if (client.funcs.check(client, interaction, command)) {
+            const radio = client.radio.get(interaction.guild.id);
             client.funcs.statisticsUpdate(client, interaction.guild, radio);
             radio.connection?.destroy();
             radio.audioPlayer?.stop();

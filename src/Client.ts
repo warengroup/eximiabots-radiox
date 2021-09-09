@@ -52,6 +52,9 @@ class RadioClient extends Client {
 
         this.funcs.logger("Bot", "Starting");
 
+        this.funcs.logger("Maintenance Mode", "Enabled");
+        this.config.maintenance = true;
+
         const commandFiles = fs.readdirSync(path.join("./src/client/commands")).filter(f => f.endsWith(".js"));
         for (const file of commandFiles) {
             const command = require(`./client/commands/${file}`);
@@ -73,11 +76,17 @@ class RadioClient extends Client {
         this.on("interactionCreate", interaction => {
             require(`${events}interactionCreate`).execute(this, interaction);
         });
-        
+
         this.on("voiceStateUpdate", (oldState, newState) => {
             require(`${events}voiceStateUpdate`).execute(this, oldState, newState);
         });
-        
+
+        this.on("error", error => {
+            this.funcs.logger("Discord Client / Error");
+            console.error(error);
+            console.log('');
+        });
+
         process.on('SIGINT', () => {
             require(`${events}SIGINT`).execute(this);
         });
@@ -89,12 +98,20 @@ class RadioClient extends Client {
         process.on('uncaughtException', (error) => {
             require(`${events}uncaughtException`).execute(this, error);
         });
-        
-        this.on("error", error => {
-            console.error(error);
+
+        process.on('exit', () => {
+            this.funcs.logger("Bot", "Stopping");
         });
 
-        this.login(this.config.token).catch(err => console.log("Failed to login: " + err));
+        process.on('warning', (warning) => {
+            require(`${events}warning`).execute(this, warning);
+        });
+
+        this.login(this.config.token).catch((err) => {
+            this.funcs.logger("Discord Client / Error");
+            console.log(err);
+            console.log('');
+        });
     }
 }
 

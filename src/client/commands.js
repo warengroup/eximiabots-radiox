@@ -15,7 +15,7 @@ module.exports = {
             command.data = new SlashCommandBuilder()
                 .setName(command.name)
                 .setDescription(command.description);
-            
+
             command.data = command.data.toJSON();
             if(command.options) {
                 command.options.forEach(function(option) {

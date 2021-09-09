@@ -6,6 +6,7 @@ module.exports = {
     category: 'radio',
     execute(interaction, client) {
         let message = {};
+
         if(!client.stations) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
             return interaction.reply({
@@ -13,10 +14,10 @@ module.exports = {
                 ephemeral: true
             });
         }
-        
+
         const radio = client.radio.get(interaction.guild.id);
-        
-        if(radio){
+
+        if(radio && !client.config.maintenance){
             client.funcs.listStations(client, interaction);
         } else {
             let stations = `${client.stations.map(s => `**#** ${s.name}`).join('\n')}`

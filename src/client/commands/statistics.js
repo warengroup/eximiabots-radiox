@@ -11,7 +11,7 @@ module.exports = {
         let currentGuild = client.datastore.getEntry(interaction.guild.id);
         let global = client.datastore.getEntry("global");
         let statistics = "";
-        
+
         if(!client.stations) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
             return interaction.reply({
@@ -35,7 +35,7 @@ module.exports = {
                 }
             });
         }
-        
+
         const embed = new Discord.MessageEmbed()
             .setTitle(client.messages.statisticsTitle)
             .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["statistics"].replace(/[^0-9]+/g, ''))
