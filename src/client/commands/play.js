@@ -14,6 +14,15 @@ module.exports = {
     category: "radio",
     async execute(interaction, client) {
         let message = {};
+
+        if(client.config.maintenance){
+            interaction.reply({
+                content: client.messageEmojis["error"] + client.messages.maintenance,
+                ephemeral: true
+            });
+            return false;
+        }
+
         if(!client.stations) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
             return interaction.reply({
