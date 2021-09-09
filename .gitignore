@@ -1,6 +1,5 @@
 datastore/
 node_modules/
 npm-debug.log
-.vscode/
 .env
 build/
