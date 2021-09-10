@@ -93,23 +93,30 @@ module.exports = {
 
         switch(action){
             case "0":
+                client.config.maintenance = true;
                 process.emit('SIGINT');
                 break;
             case "4":
+                client.config.maintenance = true;
                 client.user.setStatus('idle');
                 client.funcs.saveRadios(client);
                 client.user.setStatus('online');
+                client.config.maintenance = false;
                 break;
             case "5":
+                client.config.maintenance = true;
                 client.user.setStatus('idle');
                 let guilds = await client.guilds.fetch();
                 client.funcs.restoreRadios(client, guilds);
                 client.user.setStatus('online');
+                client.config.maintenance = false;
                 break;
             case "6":
+                client.config.maintenance = true;
                 client.user.setStatus('idle');
                 require(`../commands.js`).execute(client);
                 client.user.setStatus('online');
+                client.config.maintenance = false;
                 break;
             case "7":
                 try {
