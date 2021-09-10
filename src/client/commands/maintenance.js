@@ -126,7 +126,7 @@ module.exports = {
             case "8":
                 client.user.setStatus('dnd');
                 client.funcs.logger("Maintenance Mode", "Enabled");
-                client.config.maintenance = false;
+                client.config.maintenance = true;
                 break;
             case "9":
                 client.user.setStatus('online');
