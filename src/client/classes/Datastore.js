@@ -8,15 +8,15 @@ module.exports = class {
     }
 
     loadData() {
-        const dir = path.join(path.dirname(__dirname), '../datastore');
+        const dir = path.join(path.dirname(__dirname), '../../datastore');
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir);
         }
         //console.log("");
-        const dataFiles = fs.readdirSync(path.join(path.dirname(__dirname), '../datastore')).filter(f => f.endsWith('.json'));
+        const dataFiles = fs.readdirSync(path.join(path.dirname(__dirname), '../../datastore')).filter(f => f.endsWith('.json'));
         for (const file of dataFiles) {
             try {
-                const json = require(`../../datastore/${file}`);
+                const json = require(`../../../datastore/${file}`);
                 this.map.set(json.guild.id, json);
                 //console.log('[LOADED] ' + file + " (" + json.guild.id + ")");
                 //console.log(JSON.stringify(json, null, 4));
@@ -127,7 +127,7 @@ module.exports = class {
     saveEntry(file, data) {
         data = JSON.stringify(data, null, 4);
 
-        fs.writeFile(path.join(path.dirname(__dirname), '../datastore') + "/" + file + ".json", data, 'utf8', function(err) {
+        fs.writeFile(path.join(path.dirname(__dirname), '../../datastore') + "/" + file + ".json", data, 'utf8', function(err) {
             if (err) {
                 //console.log(err);
             }

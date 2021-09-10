@@ -1,6 +1,6 @@
 import Discord, { Client, Collection } from "discord.js";
 import fs from "fs";
-import Datastore from "./client/datastore.js";
+import Datastore from "./client/classes/Datastore.js";
 import { command, radio } from "./client/utils/typings.js";
 import config from "./config.js";
 import messages from "./client/messages.js";
