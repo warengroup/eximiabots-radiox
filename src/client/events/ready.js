@@ -1,4 +1,4 @@
-import Datastore from "../datastore.js";
+import Datastore from "../classes/Datastore.js";
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
 const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
 
