@@ -10,7 +10,6 @@ module.exports =  function saveRadios(client) {
             client.funcs.statisticsUpdate(client, currentRadio.guild, currentRadio);
             client.funcs.saveState(client, currentRadio.guild, currentRadio);
             currentRadio.connection?.destroy();
-            currentRadio.audioPlayer?.stop();
             currentRadio.message?.delete();
             client.radio.delete(radio.value);
         }
