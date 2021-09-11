@@ -38,12 +38,13 @@ module.exports = class {
                 logger('Streamer', station.name + " / " + "Error");
                 this.map.delete(station.name);
             });
+        return audioPlayer;
     }
 
     listen(station) {
         let audioPlayer = this.map.get(station.name);
         if(!audioPlayer){
-            this.play(station);
+            audioPlayer = this.play(station);
         }
         return audioPlayer;
     }
