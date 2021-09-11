@@ -1,6 +1,5 @@
 import Discord from "discord.js";
 const {
-    createAudioPlayer,
     getVoiceConnection,
     joinVoiceChannel
 } = require("@discordjs/voice");
@@ -26,7 +25,6 @@ module.exports = async function restoreRadios(client, guilds) {
             voiceChannel: client.channels.cache.get(state.channels.voice),
             connection: null,
             message: null,
-            audioPlayer: createAudioPlayer(),
             station: station
         };
         client.radio.set(guild.id, construct);
@@ -44,7 +42,7 @@ module.exports = async function restoreRadios(client, guilds) {
             let date = new Date();
             construct.startTime = date.getTime();
 
-            client.funcs.play(null, guild, client, url, Discord);
+            client.funcs.play(client, null, guild, station);
 
             client.datastore.checkEntry(guild.id);
             construct.datastore = client.datastore.getEntry(guild.id);
