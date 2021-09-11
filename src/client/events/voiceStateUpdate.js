@@ -17,7 +17,7 @@ module.exports = {
                 client.funcs.statisticsUpdate(client, newState.guild, radio);
                 radio.connection?.destroy();
                 radio.message?.delete();
-                client.funcs.logger('Radio', 'Stream stopped' + " / " + newState.guild.id);
+                client.funcs.logger('Radio', newState.guild.id + " / " + 'Stop');
                 return client.radio.delete(newState.guild.id);
             }
 
@@ -39,7 +39,7 @@ module.exports = {
                     client.funcs.statisticsUpdate(client, newState.guild, radio);
                     radio.connection?.destroy();
                     radio.message?.delete();
-                    client.funcs.logger('Radio', 'Stream stopped' + " / " + newState.guild.id);
+                    client.funcs.logger('Radio', newState.guild.id + " / " + 'Stop');
                     client.radio.delete(oldState.guild.id);
                 }
                 return;
@@ -58,7 +58,7 @@ module.exports = {
                     client.funcs.statisticsUpdate(client, newState.guild, radio);
                     radio.connection?.destroy();
                     radio.message?.delete();
-                    client.funcs.logger('Radio', 'Stream stopped' + " / " + newState.guild.id);
+                    client.funcs.logger('Radio', newState.guild.id + " / " + 'Stop');
                     client.radio.delete(newState.guild.id);
                 }
             }, 60000);
