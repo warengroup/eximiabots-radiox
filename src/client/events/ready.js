@@ -1,4 +1,6 @@
 import Datastore from "../classes/Datastore.js";
+import Radio from "../classes/Radio.js";
+import Streamer from "../classes/Streamer.js";
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
 const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
 
@@ -69,6 +71,12 @@ module.exports = {
             }
         }, 3600000);
 
+        client.streamer = new Streamer();
+
+        if(client.stations){
+            await client.streamer.init(client);
+        }
+
         if(!client.stations) {
             client.user.setStatus('dnd');
         }
@@ -100,9 +108,11 @@ module.exports = {
         }, 5000);
 
         setTimeout(function () {
-            /*MAINTENANCE MODE*/
-            client.funcs.logger("Maintenance Mode", "Disabled");
-            client.config.maintenance = false;
+            if(client.stations) {
+                /*MAINTENANCE MODE*/
+                client.funcs.logger("Maintenance Mode", "Disabled");
+                client.config.maintenance = false;
+            }
         }, 10000);
 
     }
