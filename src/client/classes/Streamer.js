@@ -29,7 +29,7 @@ module.exports = class {
         let streamers = this.map.keys();
         streamers.forEach(streamer => {
             if(client.stations.findIndex(station => station.name == streamer)) return;
-            this.map.delete(streamer);
+            this.stop(streamer);
         });
     }
 
@@ -56,6 +56,12 @@ module.exports = class {
         return audioPlayer;
     }
 
+    stop(station){
+        let audioPlayer = this.map.get(station.name);
+        audioPlayer?.stop();
+        this.map.delete(station.name);
+    }
+
     listen(station) {
         let audioPlayer = this.map.get(station.name);
         if(!audioPlayer){
@@ -68,9 +74,7 @@ module.exports = class {
         if(!client.stations) return;
 
         client.stations.forEach(station => {
-            let streamer = this.map.get(station.name);
-            streamer?.stop();
-            this.map.delete(station.name);
+            this.stop(station);
         });
     }
 };
