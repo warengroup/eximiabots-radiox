@@ -21,7 +21,6 @@ module.exports = class {
         });
     }
 
-
     play(station) {
         const audioPlayer = createAudioPlayer();
         const resource = createAudioResource(url);
