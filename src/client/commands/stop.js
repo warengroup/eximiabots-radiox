@@ -22,7 +22,11 @@ module.exports = {
             if(!radio.message){
                 radio.message = radio.textChannel.send({ embeds: [embed], components: [] });
             } else {
-                radio.message.edit({ embeds: [embed], components: [] });
+                if(radio.textChannel.id == radio.message.channel.id){
+                    radio.message.edit({ embeds: [embed], components: [] });
+                } else {
+                    radio.message?.delete();
+                }
             }
 
             setTimeout(async function() {
