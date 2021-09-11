@@ -25,6 +25,12 @@ module.exports = class {
 
     refresh(client){
         this.init(client);
+
+        let streamers = this.map.keys();
+        streamers.forEach(streamer => {
+            if(client.stations.findIndex(station => station.name == streamer)) return;
+            this.map.delete(streamer);
+        });
     }
 
     play(station) {
