@@ -16,7 +16,6 @@ module.exports = {
             if (newState.channel === null) {
                 client.funcs.statisticsUpdate(client, newState.guild, radio);
                 radio.connection?.destroy();
-                radio.audioPlayer?.stop();
                 radio.message?.delete();
                 client.funcs.logger('Radio', 'Stream stopped' + " / " + newState.guild.id);
                 return client.radio.delete(newState.guild.id);
@@ -39,7 +38,6 @@ module.exports = {
                 } catch (error) {
                     client.funcs.statisticsUpdate(client, newState.guild, radio);
                     radio.connection?.destroy();
-                    radio.audioPlayer?.stop();
                     radio.message?.delete();
                     client.funcs.logger('Radio', 'Stream stopped' + " / " + newState.guild.id);
                     client.radio.delete(oldState.guild.id);
@@ -59,7 +57,6 @@ module.exports = {
                 if (radio.voiceChannel.members.size === 1) {
                     client.funcs.statisticsUpdate(client, newState.guild, radio);
                     radio.connection?.destroy();
-                    radio.audioPlayer?.stop();
                     radio.message?.delete();
                     client.funcs.logger('Radio', 'Stream stopped' + " / " + newState.guild.id);
                     client.radio.delete(newState.guild.id);
