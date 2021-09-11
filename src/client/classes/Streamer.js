@@ -16,12 +16,12 @@ module.exports = class {
         if(!client.stations) return;
 
         client.stations.forEach(station => {
-            const url = station.stream[station.stream.default];
             this.play(station);
         });
     }
 
     play(station) {
+        const url = station.stream[station.stream.default];
         const audioPlayer = createAudioPlayer();
         const resource = createAudioResource(url);
         audioPlayer.play(resource);
