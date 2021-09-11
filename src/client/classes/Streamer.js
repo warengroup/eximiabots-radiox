@@ -2,14 +2,12 @@ const {
     createAudioPlayer,
     createAudioResource
 } = require("@discordjs/voice");
-const {
-    logger
-} = require("../funcs/logger.js");
 
 module.exports = class {
     constructor() {
         this.map = new Map();
         this.stations = null;
+        this.logger = require("../funcs/logger.js");
     }
 
     init(client){
@@ -27,15 +25,15 @@ module.exports = class {
         audioPlayer.play(resource);
         resource.playStream
             .on("readable", () => {
-                logger('Streamer', station.name + " / " + "Readable");
+                this.logger('Streamer', station.name + " / " + "Readable");
                 this.map.set(station.name, audioPlayer);
             })
             .on("finish", () => {
-                logger('Streamer', station.name + " / " + "Finished");
+                this.logger('Streamer', station.name + " / " + "Finished");
                 this.map.delete(station.name);
             })
             .on("error", error => {
-                logger('Streamer', station.name + " / " + "Error");
+                this.logger('Streamer', station.name + " / " + "Error");
                 this.map.delete(station.name);
             });
         return audioPlayer;
