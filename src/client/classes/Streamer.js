@@ -14,10 +14,17 @@ module.exports = class {
         if(!client.stations) return;
 
         client.stations.forEach(station => {
-            const audioPlayer = createAudioPlayer();
-            this.map.set(station.name, audioPlayer);
+            let audioPlayer = this.map.get(station.name);
+            if(!audioPlayer) {
+                audioPlayer = createAudioPlayer();
+                this.map.set(station.name, audioPlayer);
+            }
             this.play(station);
         });
+    }
+
+    refresh(client){
+        this.init(client);
     }
 
     play(station) {
