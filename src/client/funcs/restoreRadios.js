@@ -17,7 +17,6 @@ module.exports = async function restoreRadios(client, guilds) {
 
 
         const sstation = await client.funcs.searchStation(state.station.name, client);
-        let url = sstation.stream[sstation.stream.default];
         let station = sstation;
 
         const construct = {
