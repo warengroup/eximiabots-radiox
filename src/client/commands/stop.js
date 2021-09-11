@@ -9,8 +9,7 @@ module.exports = {
             const radio = client.radio.get(interaction.guild.id);
             client.funcs.statisticsUpdate(client, interaction.guild, radio);
             radio.connection?.destroy();
-            radio.audioPlayer?.stop();
-            client.funcs.logger('Radio', 'Stream stopped' + " / " + interaction.guild.id);
+            client.funcs.logger('Radio', interaction.guild.id + " / " + 'Stop');
 
             const embed = new Discord.MessageEmbed()
                 .setTitle(client.user.username)
