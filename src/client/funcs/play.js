@@ -60,7 +60,12 @@ module.exports = async function play(client, interaction, guild, station) {
     if(!radio.message){
         radio.message = await radio.textChannel.send({ embeds: [embed], components: [buttons] });
     } else {
-        radio.message.edit({ embeds: [embed], components: [buttons] });
+        if(radio.textChannel.id == radio.message.channel.id){
+            radio.message.edit({ embeds: [embed], components: [buttons] });
+        } else {
+            radio.message?.delete();
+            radio.message = await radio.textChannel.send({ embeds: [embed], components: [buttons] });
+        }
     }
 
     message.play = client.messages.play.replace("%radio.station.name%", radio.station.name);
