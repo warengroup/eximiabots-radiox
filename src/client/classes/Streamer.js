@@ -14,13 +14,15 @@ module.exports = class {
         if(!client.stations) return;
 
         client.stations.forEach(station => {
+            const audioPlayer = createAudioPlayer();
+            this.map.set(station.name, audioPlayer);
             this.play(station);
         });
     }
 
     play(station) {
+        const audioPlayer = this.map.get(station.name);
         const url = station.stream[station.stream.default];
-        const audioPlayer = createAudioPlayer();
         const resource = createAudioResource(url);
         audioPlayer.play(resource);
         resource.playStream
@@ -31,10 +33,12 @@ module.exports = class {
             .on("finish", () => {
                 this.logger('Streamer', station.name + " / " + "Finished");
                 this.map.delete(station.name);
+                this.play(station);
             })
             .on("error", error => {
                 this.logger('Streamer', station.name + " / " + "Error");
                 this.map.delete(station.name);
+                this.play(station);
             });
         return audioPlayer;
     }
