@@ -126,6 +126,9 @@ module.exports = {
                         .then(response => response.json());
 
                     client.funcs.logger('Stations', 'Successfully fetched list');
+
+                    client.streamer.refresh(client);
+
                 } catch (error) {
                     client.funcs.logger('Stations', 'Fetching list failed');
                 }
