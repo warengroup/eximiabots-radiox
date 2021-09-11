@@ -1,6 +1,8 @@
 import Discord, { Client, Collection } from "discord.js";
-import fs from "fs";
 import Datastore from "./client/classes/Datastore.js";
+import Radio from "./client/classes/Radio.js";
+import Streamer from "./client/classes/Streamer.js";
+import fs from "fs";
 import { command, radio } from "./client/utils/typings.js";
 import config from "./config.js";
 import messages from "./client/messages.js";
@@ -22,6 +24,7 @@ class RadioClient extends Client {
     readonly config = config;
     readonly messages = messages;
     public datastore: Datastore | null;
+    public streamer: Streamer | null;
     constructor() {
         super({
             intents: GatewayIntents
@@ -29,6 +32,7 @@ class RadioClient extends Client {
         this.commands = new Collection();
         this.radio = new Map();
         this.datastore = null;
+        this.streamer = null;
 
         this.funcs = {};
         this.funcs.check = require("./client/funcs/check.js");
