@@ -14,7 +14,7 @@ module.exports = {
     async execute(interaction, client) {
         let message = {};
 
-        if(client.config.maintenance){
+        if(client.config.maintenanceMode){
             interaction.reply({
                 content: client.messageEmojis["error"] + client.messages.maintenance,
                 ephemeral: true

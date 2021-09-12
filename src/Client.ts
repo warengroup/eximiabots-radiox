@@ -57,7 +57,7 @@ class RadioClient extends Client {
         this.funcs.logger("Bot", "Starting");
 
         this.funcs.logger("Maintenance Mode", "Enabled");
-        this.config.maintenance = true;
+        this.config.maintenanceMode = true;
 
         const commandFiles = fs.readdirSync(path.join("./src/client/commands")).filter(f => f.endsWith(".js"));
         for (const file of commandFiles) {
