@@ -6,8 +6,7 @@ const {
 module.exports = class {
     constructor() {
         this.map = new Map();
-        this.mode = "auto";
-        this.stations = null;
+        this.mode = null;
         this.logger = require("../funcs/logger.js");
     }
 
@@ -17,6 +16,7 @@ module.exports = class {
         switch(client.config.streamerMode){
             case "manual":
                 this.mode = "manual";
+                break;
             default:
                 this.mode = "auto";
         }
@@ -25,11 +25,6 @@ module.exports = class {
             if(!client.stations) return;
 
             client.stations.forEach(station => {
-                let audioPlayer = this.map.get(station.name);
-                if(!audioPlayer) {
-                    audioPlayer = createAudioPlayer();
-                    this.map.set(station.name, audioPlayer);
-                }
                 this.play(station);
             });
         }
@@ -46,7 +41,11 @@ module.exports = class {
     }
 
     play(station) {
-        const audioPlayer = this.map.get(station.name);
+        let audioPlayer = this.map.get(station.name);
+        if(!audioPlayer) {
+            audioPlayer = createAudioPlayer();
+            this.map.set(station.name, audioPlayer);
+        }
         const url = station.stream[station.stream.default];
         const resource = createAudioResource(url);
         audioPlayer.play(resource);
