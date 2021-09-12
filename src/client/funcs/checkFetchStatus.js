@@ -1,4 +1,4 @@
-module.exports = function (response) {
+module.exports = function checkFetchStatus(response) {
     if (response.ok) { // res.status >= 200 && res.status < 300
         return response;
     } else {

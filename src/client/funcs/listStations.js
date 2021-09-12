@@ -1,6 +1,6 @@
 import Discord from "discord.js";
 
-module.exports = function (client, interaction){
+module.exports = function listStations(client, interaction){
     let stations = new Array();
     let options = new Array();
 
