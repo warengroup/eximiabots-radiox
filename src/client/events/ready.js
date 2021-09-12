@@ -108,7 +108,7 @@ module.exports = {
             if(client.stations) {
                 /*MAINTENANCE MODE*/
                 client.funcs.logger("Maintenance Mode", "Disabled");
-                client.config.maintenance = false;
+                client.config.maintenanceMode = false;
             }
         }, 10000);
 
