@@ -59,6 +59,18 @@ module.exports = {
                 label: "Disable Maintenance Mode",
                 description: "",
                 value: "9"
+            },
+            {
+                emoji: "💤",
+                label: "Streamer Mode – Manual",
+                description: "",
+                value: "10"
+            },
+            {
+                emoji: "📡",
+                label: "Streamer Mode – Auto",
+                description: "",
+                value: "11"
             }
         );
 
@@ -142,6 +154,36 @@ module.exports = {
                 client.user.setStatus('online');
                 client.funcs.logger("Maintenance Mode", "Disabled");
                 client.config.maintenance = false;
+                break;
+            case "10":
+                client.config.maintenance = true;
+                client.user.setStatus('idle');
+                client.funcs.saveRadios(client);
+
+                client.config.streamerMode = "manual";
+                client.streamer.leave(client);
+                client.streamer.init(client);
+
+                let guilds = await client.guilds.fetch();
+                client.funcs.restoreRadios(client, guilds);
+                client.user.setStatus('online');
+                client.config.maintenance = false;
+
+                break;
+            case "11":
+                client.config.maintenance = true;
+                client.user.setStatus('idle');
+                client.funcs.saveRadios(client);
+
+                client.config.streamerMode = "auto";
+                client.streamer.leave(client);
+                client.streamer.init(client);
+
+                let guilds = await client.guilds.fetch();
+                client.funcs.restoreRadios(client, guilds);
+                client.user.setStatus('online');
+                client.config.maintenance = false;
+
                 break;
             default:
 
