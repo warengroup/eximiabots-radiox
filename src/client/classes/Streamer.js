@@ -6,21 +6,33 @@ const {
 module.exports = class {
     constructor() {
         this.map = new Map();
+        this.mode = "auto";
         this.stations = null;
         this.logger = require("../funcs/logger.js");
     }
 
     init(client){
-        if(!client.stations) return;
+        if(!client.config.streamerMode) return;
 
-        client.stations.forEach(station => {
-            let audioPlayer = this.map.get(station.name);
-            if(!audioPlayer) {
-                audioPlayer = createAudioPlayer();
-                this.map.set(station.name, audioPlayer);
-            }
-            this.play(station);
-        });
+        switch(client.config.streamerMode){
+            case "manual":
+                this.mode = "manual";
+            default:
+                this.mode = "auto";
+        }
+
+        if(this.mode == "auto"){
+            if(!client.stations) return;
+
+            client.stations.forEach(station => {
+                let audioPlayer = this.map.get(station.name);
+                if(!audioPlayer) {
+                    audioPlayer = createAudioPlayer();
+                    this.map.set(station.name, audioPlayer);
+                }
+                this.play(station);
+            });
+        }
     }
 
     refresh(client){
