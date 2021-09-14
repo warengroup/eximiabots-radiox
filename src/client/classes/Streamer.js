@@ -69,7 +69,10 @@ module.exports = class {
 
     stop(station){
         let audioPlayer = this.map.get(station.name);
-        audioPlayer?.stop();
+        if(audioPlayer){
+            this.logger('Streamer', station.name + " / " + "Stop");
+            audioPlayer.stop();
+        }
         this.map.delete(station.name);
     }
 
