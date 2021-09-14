@@ -4,9 +4,10 @@ module.exports =  function saveRadios(client) {
 
     while (!radio.done) {
         let currentRadio = client.radio.get(radio.value);
-        currentRadio.guild = client.datastore.getEntry(radio.value).guild;
 
         if (currentRadio) {
+            currentRadio.guild = client.datastore.getEntry(radio.value).guild;
+
             client.funcs.statisticsUpdate(client, currentRadio.guild, currentRadio);
             client.funcs.saveState(client, currentRadio.guild, currentRadio);
             currentRadio.connection?.destroy();
