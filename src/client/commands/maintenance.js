@@ -162,9 +162,9 @@ module.exports = {
                 client.user.setStatus('idle');
                 client.funcs.saveRadios(client);
 
-                client.config.streamerMode = "manual";
                 client.streamer.leave(client);
 
+                client.config.streamerMode = "manual";
                 client.streamer = new Streamer();
                 client.streamer.init(client);
 
@@ -178,9 +178,9 @@ module.exports = {
                 client.user.setStatus('idle');
                 client.funcs.saveRadios(client);
 
-                client.config.streamerMode = "auto";
                 client.streamer.leave(client);
 
+                client.config.streamerMode = "auto";
                 client.streamer = new Streamer();
                 client.streamer.init(client);
 
