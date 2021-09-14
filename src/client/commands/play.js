@@ -128,14 +128,6 @@ module.exports = {
             client.funcs.play(client, interaction, interaction.guild, station);
 
             client.datastore.checkEntry(interaction.guild.id);
-            construct.currentGuild = client.datastore.getEntry(interaction.guild.id);
-
-            if (!construct.currentGuild.statistics[construct.station.name]) {
-                construct.currentGuild.statistics[construct.station.name] = {};
-                construct.currentGuild.statistics[construct.station.name].time = 0;
-                construct.currentGuild.statistics[construct.station.name].used = 0;
-                client.datastore.updateEntry(interaction.guild, construct.currentGuild);
-            }
         } catch (error) {
             console.log(error);
             client.radio.delete(interaction.guild.id);
