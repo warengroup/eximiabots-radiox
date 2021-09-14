@@ -67,6 +67,7 @@ module.exports = class {
 
 
     checkEntry(id){
+        this.loadEntry(id);
         if(!this.map.has(id)){
             this.createEntry(id);
             //this.showEntry(this.getEntry(id));
@@ -83,6 +84,11 @@ module.exports = class {
         newData.state = {};
         this.map.set(id, newData);
         this.saveEntry(id, newData);
+    }
+
+    loadEntry(id){
+        const json = require(`../../../datastore/` + id + '.json');
+        this.map.set(id, json);
     }
 
     getEntry(id){
