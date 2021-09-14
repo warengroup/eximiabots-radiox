@@ -56,12 +56,10 @@ module.exports = class {
             })
             .on("finish", () => {
                 this.logger('Streamer', station.name + " / " + "Finished");
-                this.map.delete(station.name);
                 this.play(station);
             })
             .on("error", error => {
                 this.logger('Streamer', station.name + " / " + "Error");
-                this.map.delete(station.name);
                 this.play(station);
             });
         return audioPlayer;
