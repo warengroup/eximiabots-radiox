@@ -158,35 +158,51 @@ module.exports = {
                 client.config.maintenanceMode = false;
                 break;
             case "10":
+                client.config.streamerMode = "manual";
                 client.config.maintenanceMode = true;
+
                 client.user.setStatus('idle');
                 client.funcs.saveRadios(client);
 
-                client.streamer.leave(client);
+                setInterval(() => {
+                    if(client.radio.size == 0 && client.config.streamerMode == "manual" && client.config.maintenanceMode){
+                        client.streamer.leave(client);
+                        client.streamer = new Streamer();
+                        client.streamer.init(client);
 
-                client.config.streamerMode = "manual";
-                client.streamer = new Streamer();
-                client.streamer.init(client);
+                        client.funcs.restoreRadios(client, guilds);
+                        client.user.setStatus('online');
+                        client.config.maintenanceMode = false;
+                    }
 
-                client.funcs.restoreRadios(client, guilds);
-                client.user.setStatus('online');
-                client.config.maintenanceMode = false;
+                    if(!client.config.maintenanceMode){
+                        clearInterval();
+                    }
+                }, 500);
 
                 break;
             case "11":
+                client.config.streamerMode = "auto";
                 client.config.maintenanceMode = true;
+
                 client.user.setStatus('idle');
                 client.funcs.saveRadios(client);
 
-                client.streamer.leave(client);
+                setInterval(() => {
+                    if(client.radio.size == 0 && client.config.streamerMode == "auto" && client.config.maintenanceMode){
+                        client.streamer.leave(client);
+                        client.streamer = new Streamer();
+                        client.streamer.init(client);
 
-                client.config.streamerMode = "auto";
-                client.streamer = new Streamer();
-                client.streamer.init(client);
+                        client.funcs.restoreRadios(client, guilds);
+                        client.user.setStatus('online');
+                        client.config.maintenanceMode = false;
+                    }
 
-                client.funcs.restoreRadios(client, guilds);
-                client.user.setStatus('online');
-                client.config.maintenanceMode = false;
+                    if(!client.config.maintenanceMode){
+                        clearInterval();
+                    }
+                }, 500);
 
                 break;
             default:
