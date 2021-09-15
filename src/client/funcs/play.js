@@ -1,7 +1,4 @@
 import Discord from "discord.js";
-const {
-    createAudioResource
-} = require("@discordjs/voice");
 
 module.exports = async function play(client, interaction, guild, station) {
     let message = {};
