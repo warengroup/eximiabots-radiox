@@ -15,11 +15,10 @@ module.exports = {
         let message = {};
 
         if(client.config.maintenanceMode){
-            interaction.reply({
+            return interaction.reply({
                 content: client.messageEmojis["error"] + client.messages.maintenance,
                 ephemeral: true
             });
-            return false;
         }
 
         if(!client.stations) {
