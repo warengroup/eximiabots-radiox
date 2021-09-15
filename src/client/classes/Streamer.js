@@ -99,7 +99,7 @@ module.exports = class {
                     this.play(station);
 	            }
             })
-            .on('error', (error) => {
+            .on('error', error => {
                 this.logger('Streamer', station.name + " / " + "Error" + "\n" + error);
                 this.play(station);
             });
