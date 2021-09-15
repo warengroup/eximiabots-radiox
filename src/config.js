@@ -20,8 +20,9 @@ module.exports = {
     hostedBy: "[Warén Group](https://waren.io)",
 
     //Settings
-    version: process.env.RADIOX_VERSION || process.env.npm_package_version,
+    version: process.env.DEV_MODE ? process.env.npm_package_version + "-dev" : process.env.npm_package_version,
     debug: process.env.DEBUG_MODE || false,
+    devMode: process.env.DEV_MODE || false,
     maintenanceMode: false,
     streamerMode: process.env.STREAMER_MODE || "manual"
 }
