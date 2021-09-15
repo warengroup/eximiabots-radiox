@@ -19,8 +19,11 @@ module.exports = class {
             case "manual":
                 this.mode = "manual";
                 break;
-            default:
+            case "auto":
                 this.mode = "auto";
+                break;
+            default:
+                this.mode = "manual";
         }
 
         if(this.mode == "auto"){

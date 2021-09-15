@@ -23,5 +23,5 @@ module.exports = {
     version: process.env.RADIOX_VERSION || process.env.npm_package_version,
     debug: process.env.DEBUG_MODE || false,
     maintenanceMode: false,
-    streamerMode: process.env.STREAMER_MODE || "auto"
+    streamerMode: process.env.STREAMER_MODE || "manual"
 }
