@@ -1,6 +1,8 @@
 const {
     createAudioPlayer,
-    createAudioResource
+    createAudioResource,
+    AudioPlayerStatus,
+    NoSubscriberBehavior
 } = require("@discordjs/voice");
 
 module.exports = class {
@@ -43,7 +45,12 @@ module.exports = class {
     play(station) {
         let audioPlayer = this.map.get(station.name);
         if(!audioPlayer) {
-            audioPlayer = createAudioPlayer();
+            audioPlayer = createAudioPlayer({
+                behaviors: {
+                    noSubscriber: NoSubscriberBehavior.Play,
+                    maxMissedFrames: Math.round(5000 / 20),
+                },
+            });
             this.map.set(station.name, audioPlayer);
         }
         const url = station.stream[station.stream.default];
@@ -60,6 +67,40 @@ module.exports = class {
             })
             .on("error", error => {
                 this.logger('Streamer', station.name + " / " + "Error");
+                this.play(station);
+            });
+
+
+
+        audioPlayer
+            .on('playing', () => {
+	            this.logger('Streamer', station.name + " / " + "Playing");
+            })
+            .on('idle', () => {
+                this.logger('Streamer', station.name + " / " + "Idle");
+                this.play(station);
+            })
+            .on('paused', () => {
+                this.logger('Streamer', station.name + " / " + "Paused");
+                this.play(station);
+            })
+            .on('buffering', () => {
+                this.logger('Streamer', station.name + " / " + "Buffering");
+            })
+            .on('autopaused', () => {
+                this.logger('Streamer', station.name + " / " + "AutoPaused");
+                this.play(station);
+            })
+            .on('stateChange', (oldState, newState) => {
+	            if (oldState.status === AudioPlayerStatus.Idle && newState.status === AudioPlayerStatus.Playing) {
+                    this.logger('Streamer', station.name + " / " + "Playing");
+	            } else if (newState.status === AudioPlayerStatus.Idle) {
+                    this.logger('Streamer', station.name + " / " + "Idle");
+                    this.play(station);
+	            }
+            })
+            .on('error', (error) => {
+                this.logger('Streamer', station.name + " / " + "Error" + "\n" + error);
                 this.play(station);
             });
         return audioPlayer;
