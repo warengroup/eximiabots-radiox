@@ -7,9 +7,6 @@ module.exports = {
     name: 'maintenance',
     description: 'Bot Maintenance',
     category: 'info',
-    options: [
-        { type: "NUMBER", name: "action", description: "Select action", required: false}
-    ],
     async execute(interaction, client) {
         let message = {};
 
