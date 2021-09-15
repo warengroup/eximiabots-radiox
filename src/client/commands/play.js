@@ -124,9 +124,8 @@ module.exports = {
             construct.connection = connection;
             let date = new Date();
             construct.startTime = date.getTime();
-            client.funcs.play(client, interaction, interaction.guild, station);
-
             client.datastore.checkEntry(interaction.guild.id);
+            client.funcs.play(client, interaction, interaction.guild, station);
         } catch (error) {
             console.log(error);
             client.radio.delete(interaction.guild.id);
