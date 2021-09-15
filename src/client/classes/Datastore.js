@@ -28,6 +28,8 @@ module.exports = class {
     }
 
     calculateGlobal(client){
+        if(!client.stations) return;
+
         let guilds = this.map.keys();
         let stations = client.stations;
         var statistics = {};
