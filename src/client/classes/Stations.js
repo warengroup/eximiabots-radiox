@@ -1,9 +1,8 @@
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
 const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
 
-module.exports = class {
+module.exports = class Stations extends Array {
     constructor() {
-        this.list = new Array();
         this.logger = require("../funcs/logger.js");
     }
 
@@ -14,15 +13,16 @@ module.exports = class {
                 .then(this.checkFetchStatus)
                 .then(response => response.json());
 
-            if(!this.list){
+            if(list){
                 this.logger('Stations');
-                this.list.forEach(station => {
+                list.forEach(station => {
                     console.log("- " + station.name);
                 });
                 console.log("\n");
+
+                this = list;
             }
 
-            this.list = list;
             this.logger('Stations', 'Successfully fetched list');
         } catch (error) {
             this.logger('Stations', 'Fetching list failed');
@@ -41,12 +41,12 @@ module.exports = class {
     }
 
     search(key) {
-        if (this.list === null) return false;
+        if (this === null) return false;
         let foundStations = [];
         if (!key) return false;
         if (key == "radio") return false;
 
-        this.list
+        this
             .filter(
                 x => x.name.toUpperCase().includes(key.toUpperCase()) || x === key
             )
@@ -57,7 +57,7 @@ module.exports = class {
         if (key.startsWith("radio ")) key = key.slice(6);
         const probabilityIncrement = 100 / key.split(" ").length / 2;
         for (let i = 0; i < key.split(" ").length; i++) {
-            this.list
+            this
                 .filter(
                     x => x.name.toUpperCase().includes(key.split(" ")[i].toUpperCase()) || x === key
                 )
