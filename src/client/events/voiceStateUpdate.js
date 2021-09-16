@@ -51,17 +51,17 @@ module.exports = {
                 //radio.connection = await newState.channel.join();
             }
         }
-        if ((oldState.channel.members.size === 1 && oldState.channel === radio.voiceChannel) || change) {
+        if ((oldState.channel.members.filter(member => !member.user.bot).size === 0 && oldState.channel === radio.voiceChannel) || change) {
             setTimeout(() => {
                 if (!radio || !radio.connection || !radio.connection === null) return;
-                if (radio.voiceChannel.members.size === 1) {
+                if (radio.voiceChannel.members.filter(member => !member.user.bot).size === 0) {
                     client.statistics.update(client, newState.guild, radio);
                     radio.connection?.destroy();
                     radio.message?.delete();
                     client.funcs.logger('Radio', newState.guild.id + " / " + 'Stop');
                     client.radio.delete(newState.guild.id);
                 }
-            }, 60000);
+            }, 5000);
         }
     },
 };
