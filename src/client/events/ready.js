@@ -54,7 +54,7 @@ module.exports = {
         client.streamer = new Streamer();
         client.streamer.init(client);
 
-        if(!client.stations.list) {
+        if(!client.stations) {
             client.user.setStatus('dnd');
         }
 
