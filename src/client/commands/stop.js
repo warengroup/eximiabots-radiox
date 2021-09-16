@@ -7,7 +7,7 @@ module.exports = {
     async execute(interaction, client, command) {
         if (client.funcs.check(client, interaction, command)) {
             const radio = client.radio.get(interaction.guild.id);
-            client.funcs.statisticsUpdate(client, interaction.guild, radio);
+            client.statistics.update(client, interaction.guild, radio);
             radio.connection?.destroy();
             client.funcs.logger('Radio', interaction.guild.id + " / " + 'Stop');
 

@@ -111,14 +111,14 @@ module.exports = {
             case "4":
                 client.config.maintenanceMode = true;
                 client.user.setStatus('idle');
-                client.funcs.saveRadios(client);
+                client.radio.save(client);
                 client.user.setStatus('online');
                 client.config.maintenanceMode = false;
                 break;
             case "5":
                 client.config.maintenanceMode = true;
                 client.user.setStatus('idle');
-                client.funcs.restoreRadios(client, guilds);
+                client.radio.restore(client, guilds);
                 client.user.setStatus('online');
                 client.config.maintenanceMode = false;
                 break;
@@ -131,17 +131,13 @@ module.exports = {
                 break;
             case "7":
                 try {
-                    client.funcs.logger('Stations', 'Started fetching list – ' + client.config.stationslistUrl);
-                    client.stations = await fetch(client.config.stationslistUrl)
-                        .then(client.funcs.checkFetchStatus)
-                        .then(response => response.json());
-
-                    client.funcs.logger('Stations', 'Successfully fetched list');
-
+                    client.stations.fetch({
+                        url: client.config.stationslistUrl
+                    });
                     client.streamer.refresh(client);
 
                 } catch (error) {
-                    client.funcs.logger('Stations', 'Fetching list failed');
+
                 }
                 break;
             case "8":
@@ -167,7 +163,7 @@ module.exports = {
                         client.streamer = new Streamer();
                         client.streamer.init(client);
 
-                        client.funcs.restoreRadios(client, guilds);
+                        client.radio.restore(client, guilds);
                         client.user.setStatus('online');
                         client.config.maintenanceMode = false;
                     }
@@ -183,7 +179,7 @@ module.exports = {
                 client.config.maintenanceMode = true;
 
                 client.user.setStatus('idle');
-                client.funcs.saveRadios(client);
+                client.funcs.save(client);
 
                 setInterval(() => {
                     if(client.radio.size == 0 && client.config.streamerMode == "auto" && client.config.maintenanceMode){
@@ -191,7 +187,7 @@ module.exports = {
                         client.streamer = new Streamer();
                         client.streamer.init(client);
 
-                        client.funcs.restoreRadios(client, guilds);
+                        client.radio.restore(client, guilds);
                         client.user.setStatus('online');
                         client.config.maintenanceMode = false;
                     }

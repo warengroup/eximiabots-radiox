@@ -7,7 +7,7 @@ module.exports = {
     execute(interaction, client) {
         let message = {};
 
-        if(!client.stations) {
+        if(!client.stations.list) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
             return interaction.reply({
                 content: client.messageEmojis["error"] + message.errorToGetPlaylist,
@@ -20,7 +20,7 @@ module.exports = {
         if(radio && !client.config.maintenanceMode){
             client.funcs.listStations(client, interaction);
         } else {
-            let stations = `${client.stations.map(s => `**#** ${s.name}`).join('\n')}`
+            let stations = `${client.stations.list.map(s => `**#** ${s.name}`).join('\n')}`
             const hashs = stations.split('**#**').length;
             for (let i = 0; i < hashs; i++) {
                 stations = stations.replace('**#**', `**${i + 1}.**`);

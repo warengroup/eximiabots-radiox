@@ -7,12 +7,12 @@ module.exports = {
     category: 'info',
     execute(interaction, client) {
         let message = {};
-        let stations = client.stations;
+        let stations = client.stations.list;
         let currentGuild = client.datastore.getEntry(interaction.guild.id);
         let global = client.datastore.getEntry("global");
         let statistics = "";
 
-        if(!client.stations) {
+        if(!client.stations.list) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
             return interaction.reply({
                 content: client.messageEmojis["error"] + message.errorToGetPlaylist,

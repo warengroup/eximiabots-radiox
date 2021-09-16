@@ -21,7 +21,7 @@ module.exports = {
             });
         }
 
-        if(!client.stations) {
+        if(!client.stations.list) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
             return interaction.reply({
                 content: client.messageEmojis["error"] + message.errorToGetPlaylist,
@@ -71,20 +71,20 @@ module.exports = {
                 ephemeral: true
             });
         } else if (!isNaN(number)) {
-            if (number > client.stations.length - 1) {
+            if (number > client.stations.list.length - 1) {
                 return interaction.reply({
                     content: client.messageEmojis["error"] + client.messages.wrongStationNumber,
                     ephemeral: true
                 });
             } else {
-                station = client.stations[number];
+                station = client.stations.list[number];
             }
         } else {
             if (query.length < 3) return interaction.reply({
                 content: client.messageEmojis["error"] + client.messages.tooShortSearch,
                 ephemeral: true
             });
-            const sstation = await client.funcs.searchStation(query, client);
+            const sstation = await client.stations.search(query, client);
             if (!sstation) return interaction.reply({
                 content: client.messageEmojis["error"] + client.messages.noSearchResults,
                 ephemeral: true
@@ -93,7 +93,7 @@ module.exports = {
         }
 
         if (radio) {
-            client.funcs.statisticsUpdate(client, interaction.guild, radio);
+            client.statistics.update(client, interaction.guild, radio);
 
             let date = new Date();
             radio.station = station;
