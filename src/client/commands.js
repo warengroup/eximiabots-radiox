@@ -6,11 +6,14 @@ const path = require ('path');
 
 module.exports = {
     async execute(client) {
+
         const commands = [];
         const commandFiles = fs.readdirSync(path.join("./src/client/commands")).filter(f => f.endsWith(".js"));
 
         for (const file of commandFiles) {
             const command = require(`./commands/${file}`);
+            client.commands.set(command.name, command);
+
             command.data = new SlashCommandBuilder()
                 .setName(command.name)
                 .setDescription(command.description);
