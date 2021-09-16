@@ -4,7 +4,7 @@ module.exports = function listStations(client, interaction){
     let stations = new Array();
     let options = new Array();
 
-    stations = client.stations.list.forEach(station => {
+    stations = client.stations.forEach(station => {
         if(station.name == "GrooveFM") return;
         station = {
             label: station.name,
