@@ -38,7 +38,7 @@ module.exports = class Radio extends Map {
             if(!state.station || !state.channels.voice || !state.channels.text) return;
             let voiceChannel = client.channels.cache.get(state.channels.voice);
             if(!voiceChannel) return;
-            if(voiceChannel.members.size === 0) return;
+            if(voiceChannel.members.filter(member => !member.user.bot).size === 0) return;
 
 
             const sstation = await client.stations.search(state.station.name);
