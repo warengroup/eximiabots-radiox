@@ -71,13 +71,13 @@ module.exports = {
                 ephemeral: true
             });
         } else if (!isNaN(number)) {
-            if (number > client.stations.list.length - 1) {
+            if (number > client.stations.length - 1) {
                 return interaction.reply({
                     content: client.messageEmojis["error"] + client.messages.wrongStationNumber,
                     ephemeral: true
                 });
             } else {
-                station = client.stations.list[number];
+                station = client.stations[number];
             }
         } else {
             if (query.length < 3) return interaction.reply({

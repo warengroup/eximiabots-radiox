@@ -6,10 +6,10 @@ module.exports = {
         if (client.funcs.check(client, interaction, command)) {
             const radio = client.radio.get(interaction.guild.id);
 
-            let index = client.stations.list.findIndex(station => station.name == radio.station.name) + 1;
-            if(index == client.stations.list.length) index = 0;
+            let index = client.stations.findIndex(station => station.name == radio.station.name) + 1;
+            if(index == client.stations.length) index = 0;
 
-            let station = client.stations.list[index];
+            let station = client.stations[index];
 
             if(!station) return interaction.reply({
                 content: client.messageEmojis["error"] + client.messages.noSearchResults,
