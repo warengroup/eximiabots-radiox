@@ -3,6 +3,7 @@ const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) 
 
 module.exports = class Stations extends Array {
     constructor() {
+        super();
         this.logger = require("../funcs/logger.js");
     }
 
@@ -15,12 +16,15 @@ module.exports = class Stations extends Array {
 
             if(list){
                 this.logger('Stations');
+                this.forEach(oldStation => {
+                    if(list.findIndex(station => station.name == oldStation.name)) return;
+                    delete this[this.findIndex(station => station.name == oldStation.name)];
+                });
                 list.forEach(station => {
                     console.log("- " + station.name);
+                    this.push(station);
                 });
                 console.log("\n");
-
-                this = list;
             }
 
             this.logger('Stations', 'Successfully fetched list');
