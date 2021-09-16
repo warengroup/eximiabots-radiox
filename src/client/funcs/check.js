@@ -9,7 +9,7 @@ module.exports = function check(client, interaction, command) {
         });
         return false;
     }
-    if(!client.stations) {
+    if(!client.stations.list) {
         message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
         interaction.reply({
             content: client.messageEmojis["error"] + message.errorToGetPlaylist,
