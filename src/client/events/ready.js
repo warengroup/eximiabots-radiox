@@ -89,7 +89,7 @@ module.exports = {
         }, 5000);
 
         setTimeout(function () {
-            if(client.stations.list) {
+            if(client.stations) {
                 /*MAINTENANCE MODE*/
                 client.funcs.logger("Maintenance Mode", "Disabled");
                 client.config.maintenanceMode = false;
