@@ -27,9 +27,9 @@ module.exports = class {
         }
 
         if(this.mode == "auto"){
-            if(!client.stations.list) return;
+            if(!client.stations) return;
 
-            client.stations.list.forEach(station => {
+            client.stations.forEach(station => {
                 this.play(station);
             });
         }
@@ -40,7 +40,7 @@ module.exports = class {
 
         let streamers = this.map.keys();
         streamers.forEach(streamer => {
-            if(client.stations.list.findIndex(station => station.name == streamer)) return;
+            if(client.stations.findIndex(station => station.name == streamer)) return;
             this.stop(streamer);
         });
     }
@@ -119,9 +119,9 @@ module.exports = class {
     }
 
     leave(client) {
-        if(!client.stations.list) return;
+        if(!client.stations) return;
 
-        client.stations.list.forEach(station => {
+        client.stations.forEach(station => {
             this.stop(station);
         });
     }
