@@ -14,7 +14,7 @@ module.exports = {
         if (newState.member.id === client.user.id && oldState.member.id === client.user.id) {
 
             if (newState.channel === null) {
-                client.funcs.statisticsUpdate(client, newState.guild, radio);
+                client.statistics.update(client, newState.guild, radio);
                 radio.connection?.destroy();
                 radio.message?.delete();
                 client.funcs.logger('Radio', newState.guild.id + " / " + 'Stop');
@@ -36,7 +36,7 @@ module.exports = {
                         1000
                     );
                 } catch (error) {
-                    client.funcs.statisticsUpdate(client, newState.guild, radio);
+                    client.statistics.update(client, newState.guild, radio);
                     radio.connection?.destroy();
                     radio.message?.delete();
                     client.funcs.logger('Radio', newState.guild.id + " / " + 'Stop');
@@ -55,7 +55,7 @@ module.exports = {
             setTimeout(() => {
                 if (!radio || !radio.connection || !radio.connection === null) return;
                 if (radio.voiceChannel.members.size === 1) {
-                    client.funcs.statisticsUpdate(client, newState.guild, radio);
+                    client.statistics.update(client, newState.guild, radio);
                     radio.connection?.destroy();
                     radio.message?.delete();
                     client.funcs.logger('Radio', newState.guild.id + " / " + 'Stop');
