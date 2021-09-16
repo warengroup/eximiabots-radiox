@@ -30,7 +30,7 @@ module.exports = class Radio extends Map {
     }
 
     restore(client, guilds) {
-        if(!client.stations.list) return;
+        if(!client.stations) return;
 
         guilds.forEach(async guild => {
             let state = client.funcs.loadState(client, guild);
