@@ -27,47 +27,6 @@ module.exports = class {
         //console.log("");
     }
 
-    calculateGlobal(client){
-        if(!client.stations) return;
-
-        let guilds = this.map.keys();
-        let stations = client.stations;
-        var statistics = {};
-
-        if(!client.stations) return;
-
-        let calculation = guilds.next();
-
-        while (!calculation.done) {
-            let currentGuild = this.getEntry(calculation.value);
-            if(calculation.value != 'global'){
-                if(stations){
-                    Object.keys(stations).forEach(function(station) {
-                        if(currentGuild.statistics[stations[station].name] && currentGuild.statistics[stations[station].name].time && parseInt(currentGuild.statistics[stations[station].name].time) != 0  && currentGuild.statistics[stations[station].name].used && parseInt(currentGuild.statistics[stations[station].name].used) != 0){
-                            if(!statistics[stations[station].name]){
-                                statistics[stations[station].name] = {};
-                                statistics[stations[station].name].time = 0;
-                                statistics[stations[station].name].used = 0;
-                            }
-
-                            statistics[stations[station].name].time = parseInt(statistics[stations[station].name].time)+parseInt(currentGuild.statistics[stations[station].name].time);
-                            statistics[stations[station].name].used = parseInt(statistics[stations[station].name].used)+parseInt(currentGuild.statistics[stations[station].name].used);
-                        }
-                    });
-                }
-            }
-            calculation = guilds.next();
-        }
-
-        let newData = {};
-        newData.guild = {};
-        newData.guild.id = "global";
-        newData.guild.name = "global";
-        newData.statistics = statistics;
-        this.updateEntry(newData.guild, newData);
-    }
-
-
     checkEntry(id){
         this.loadEntry(id);
         if(!this.map.has(id)){
