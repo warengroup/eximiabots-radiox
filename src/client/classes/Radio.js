@@ -51,7 +51,7 @@ module.exports = class Radio extends Map {
                 message: null,
                 station: station
             };
-            this.list.set(guild.id, construct);
+            this.set(guild.id, construct);
 
             try {
                 const connection =
