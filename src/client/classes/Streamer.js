@@ -94,14 +94,6 @@ module.exports = class {
                 this.logger('Streamer', station.name + " / " + "AutoPaused");
                 this.play(station);
             })
-            .on('stateChange', (oldState, newState) => {
-	            if (oldState.status === AudioPlayerStatus.Idle && newState.status === AudioPlayerStatus.Playing) {
-                    this.logger('Streamer', station.name + " / " + "Playing");
-	            } else if (newState.status === AudioPlayerStatus.Idle) {
-                    this.logger('Streamer', station.name + " / " + "Idle");
-                    this.play(station);
-	            }
-            })
             .on('error', error => {
                 this.logger('Streamer', station.name + " / " + "Error" + "\n" + error);
                 this.play(station);
