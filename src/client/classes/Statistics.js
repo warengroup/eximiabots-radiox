@@ -27,14 +27,14 @@ module.exports = class {
     }
 
     calculateGlobal(client){
-        if(!client.stations.list) return;
+        if(!client.stations) return;
         if(!client.datastore.map) return;
 
         let guilds = client.datastore.map.keys();
-        let stations = client.stations.list;
+        let stations = client.stations;
         let statistics = {};
 
-        if(!client.stations.list) return;
+        if(!client.stations) return;
 
         let calculation = guilds.next();
 
