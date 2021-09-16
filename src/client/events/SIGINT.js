@@ -4,7 +4,7 @@ module.exports = {
         client.user.setStatus('dnd');
 
         client.streamer.leave(client);
-        client.funcs.saveRadios(client);
+        client.radio.save(client);
 
         setInterval(() => {
             if(client.radio.size == 0){
