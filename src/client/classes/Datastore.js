@@ -48,8 +48,11 @@ module.exports = class {
     }
 
     loadEntry(id){
-        const json = require(`../../../datastore/` + id + '.json');
-        this.map.set(id, json);
+        try {
+            const json = require(`../../../datastore/` + id + '.json');
+            this.map.set(id, json);
+        } catch (error) {
+        }
     }
 
     getEntry(id){
