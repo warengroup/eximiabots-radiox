@@ -1,17 +1,19 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { token, version } = require('../config.js');
 const fs = require('fs');
 const path = require ('path');
 
 module.exports = {
     async execute(client) {
+
         const commands = [];
         const commandFiles = fs.readdirSync(path.join("./src/client/commands")).filter(f => f.endsWith(".js"));
 
         for (const file of commandFiles) {
             const command = require(`./commands/${file}`);
+            client.commands.set(command.name, command);
+
             command.data = new SlashCommandBuilder()
                 .setName(command.name)
                 .setDescription(command.description);
@@ -28,13 +30,13 @@ module.exports = {
             commands.push(command.data);
         }
 
-        const rest = new REST({ version: '9' }).setToken(token);
+        const rest = new REST({ version: '9' }).setToken(client.config.token);
 
         (async () => {
             try {
                 client.funcs.logger('Slash Commands', 'Started refreshing application (/) commands.');
 
-                if(version.includes("-dev")){
+                if(client.config.devMode){
                     await rest.put(
                         Routes.applicationCommands(client.user.id),
                         { body: [] },

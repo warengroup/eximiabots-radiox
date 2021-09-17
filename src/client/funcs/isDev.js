@@ -1,4 +1,4 @@
-module.exports = function (devList, authorID){
+module.exports = function isDev(devList, authorID){
     let response = false;
     Object.keys(devList).forEach(function(oneDev) {
         let devID = devList[oneDev];

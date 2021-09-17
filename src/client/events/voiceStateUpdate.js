@@ -14,11 +14,10 @@ module.exports = {
         if (newState.member.id === client.user.id && oldState.member.id === client.user.id) {
 
             if (newState.channel === null) {
-                client.funcs.statisticsUpdate(client, newState.guild, radio);
+                client.statistics.update(client, newState.guild, radio);
                 radio.connection?.destroy();
-                radio.audioPlayer?.stop();
                 radio.message?.delete();
-                client.funcs.logger('Radio', 'Stream stopped' + " / " + newState.guild.id);
+                client.funcs.logger('Radio', newState.guild.id + " / " + 'Stop');
                 return client.radio.delete(newState.guild.id);
             }
 
@@ -37,11 +36,10 @@ module.exports = {
                         1000
                     );
                 } catch (error) {
-                    client.funcs.statisticsUpdate(client, newState.guild, radio);
+                    client.statistics.update(client, newState.guild, radio);
                     radio.connection?.destroy();
-                    radio.audioPlayer?.stop();
                     radio.message?.delete();
-                    client.funcs.logger('Radio', 'Stream stopped' + " / " + newState.guild.id);
+                    client.funcs.logger('Radio', newState.guild.id + " / " + 'Stop');
                     client.radio.delete(oldState.guild.id);
                 }
                 return;
@@ -53,18 +51,17 @@ module.exports = {
                 //radio.connection = await newState.channel.join();
             }
         }
-        if ((oldState.channel.members.size === 1 && oldState.channel === radio.voiceChannel) || change) {
+        if ((oldState.channel.members.filter(member => !member.user.bot).size === 0 && oldState.channel === radio.voiceChannel) || change) {
             setTimeout(() => {
                 if (!radio || !radio.connection || !radio.connection === null) return;
-                if (radio.voiceChannel.members.size === 1) {
-                    client.funcs.statisticsUpdate(client, newState.guild, radio);
+                if (radio.voiceChannel.members.filter(member => !member.user.bot).size === 0) {
+                    client.statistics.update(client, newState.guild, radio);
                     radio.connection?.destroy();
-                    radio.audioPlayer?.stop();
                     radio.message?.delete();
-                    client.funcs.logger('Radio', 'Stream stopped' + " / " + newState.guild.id);
+                    client.funcs.logger('Radio', newState.guild.id + " / " + 'Stop');
                     client.radio.delete(newState.guild.id);
                 }
-            }, 60000);
+            }, 5000);
         }
     },
 };

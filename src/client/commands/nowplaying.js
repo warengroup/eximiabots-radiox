@@ -15,7 +15,7 @@ module.exports = {
             const completed = (radio.playTime);
 
             message.nowplayingDescription = client.messages.nowplayingDescription.replace("%radio.station.name%", radio.station.name);
-            message.nowplayingDescription = message.nowplayingDescription.replace("%radio.station.owner%", radio.station.owner);
+            message.nowplayingDescription = message.nowplayingDescription.replace("%radio.station.owner%" + "\n", radio.station.name != radio.station.owner ? radio.station.owner + "\n" : "");
             message.nowplayingDescription = message.nowplayingDescription.replace("%client.funcs.msToTime(completed)%", client.funcs.msToTime(completed));
 
             const embed = new Discord.MessageEmbed()

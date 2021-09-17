@@ -6,7 +6,7 @@ module.exports = {
         if (!permissions.has('VIEW_CHANNEL')) return;
 
         if (!permissions.has('EMBED_LINKS')) return interaction.reply({
-            content: client.messages.noPermsEmbed,
+            content: client.messageEmojis["error"] + client.messages.noPermsEmbed,
             ephemeral: true
         });
 
@@ -19,7 +19,7 @@ module.exports = {
                 command.execute(interaction, client);
             } catch (error) {
                 interaction.reply({
-                    content: client.messages.runningCommandFailed,
+                    content: client.messageEmojis["error"] + client.messages.runningCommandFailed,
                     ephemeral: true
                 });
                 console.error(error);
@@ -33,7 +33,7 @@ module.exports = {
                 command.execute(interaction, client, command);
             } catch (error) {
                 interaction.reply({
-                    content: client.messages.runningCommandFailed,
+                    content: client.messageEmojis["error"] + client.messages.runningCommandFailed,
                     ephemeral: true
                 });
                 console.error(error);

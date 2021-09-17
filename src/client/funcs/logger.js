@@ -1,4 +1,4 @@
-module.exports = function (area, text){
+module.exports = function logger(area, text){
     let date = new Date();
     console.log('[' + area + '] – ' + date.toISOString());
     if(text)  console.log(text + '\n');

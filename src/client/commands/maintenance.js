@@ -1,4 +1,5 @@
 import Discord from "discord.js";
+import Streamer from "../classes/Streamer.js";
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
 const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
 
@@ -6,9 +7,6 @@ module.exports = {
     name: 'maintenance',
     description: 'Bot Maintenance',
     category: 'info',
-    options: [
-        { type: "NUMBER", name: "action", description: "Select action", required: false}
-    ],
     async execute(interaction, client) {
         let message = {};
 
@@ -59,6 +57,18 @@ module.exports = {
                 label: "Disable Maintenance Mode",
                 description: "",
                 value: "9"
+            },
+            {
+                emoji: "💤",
+                label: "Streamer Mode – Manual",
+                description: "",
+                value: "10"
+            },
+            {
+                emoji: "📡",
+                label: "Streamer Mode – Auto",
+                description: "",
+                value: "11"
             }
         );
 
@@ -91,47 +101,102 @@ module.exports = {
             ephemeral: true
         });
 
+        let guilds = await client.guilds.fetch();
+
         switch(action){
             case "0":
+                client.config.maintenanceMode = true;
                 process.emit('SIGINT');
                 break;
             case "4":
+                client.config.maintenanceMode = true;
                 client.user.setStatus('idle');
-                client.funcs.saveRadios(client);
+                client.radio.save(client);
                 client.user.setStatus('online');
+                client.config.maintenanceMode = false;
                 break;
             case "5":
+                client.config.maintenanceMode = true;
                 client.user.setStatus('idle');
-                let guilds = await client.guilds.fetch();
-                client.funcs.restoreRadios(client, guilds);
+                client.radio.restore(client, guilds);
                 client.user.setStatus('online');
+                client.config.maintenanceMode = false;
                 break;
             case "6":
+                client.config.maintenanceMode = true;
                 client.user.setStatus('idle');
                 require(`../commands.js`).execute(client);
                 client.user.setStatus('online');
+                client.config.maintenanceMode = false;
                 break;
             case "7":
                 try {
-                    client.funcs.logger('Stations', 'Started fetching list – ' + client.config.stationslistUrl);
-                    client.stations = await fetch(client.config.stationslistUrl)
-                        .then(client.funcs.checkFetchStatus)
-                        .then(response => response.json());
+                    client.stations.fetch({
+                        url: client.config.stationslistUrl
+                    });
+                    client.streamer.refresh(client);
 
-                    client.funcs.logger('Stations', 'Successfully fetched list');
                 } catch (error) {
-                    client.funcs.logger('Stations', 'Fetching list failed');
+
                 }
                 break;
             case "8":
                 client.user.setStatus('dnd');
                 client.funcs.logger("Maintenance Mode", "Enabled");
-                client.config.maintenance = false;
+                client.config.maintenanceMode = true;
                 break;
             case "9":
                 client.user.setStatus('online');
                 client.funcs.logger("Maintenance Mode", "Disabled");
-                client.config.maintenance = false;
+                client.config.maintenanceMode = false;
+                break;
+            case "10":
+                client.config.streamerMode = "manual";
+                client.config.maintenanceMode = true;
+
+                client.user.setStatus('idle');
+                client.funcs.saveRadios(client);
+
+                setInterval(() => {
+                    if(client.radio.size == 0 && client.config.streamerMode == "manual" && client.config.maintenanceMode){
+                        client.streamer.leave(client);
+                        client.streamer = new Streamer();
+                        client.streamer.init(client);
+
+                        client.radio.restore(client, guilds);
+                        client.user.setStatus('online');
+                        client.config.maintenanceMode = false;
+                    }
+
+                    if(!client.config.maintenanceMode){
+                        clearInterval();
+                    }
+                }, 500);
+
+                break;
+            case "11":
+                client.config.streamerMode = "auto";
+                client.config.maintenanceMode = true;
+
+                client.user.setStatus('idle');
+                client.funcs.save(client);
+
+                setInterval(() => {
+                    if(client.radio.size == 0 && client.config.streamerMode == "auto" && client.config.maintenanceMode){
+                        client.streamer.leave(client);
+                        client.streamer = new Streamer();
+                        client.streamer.init(client);
+
+                        client.radio.restore(client, guilds);
+                        client.user.setStatus('online');
+                        client.config.maintenanceMode = false;
+                    }
+
+                    if(!client.config.maintenanceMode){
+                        clearInterval();
+                    }
+                }, 500);
+
                 break;
             default:
 

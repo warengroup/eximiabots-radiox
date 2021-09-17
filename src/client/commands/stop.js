@@ -7,10 +7,9 @@ module.exports = {
     async execute(interaction, client, command) {
         if (client.funcs.check(client, interaction, command)) {
             const radio = client.radio.get(interaction.guild.id);
-            client.funcs.statisticsUpdate(client, interaction.guild, radio);
+            client.statistics.update(client, interaction.guild, radio);
             radio.connection?.destroy();
-            radio.audioPlayer?.stop();
-            client.funcs.logger('Radio', 'Stream stopped' + " / " + interaction.guild.id);
+            client.funcs.logger('Radio', interaction.guild.id + " / " + 'Stop');
 
             const embed = new Discord.MessageEmbed()
                 .setTitle(client.user.username)
@@ -23,7 +22,11 @@ module.exports = {
             if(!radio.message){
                 radio.message = radio.textChannel.send({ embeds: [embed], components: [] });
             } else {
-                radio.message.edit({ embeds: [embed], components: [] });
+                if(radio.textChannel.id == radio.message.channel.id){
+                    radio.message.edit({ embeds: [embed], components: [] });
+                } else {
+                    radio.message?.delete();
+                }
             }
 
             setTimeout(async function() {

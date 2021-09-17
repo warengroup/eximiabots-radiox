@@ -1,5 +1,4 @@
 const {
-    createAudioPlayer,
     getVoiceConnection,
     joinVoiceChannel
 } = require("@discordjs/voice");
@@ -15,12 +14,11 @@ module.exports = {
     async execute(interaction, client) {
         let message = {};
 
-        if(client.config.maintenance){
-            interaction.reply({
+        if(client.config.maintenanceMode){
+            return interaction.reply({
                 content: client.messageEmojis["error"] + client.messages.maintenance,
                 ephemeral: true
             });
-            return false;
         }
 
         if(!client.stations) {
@@ -79,7 +77,6 @@ module.exports = {
                     ephemeral: true
                 });
             } else {
-                url = client.stations[number].stream[client.stations[number].stream.default];
                 station = client.stations[number];
             }
         } else {
@@ -87,24 +84,22 @@ module.exports = {
                 content: client.messageEmojis["error"] + client.messages.tooShortSearch,
                 ephemeral: true
             });
-            const sstation = await client.funcs.searchStation(query, client);
+            const sstation = await client.stations.search(query, client);
             if (!sstation) return interaction.reply({
                 content: client.messageEmojis["error"] + client.messages.noSearchResults,
                 ephemeral: true
             });
-            url = sstation.stream[sstation.stream.default];
             station = sstation;
         }
 
         if (radio) {
-            client.funcs.statisticsUpdate(client, interaction.guild, radio);
-            radio.audioPlayer.stop();
+            client.statistics.update(client, interaction.guild, radio);
 
             let date = new Date();
             radio.station = station;
             radio.textChannel = interaction.channel;
             radio.startTime = date.getTime();
-            client.funcs.play(interaction, interaction.guild, client, url);
+            client.funcs.play(client, interaction, interaction.guild, station);
 
             return;
         }
@@ -114,7 +109,6 @@ module.exports = {
             voiceChannel: voiceChannel,
             connection: null,
             message: null,
-            audioPlayer: createAudioPlayer(),
             station: station
         };
         client.radio.set(interaction.guild.id, construct);
@@ -130,17 +124,8 @@ module.exports = {
             construct.connection = connection;
             let date = new Date();
             construct.startTime = date.getTime();
-            client.funcs.play(interaction, interaction.guild, client, url);
-
             client.datastore.checkEntry(interaction.guild.id);
-            construct.currentGuild = client.datastore.getEntry(interaction.guild.id);
-
-            if (!construct.currentGuild.statistics[construct.station.name]) {
-                construct.currentGuild.statistics[construct.station.name] = {};
-                construct.currentGuild.statistics[construct.station.name].time = 0;
-                construct.currentGuild.statistics[construct.station.name].used = 0;
-                client.datastore.updateEntry(interaction.guild, construct.currentGuild);
-            }
+            client.funcs.play(client, interaction, interaction.guild, station);
         } catch (error) {
             console.log(error);
             client.radio.delete(interaction.guild.id);

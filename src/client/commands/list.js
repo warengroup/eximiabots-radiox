@@ -17,7 +17,7 @@ module.exports = {
 
         const radio = client.radio.get(interaction.guild.id);
 
-        if(radio && !client.config.maintenance){
+        if(radio && !client.config.maintenanceMode){
             client.funcs.listStations(client, interaction);
         } else {
             let stations = `${client.stations.map(s => `**#** ${s.name}`).join('\n')}`

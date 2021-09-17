@@ -14,11 +14,11 @@ module.exports = {
             .setTitle(message.statusTitle)
             .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["logo"].replace(/[^0-9]+/g, ''))
             .setColor(client.config.embedColor)
-            .addField(client.messages.statusField1, Date.now() - interaction.createdTimestamp + "ms", true)
-            .addField(client.messages.statusField2, client.ws.ping + "ms", true)
-            .addField(client.messages.statusField3, uptime, true)
-            .addField(client.messages.statusField4, client.config.version, true)
-            .addField(client.messages.statusField5, client.config.hostedBy, true)
+            .addField(client.messages.statusField1, uptime, false)
+            .addField(client.messages.statusField2, client.config.version, false)
+            .addField(client.messages.statusField3, Date.now() - interaction.createdTimestamp + "ms", false)
+            .addField(client.messages.statusField4, client.ws.ping + "ms", false)
+            .addField(client.messages.statusField5, client.config.hostedBy, false)
             .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
             .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
 

@@ -1,6 +1,8 @@
-import Datastore from "../datastore.js";
-const _importDynamic = new Function('modulePath', 'return import(modulePath)');
-const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
+import Datastore from "../classes/Datastore.js";
+import Radio from "../classes/Radio.js";
+import Stations from "../classes/Stations.js";
+import Streamer from "../classes/Streamer.js";
+import Statistics from "../classes/Statistics.js";
 
 module.exports = {
     name: 'ready',
@@ -37,37 +39,20 @@ module.exports = {
         console.log("\n");
 
         /*STATIONS*/
-        try {
-            client.funcs.logger('Stations', 'Started fetching list – ' + client.config.stationslistUrl);
-            client.stations = await fetch(client.config.stationslistUrl)
-                .then(client.funcs.checkFetchStatus)
-                .then(response => response.json());
+        client.stations = new Stations();
 
-            client.funcs.logger('Stations');
-            client.stations.forEach(station => {
-                console.log("- " + station.name);
-            });
-            console.log("\n");
-
-            client.funcs.logger('Stations', 'Successfully fetched list');
-        } catch (error) {
-            client.funcs.logger('Stations', 'Fetching list failed');
-            console.error(error + "\n");
-        }
+        await client.stations.fetch({
+            url: client.config.stationslistUrl
+        });
 
         setInterval(async () => {
-            try {
-                client.funcs.logger('Stations', 'Started fetching list – ' + client.config.stationslistUrl);
-                client.stations = await fetch(client.config.stationslistUrl)
-                    .then(client.funcs.checkFetchStatus)
-                    .then(response => response.json());
-
-                client.funcs.logger('Stations', 'Successfully fetched list');
-            } catch (error) {
-                client.funcs.logger('Stations', 'Fetching list failed');
-                //console.error(error);
-            }
+            await client.stations.fetch({
+                url: client.config.stationslistUrl
+            });
         }, 3600000);
+
+        client.streamer = new Streamer();
+        client.streamer.init(client);
 
         if(!client.stations) {
             client.user.setStatus('dnd');
@@ -86,7 +71,8 @@ module.exports = {
         client.funcs.logger('Guilds', 'Successfully fetched list');
 
         /*STATISTICS*/
-        client.datastore.calculateGlobal(client);
+        client.statistics = new Statistics();
+        client.statistics.calculateGlobal(client);
 
         /*EMOJIS*/
         require(`../emojis.js`).execute(client);
@@ -94,15 +80,20 @@ module.exports = {
         /*COMMANDS*/
         require(`../commands.js`).execute(client);
 
+        /*RADIO*/
+        client.radio = new Radio();
+
         setTimeout(function () {
             /*RESTORE RADIOS*/
-            client.funcs.restoreRadios(client, guilds);
+            client.radio.restore(client, guilds);
         }, 5000);
 
         setTimeout(function () {
-            /*MAINTENANCE MODE*/
-            client.funcs.logger("Maintenance Mode", "Disabled");
-            client.config.maintenance = false;
+            if(client.stations) {
+                /*MAINTENANCE MODE*/
+                client.funcs.logger("Maintenance Mode", "Disabled");
+                client.config.maintenanceMode = false;
+            }
         }, 10000);
 
     }
