@@ -8,7 +8,7 @@ module.exports = async function play(client, interaction, guild, station) {
     client.funcs.logger('Radio', guild.id + " / " + "Play" + " / " + radio.station.name);
 
     message.nowplayingDescription = client.messages.nowplayingDescription.replace("%radio.station.name%", radio.station.name);
-    message.nowplayingDescription = message.nowplayingDescription.replace("%radio.station.owner%" + "\n", radio.station.name != radio.station.owner ? radio.station.owner + "\n" : "");
+    message.nowplayingDescription = message.nowplayingDescription.replace("%radio.station.owner%", radio.station.name != radio.station.owner ? radio.station.owner + "\n" : "");
     message.nowplayingDescription = message.nowplayingDescription.replace("%client.funcs.msToTime(completed)%", "");
     message.nowplayingDescription = message.nowplayingDescription.replace("**", "");
     message.nowplayingDescription = message.nowplayingDescription.replace("**", "");
