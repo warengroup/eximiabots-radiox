@@ -155,7 +155,7 @@ module.exports = {
                 client.config.maintenanceMode = true;
 
                 client.user.setStatus('idle');
-                client.funcs.saveRadios(client);
+                client.radio.save(client);
 
                 setInterval(() => {
                     if(client.radio.size == 0 && client.config.streamerMode == "manual" && client.config.maintenanceMode){
