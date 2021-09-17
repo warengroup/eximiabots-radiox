@@ -15,16 +15,18 @@ module.exports = class Stations extends Array {
                 .then(response => response.json());
 
             if(list){
-                this.logger('Stations');
-                this.forEach(oldStation => {
-                    if(list.findIndex(station => station.name == oldStation.name)) return;
-                    delete this[this.findIndex(station => station.name == oldStation.name)];
-                });
+                this.length = 0;
                 list.forEach(station => {
-                    console.log("- " + station.name);
                     this.push(station);
                 });
-                console.log("\n");
+
+                if(options.show){
+                    this.logger('Stations');
+                    list.forEach(station => {
+                        console.log("- " + station.name);
+                    });
+                    console.log("\n");
+                }
             }
 
             this.logger('Stations', 'Successfully fetched list');

@@ -65,18 +65,8 @@ module.exports = class Radio extends Map {
                 construct.connection = connection;
                 let date = new Date();
                 construct.startTime = date.getTime();
-
-                client.funcs.play(client, null, guild, station);
-
                 client.datastore.checkEntry(guild.id);
-                construct.datastore = client.datastore.getEntry(guild.id);
-
-                if (!construct.datastore.statistics[construct.station.name]) {
-                    construct.datastore.statistics[construct.station.name] = {};
-                    construct.datastore.statistics[construct.station.name].time = 0;
-                    construct.datastore.statistics[construct.station.name].used = 0;
-                    client.datastore.updateEntry(guild, construct.datastore);
-                }
+                client.funcs.play(client, null, guild, station);
             } catch (error) {
                 console.log(error);
             }

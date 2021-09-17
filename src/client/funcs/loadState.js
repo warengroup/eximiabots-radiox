@@ -4,6 +4,8 @@ module.exports = function loadState(client, guild){
     let state;
 
     state = data.state;
+    if(!state) return;
+
     data.state = {};
     client.datastore.updateEntry(guild, data);
     return state;

@@ -42,12 +42,14 @@ module.exports = {
         client.stations = new Stations();
 
         await client.stations.fetch({
-            url: client.config.stationslistUrl
+            url: client.config.stationslistUrl,
+            show: true
         });
 
         setInterval(async () => {
             await client.stations.fetch({
-                url: client.config.stationslistUrl
+                url: client.config.stationslistUrl,
+                show: false
             });
         }, 3600000);
 
