@@ -40,8 +40,9 @@ module.exports = class {
 
         let streamers = this.map.keys();
         streamers.forEach(streamer => {
-            if(client.stations.findIndex(station => station.name == streamer) == -1) return;
-            this.stop(streamer);
+            if(client.stations.findIndex(station => station.name == streamer) == -1){
+                this.stop(streamer);
+            }
         });
     }
 
