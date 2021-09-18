@@ -40,8 +40,9 @@ module.exports = class {
 
         let streamers = this.map.keys();
         streamers.forEach(streamer => {
-            if(client.stations.findIndex(station => station.name == streamer)) return;
-            this.stop(streamer);
+            if(client.stations.findIndex(station => station.name == streamer) == -1){
+                this.stop(streamer);
+            }
         });
     }
 
@@ -73,15 +74,12 @@ module.exports = class {
                 this.play(station);
             });
 
-
-
         audioPlayer
             .on('playing', () => {
 	            this.logger('Streamer', station.name + " / " + "Playing");
             })
             .on('idle', () => {
                 this.logger('Streamer', station.name + " / " + "Idle");
-                this.play(station);
             })
             .on('paused', () => {
                 this.logger('Streamer', station.name + " / " + "Paused");
