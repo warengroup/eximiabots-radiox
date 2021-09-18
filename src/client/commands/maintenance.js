@@ -179,7 +179,7 @@ module.exports = {
                 client.config.maintenanceMode = true;
 
                 client.user.setStatus('idle');
-                client.funcs.save(client);
+                client.radio.save(client);
 
                 setInterval(() => {
                     if(client.radio.size == 0 && client.config.streamerMode == "auto" && client.config.maintenanceMode){
