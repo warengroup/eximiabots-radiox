@@ -63,15 +63,12 @@ module.exports = class {
         resource.playStream
             .on("readable", () => {
                 this.logger('Streamer', station.name + " / " + "Readable");
-                this.map.set(station.name, audioPlayer);
             })
             .on("finish", () => {
                 this.logger('Streamer', station.name + " / " + "Finished");
-                this.play(station);
             })
             .on("error", error => {
-                this.logger('Streamer', station.name + " / " + "Error");
-                this.play(station);
+                this.logger('Streamer', station.name + " / " + "Error" + "\n" + error);
             });
 
         audioPlayer
@@ -80,6 +77,7 @@ module.exports = class {
             })
             .on('idle', () => {
                 this.logger('Streamer', station.name + " / " + "Idle");
+                this.play(station);
             })
             .on('paused', () => {
                 this.logger('Streamer', station.name + " / " + "Paused");
