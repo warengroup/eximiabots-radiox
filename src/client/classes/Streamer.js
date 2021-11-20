@@ -87,7 +87,6 @@ module.exports = class {
             })
             .on('idle', () => {
                 this.logger('Streamer', station.name + " / " + "Idle");
-                this.stop(station);
                 this.play(station);
             })
             .on('paused', () => {
@@ -109,6 +108,7 @@ module.exports = class {
         let audioPlayer = this.map.get(station.name);
         if(audioPlayer){
             this.logger('Streamer', station.name + " / " + "Stop");
+            audioPlayer.removeAllListeners();
             audioPlayer.stop();
         }
         this.map.delete(station.name);
