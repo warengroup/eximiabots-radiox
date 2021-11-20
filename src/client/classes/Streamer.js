@@ -87,6 +87,8 @@ module.exports = class {
             })
             .on('idle', () => {
                 this.logger('Streamer', station.name + " / " + "Idle");
+                this.stop(station);
+                this.play(station);
             })
             .on('paused', () => {
                 this.logger('Streamer', station.name + " / " + "Paused");
