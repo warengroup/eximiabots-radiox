@@ -34,7 +34,7 @@ module.exports = class Stations extends Array {
             this.logger('Stations', 'Fetching list failed');
             console.error(error + "\n");
 
-            this.fetch(options);
+            if(this.length == 0) this.fetch(options);
         }
     }
 
