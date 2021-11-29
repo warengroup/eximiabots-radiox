@@ -17,7 +17,11 @@ module.exports = class Stations extends Array {
             if(list){
                 this.length = 0;
                 list.forEach(station => {
-                    this.push(station);
+                    try {
+                        this.push(station);
+                    } catch (error) {
+
+                    }
                 });
 
                 if(options.show){
@@ -27,6 +31,16 @@ module.exports = class Stations extends Array {
                     });
                     console.log("\n");
                 }
+
+                list.forEach(async station => {
+                    try {
+                        let stationTest = await fetch(station.stream[station.stream.default]);
+                        if(stationTest.ok === true) return;
+                        this.splice(this.indexOf(station),1);
+                    } catch (error) {
+                        this.splice(this.indexOf(station),1);
+                    }
+                });
             }
 
             this.logger('Stations', 'Successfully fetched list');
@@ -34,7 +48,7 @@ module.exports = class Stations extends Array {
             this.logger('Stations', 'Fetching list failed');
             console.error(error + "\n");
 
-            this.fetch(options);
+            if(this.length == 0) this.fetch(options);
         }
     }
 
@@ -46,66 +60,79 @@ module.exports = class Stations extends Array {
         }
     }
 
-    search(key) {
+    search(key, type) {
         if (this === null) return false;
-        let foundStations = [];
         if (!key) return false;
-        if (key == "radio") return false;
+        if (!type) return false;
 
-        this
-            .filter(
-                x => x.name.toUpperCase().includes(key.toUpperCase()) || x === key
-            )
-            .forEach(x =>
-                foundStations.push({ station: x, name: x.name, probability: 100 })
-            );
+        if(type == "direct"){
+            let foundStation;
+            this.forEach(station => {
+                if(station.name != key) return false;
+                foundStation = station;
+            });
 
-        if (key.startsWith("radio ")) key = key.slice(6);
-        const probabilityIncrement = 100 / key.split(" ").length / 2;
-        for (let i = 0; i < key.split(" ").length; i++) {
+            return foundStation;
+        } else {
+
+            let foundStations = [];
+            if (key == "radio") return false;
+
             this
                 .filter(
-                    x => x.name.toUpperCase().includes(key.split(" ")[i].toUpperCase()) || x === key
+                    x => x.name.toUpperCase().includes(key.toUpperCase()) || x === key
                 )
                 .forEach(x =>
-                    foundStations.push({ station: x, name: x.name, probability: probabilityIncrement })
+                    foundStations.push({ station: x, name: x.name, probability: 100 })
                 );
-        }
-        if (foundStations.length === 0) return false;
-        for (let i = 0; i < foundStations.length; i++) {
-            for (let j = 0; j < foundStations.length; j++) {
-                if (foundStations[i] === foundStations[j] && i !== j) foundStations.splice(i, 1);
-            }
-        }
-        for (let i = 0; i < foundStations.length; i++) {
-            if (foundStations[i].name.length > key.length) {
-                foundStations[i].probability -=
-                    (foundStations[i].name.split(" ").length - key.split(" ").length) *
-                    (probabilityIncrement * 0.5);
-            } else if (foundStations[i].name.length === key.length) {
-                foundStations[i].probability += probabilityIncrement * 0.9;
-            }
 
-            for (let j = 0; j < key.split(" ").length; j++) {
-                if (!foundStations[i].name.toUpperCase().includes(key.toUpperCase().split(" ")[j])) {
-                    foundStations[i].probability -= probabilityIncrement * 0.5;
+            if (key.startsWith("radio ")) key = key.slice(6);
+            const probabilityIncrement = 100 / key.split(" ").length / 2;
+            for (let i = 0; i < key.split(" ").length; i++) {
+                this
+                    .filter(
+                        x => x.name.toUpperCase().includes(key.split(" ")[i].toUpperCase()) || x === key
+                    )
+                    .forEach(x =>
+                        foundStations.push({ station: x, name: x.name, probability: probabilityIncrement })
+                    );
+            }
+            if (foundStations.length === 0) return false;
+            for (let i = 0; i < foundStations.length; i++) {
+                for (let j = 0; j < foundStations.length; j++) {
+                    if (foundStations[i] === foundStations[j] && i !== j) foundStations.splice(i, 1);
                 }
             }
-        }
-        let highestProbabilityStation;
-        for (let i = 0; i < foundStations.length; i++) {
-            if (
-                !highestProbabilityStation ||
-                highestProbabilityStation.probability < foundStations[i].probability
-            )
-                highestProbabilityStation = foundStations[i];
-            if (
-                highestProbabilityStation &&
-                highestProbabilityStation.probability === foundStations[i].probability
-            ) {
-                highestProbabilityStation = foundStations[i].station;
+            for (let i = 0; i < foundStations.length; i++) {
+                if (foundStations[i].name.length > key.length) {
+                    foundStations[i].probability -=
+                        (foundStations[i].name.split(" ").length - key.split(" ").length) *
+                        (probabilityIncrement * 0.5);
+                } else if (foundStations[i].name.length === key.length) {
+                    foundStations[i].probability += probabilityIncrement * 0.9;
+                }
+
+                for (let j = 0; j < key.split(" ").length; j++) {
+                    if (!foundStations[i].name.toUpperCase().includes(key.toUpperCase().split(" ")[j])) {
+                        foundStations[i].probability -= probabilityIncrement * 0.5;
+                    }
+                }
             }
+            let highestProbabilityStation;
+            for (let i = 0; i < foundStations.length; i++) {
+                if (
+                    !highestProbabilityStation ||
+                    highestProbabilityStation.probability < foundStations[i].probability
+                )
+                    highestProbabilityStation = foundStations[i];
+                if (
+                    highestProbabilityStation &&
+                    highestProbabilityStation.probability === foundStations[i].probability
+                ) {
+                    highestProbabilityStation = foundStations[i].station;
+                }
+            }
+            return highestProbabilityStation;
         }
-        return highestProbabilityStation;
     }
 };
