@@ -87,6 +87,7 @@ module.exports = class {
             })
             .on('idle', () => {
                 this.logger('Streamer', station.name + " / " + "Idle");
+                audioPlayer.removeAllListeners();
                 this.play(station);
             })
             .on('paused', () => {
