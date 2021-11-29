@@ -44,6 +44,8 @@ module.exports = class Radio extends Map {
             const sstation = await client.stations.search(state.station.name);
             let station = sstation;
 
+            if(!station) return;
+
             const construct = {
                 textChannel: client.channels.cache.get(state.channels.text),
                 voiceChannel: client.channels.cache.get(state.channels.voice),
