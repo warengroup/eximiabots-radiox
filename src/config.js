@@ -6,7 +6,7 @@ module.exports = {
     token: process.env.DISCORD_TOKEN,
 
     //radio stations
-    stationslistUrl: process.env.RADIOX_STATIONSLISTURL || "https://gitea.cwinfo.org/cwchristerw/radio/raw/branch/master/playlist.json",
+    stationslistUrl: process.env.RADIOX_STATIONSLISTURL || "https://git.cwinfo.net/cwchristerw/radio/raw/branch/master/playlist.json",
 
     //support
     supportGuild: "https://discord.gg/rRA65Mn",
