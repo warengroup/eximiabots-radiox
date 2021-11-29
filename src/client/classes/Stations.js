@@ -60,9 +60,20 @@ module.exports = class Stations extends Array {
         }
     }
 
-    search(key) {
+    search(key, type) {
         if (this === null) return false;
         if (!key) return false;
+        if (!type) return false;
+
+        if(type == "direct"){
+            let foundStation;
+            this.forEach(station => {
+                if(station.name != key) return false;
+                foundStation = station;
+            });
+
+            return foundStation;
+        } else {
 
             let foundStations = [];
             if (key == "radio") return false;
@@ -122,5 +133,6 @@ module.exports = class Stations extends Array {
                 }
             }
             return highestProbabilityStation;
+        }
     }
 };

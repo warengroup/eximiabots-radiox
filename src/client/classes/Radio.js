@@ -41,7 +41,7 @@ module.exports = class Radio extends Map {
             if(voiceChannel.members.filter(member => !member.user.bot).size === 0) return;
 
 
-            const sstation = await client.stations.search(state.station.name);
+            const sstation = await client.stations.search(state.station.name, "direct");
             let station = sstation;
 
             if(!station) return;

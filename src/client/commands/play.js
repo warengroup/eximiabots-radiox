@@ -84,7 +84,16 @@ module.exports = {
                 content: client.messageEmojis["error"] + client.messages.tooShortSearch,
                 ephemeral: true
             });
-            const sstation = await client.stations.search(query, client);
+
+            let type = "";
+
+            if(interaction.values?.[0]){
+                type = "direct";
+            } else {
+                type = "text";
+            }
+
+            const sstation = await client.stations.search(query, type);
             if (!sstation) return interaction.reply({
                 content: client.messageEmojis["error"] + client.messages.noSearchResults,
                 ephemeral: true
