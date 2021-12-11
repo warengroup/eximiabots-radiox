@@ -70,17 +70,6 @@ module.exports = class {
         const url = station.stream[station.stream.default];
         const resource = createAudioResource(url);
         audioPlayer.play(resource);
-        resource.playStream
-            .on("readable", () => {
-                this.logger('Streamer', station.name + " / " + "Readable");
-            })
-            .on("finish", () => {
-                this.logger('Streamer', station.name + " / " + "Finished");
-            })
-            .on("error", error => {
-                this.logger('Streamer', station.name + " / " + "Error" + "\n" + error);
-            });
-
         audioPlayer
             .on('playing', () => {
 	            this.logger('Streamer', station.name + " / " + "Playing");
@@ -88,6 +77,7 @@ module.exports = class {
             .on('idle', () => {
                 this.logger('Streamer', station.name + " / " + "Idle");
                 audioPlayer.removeAllListeners();
+                if(this.mode == "manual" && audioPlayer.subscribers.length == 0) return;
                 this.play(station);
             })
             .on('paused', () => {
@@ -116,16 +106,12 @@ module.exports = class {
     }
 
     listen(station) {
-        let audioPlayer = this.map.get(station.name);
-        if(!audioPlayer){
-            audioPlayer = this.play(station);
-        }
+        let audioPlayer = this.play(station);
         return audioPlayer;
     }
 
     leave(client) {
         if(!client.stations) return;
-
         client.stations.forEach(station => {
             this.stop(station);
         });
