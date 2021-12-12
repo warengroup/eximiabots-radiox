@@ -60,6 +60,17 @@ module.exports = {
                         Routes.applicationCommands(client.user.id),
                         { body: commands }
                     );
+
+                    let guilds = await client.guilds.fetch();
+                    guilds.forEach(async guild => {
+                        try {
+                            await rest.put(
+                                Routes.applicationGuildCommands(client.user.id, guild.id),
+                                { body: [] }
+                            );
+                        } catch (DiscordAPIError) {
+                        }
+                    });
                 }
 
                 client.funcs.logger('Slash Commands', 'Successfully reloaded application (/) commands.' + "\n");
