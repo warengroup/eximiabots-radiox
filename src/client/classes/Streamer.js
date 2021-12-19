@@ -107,7 +107,7 @@ module.exports = class {
 
     listen(station) {
         let audioPlayer = this.map.get(station.name);
-        if(!audioPlayer || this.mode == "manual" && audioPlayer.subscribers.length != 0) audioPlayer = this.play(station);
+        if(!audioPlayer || this.mode == "manual" && audioPlayer.subscribers.length == 0) audioPlayer = this.play(station);
         return audioPlayer;
     }
 
