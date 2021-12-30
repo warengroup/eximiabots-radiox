@@ -18,7 +18,7 @@
     "url": "https://github.com/warengroup/eximiabots-radiox/issues"
   },
   "dependencies": {
-    "@discordjs/builders": "^0.10.0",
+    "@discordjs/builders": "^0.11.0",
     "@discordjs/opus": "^0.7.0",
     "@discordjs/rest": "^0.2.0-canary.0",
     "@discordjs/voice": "^0.7.5",
