@@ -2,6 +2,7 @@ name: TypeScript Build
 
 on:
   push:
+  workflow_dispatch:
 
 jobs:
   tsc:
