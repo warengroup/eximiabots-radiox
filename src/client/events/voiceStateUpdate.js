@@ -8,7 +8,7 @@ module.exports = {
     async execute(client, oldState, newState) {
         if (oldState.channel === null) return;
         let change = false;
-        const radio = client.radio.get(newState.guild.id);
+        const radio = client.radio?.get(newState.guild.id);
         if (!radio) return;
 
         if (newState.member.id === client.user.id && oldState.member.id === client.user.id) {
