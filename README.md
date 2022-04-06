@@ -6,7 +6,7 @@ This bot is using Gitea repo to get radio stations from [playlist.json](https://
 
 ## Docker
 1. `docker build -t warengroup/eximiabots-radiox . --pull`
-2. `docker run --name radiox-dev -d --net host -e DISCORD_TOKEN= -v "$PWD/datastore":/usr/src/app/datastore/ warengroup/eximiabots-radiox`
+2. `docker run --name radiox-dev --net host -e DISCORD_TOKEN= -v "$PWD/datastore":/usr/src/app/datastore/ warengroup/eximiabots-radiox`
 
 ## Join our Discord Server
 https://discord.gg/rRA65Mn

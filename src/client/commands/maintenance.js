@@ -94,7 +94,10 @@ module.exports = {
             .setTitle(client.messages.maintenanceTitle)
             .setColor(client.config.embedColor)
             .setDescription(options.find(option => option.value == action).label)
-            .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
+            .setFooter({
+                text: client.messages.footerText,
+                iconURL: "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, '')
+            });
 
         interaction.reply({
             embeds: [embed],
