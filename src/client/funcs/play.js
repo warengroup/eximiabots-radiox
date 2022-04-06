@@ -57,13 +57,13 @@ module.exports = async function play(client, interaction, guild, station) {
         );
 
     if(!radio.message){
-        radio.message = await radio.textChannel.send({ embeds: [embed], components: [buttons] });
+        radio.message = await radio.textChannel?.send({ embeds: [embed], components: [buttons] });
     } else {
         if(radio.textChannel.id == radio.message.channel.id){
             radio.message.edit({ embeds: [embed], components: [buttons] });
         } else {
             radio.message?.delete();
-            radio.message = await radio.textChannel.send({ embeds: [embed], components: [buttons] });
+            radio.message = await radio.textChannel?.send({ embeds: [embed], components: [buttons] });
         }
     }
 
