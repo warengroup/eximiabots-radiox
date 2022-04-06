@@ -23,20 +23,17 @@ module.exports = {
         client.funcs.logger('Datastore', 'Ready');
 
         /*DEVELOPERS*/
-        client.funcs.logger('Developers');
-
         client.developers = "";
         let user = "";
         for (let i = 0; i < client.config.devId.length; i++) {
             user = await client.users.fetch(client.config.devId[i]);
-            console.log("- " + user.tag);
+            client.funcs.logger('Developers', user.tag);
             if (i == client.config.devId.length - 1) {
                 client.developers += user.tag;
             } else {
                 client.developers += user.tag + " & ";
             }
         }
-        console.log("\n");
 
         /*STATIONS*/
         client.stations = new Stations();
@@ -63,12 +60,10 @@ module.exports = {
         /*GUILDS*/
         client.funcs.logger('Guilds', 'Started fetching list');
 
-        client.funcs.logger('Guilds');
         let guilds = await client.guilds.fetch();
         guilds.forEach(guild => {
-            console.log("- " + guild.id + " / " + guild.name);
+            client.funcs.logger('Guilds', guild.id + " / " + guild.name);
         });
-        console.log("\n");
 
         client.funcs.logger('Guilds', 'Successfully fetched list');
 

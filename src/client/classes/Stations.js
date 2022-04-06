@@ -25,11 +25,9 @@ module.exports = class Stations extends Array {
                 });
 
                 if(options.show){
-                    this.logger('Stations');
                     list.forEach(station => {
-                        console.log("- " + station.name);
+                        this.logger('Stations', station.name);
                     });
-                    console.log("\n");
                 }
 
                 list.forEach(async station => {
