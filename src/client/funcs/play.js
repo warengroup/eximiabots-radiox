@@ -19,7 +19,10 @@ module.exports = async function play(client, interaction, guild, station) {
         .setColor(client.config.embedColor)
         .addField(client.messages.nowplayingTitle, message.nowplayingDescription, true)
         .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
-        .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
+        .setFooter({
+            text: client.messages.footerText,
+            iconURL: "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, '')
+        });
 
     const buttons = new Discord.MessageActionRow()
         .addComponents(
@@ -54,13 +57,13 @@ module.exports = async function play(client, interaction, guild, station) {
         );
 
     if(!radio.message){
-        radio.message = await radio.textChannel.send({ embeds: [embed], components: [buttons] });
+        radio.message = await radio.textChannel?.send({ embeds: [embed], components: [buttons] });
     } else {
         if(radio.textChannel.id == radio.message.channel.id){
             radio.message.edit({ embeds: [embed], components: [buttons] });
         } else {
             radio.message?.delete();
-            radio.message = await radio.textChannel.send({ embeds: [embed], components: [buttons] });
+            radio.message = await radio.textChannel?.send({ embeds: [embed], components: [buttons] });
         }
     }
 

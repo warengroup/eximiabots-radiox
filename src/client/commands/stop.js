@@ -17,7 +17,10 @@ module.exports = {
                 .setColor(client.config.embedColor)
                 .addField(client.messages.nowplayingTitle, "-", true)
                 .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
-                .setFooter(client.messages.footerText, "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, ''));
+                .setFooter({
+                    text: client.messages.footerText,
+                    iconURL: "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, '')
+                });
 
             if(!radio.message){
                 radio.message = radio.textChannel.send({ embeds: [embed], components: [] });
