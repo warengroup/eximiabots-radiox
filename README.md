@@ -10,34 +10,34 @@ This bot is using Gitea repo to get radio stations from [playlist.json](https://
 
 **Production**
 ```
-docker build -t warengroup/eximiabots-radiox:0.3.20 . --pull
+docker build -t warengroup/eximiabots-radiox:latest . --pull
 ```
 
 **Beta**
 ```
-docker build -t warengroup/eximiabots-radiox:0.3.20-beta . --pull
+docker build -t warengroup/eximiabots-radiox:latest-beta . --pull
 ```
 
 **Dev**
 ```
-docker build -t warengroup/eximiabots-radiox:0.3.20-dev . --pull
+docker build -t warengroup/eximiabots-radiox:latest-dev . --pull
 ```
 
 ### 2. Run Container
 
 **Production**
 ```
-docker run --name radiox --net host -d -e DISCORD_TOKEN= -e STREAMER_MODE=auto -v "$PWD/datastore":/usr/src/app/datastore/ warengroup/eximiabots-radiox:0.3.20
+docker run --name radiox --net host -d -e DISCORD_TOKEN= -e STREAMER_MODE=auto -v "$PWD/datastore":/usr/src/app/datastore/ warengroup/eximiabots-radiox:latest
 ```
 
 **Beta**
 ```
-docker run --name radiox --net host -d -e DISCORD_TOKEN= -e STREAMER_MODE=auto -v "$PWD/datastore":/usr/src/app/datastore/ warengroup/eximiabots-radiox:0.3.20-beta
+docker run --name radiox --net host -d -e DISCORD_TOKEN= -e STREAMER_MODE=auto -v "$PWD/datastore":/usr/src/app/datastore/ warengroup/eximiabots-radiox:latest-beta
 ```
 
 **Dev**
 ```
-docker run --rm --name radiox-dev --net host -e DISCORD_TOKEN= -e DEV_MODE=true -v "$PWD":/usr/src/app/ warengroup/eximiabots-radiox:0.3.20-dev
+docker run --rm --name radiox-dev --net host -e DISCORD_TOKEN= -e DEV_MODE=true -v "$PWD":/usr/src/app/ warengroup/eximiabots-radiox:latest-dev
 ```
 
 
