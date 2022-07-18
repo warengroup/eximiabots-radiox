@@ -19,55 +19,46 @@ module.exports = {
             {
                 emoji: "🌀",
                 label: "Restart Bot",
-                description: "",
                 value: "0"
             },
             {
                 emoji: "<:RadioXStop:688541155377414168>",
                 label: "Save Radios",
-                description: "",
                 value: "4"
             },
             {
                 emoji: "<:RadioXPlay:688541155712827458>",
                 label: "Restore Radios",
-                description: "",
                 value: "5"
             },
             {
                 emoji: "#️⃣",
                 label: "Reload Commands",
-                description: "",
                 value: "6"
             },
             {
                 emoji: "<:RadioXList:688541155519889482>",
                 label: "Reload Stations",
-                description: "",
                 value: "7"
             },
             {
                 emoji: "<:dnd:746069698139127831>",
                 label: "Enable Maintenance Mode",
-                description: "",
                 value: "8"
             },
             {
                 emoji: "<:online:746069731836035098>",
                 label: "Disable Maintenance Mode",
-                description: "",
                 value: "9"
             },
             {
                 emoji: "💤",
                 label: "Streamer Mode – Manual",
-                description: "",
                 value: "10"
             },
             {
                 emoji: "📡",
                 label: "Streamer Mode – Auto",
-                description: "",
                 value: "11"
             }
         );
