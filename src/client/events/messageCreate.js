@@ -1,4 +1,5 @@
-import Discord from "discord.js";
+import { EmbedBuilder, PermissionFlagsBits } from "discord.js";
+
 module.exports = {
     name: 'messageCreate',
     async execute(client, message) {
@@ -25,13 +26,13 @@ module.exports = {
         const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
         if (!command && message.content !== `${prefix}`) return;
         const permissions = message.channel.permissionsFor(message.client.user);
-        if (!permissions.has('EMBED_LINKS')) return message.channel.send(client.messages.noPermsEmbed);
+        if (!permissions.has(PermissionFlagsBits.EmbedLinks)) return message.channel.send(client.messages.noPermsEmbed);
         try {
             let newMessage = {};
 
             newMessage.messageCommandsDeprecatedTitle = client.messages.messageCommandsDeprecatedTitle.replace("%client.user.username%", client.user.username);
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setTitle(newMessage.messageCommandsDeprecatedTitle)
                 .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["logo"].replace(/[^0-9]+/g, ''))
                 .setColor(client.config.embedColor)

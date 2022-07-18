@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import { EmbedBuilder } from "discord.js";
 
 module.exports = {
     name: 'list',
@@ -26,7 +26,7 @@ module.exports = {
                 stations = stations.replace('**#**', `**${i + 1}.**`);
             }
 
-            let embed = new Discord.MessageEmbed()
+            let embed = new EmbedBuilder()
                 .setTitle(client.messages.listTitle)
                 .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["list"].replace(/[^0-9]+/g, ''))
                 .setColor(client.config.embedColor)

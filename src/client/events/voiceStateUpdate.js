@@ -1,3 +1,4 @@
+import { PermissionFlagsBits } from "discord.js";
 const {
     getVoiceConnection,
     joinVoiceChannel
@@ -22,7 +23,7 @@ module.exports = {
             }
 
             const newPermissions = newState.channel.permissionsFor(newState.client.user);
-            if (!newPermissions.has("CONNECT") || !newPermissions.has("SPEAK") || !newPermissions.has("VIEW_CHANNEL")) {
+            if (!newPermissions.has(PermissionFlagsBits.Connect) || !newPermissions.has(PermissionFlagsBits.Speak) || !newPermissions.has(PermissionFlagsBits.ViewChannel)) {
                 try {
                     setTimeout(
                         async () => (

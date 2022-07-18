@@ -1,3 +1,4 @@
+import { PermissionFlagsBits } from "discord.js";
 const {
     getVoiceConnection,
     joinVoiceChannel
@@ -51,13 +52,13 @@ module.exports = {
             ephemeral: true
         });
         const permissions = voiceChannel.permissionsFor(interaction.client.user);
-        if (!permissions.has("CONNECT")) {
+        if (!permissions.has(PermissionFlagsBits.Connect)) {
             return interaction.reply({
                 content: client.messageEmojis["error"] + client.messages.noPermsConnect,
                 ephemeral: true
             });
         }
-        if (!permissions.has("SPEAK")) {
+        if (!permissions.has(PermissionFlagsBits.Speak)) {
             return interaction.reply({
                 content: client.messageEmojis["error"] + client.messages.noPermsSpeak,
                 ephemeral: true

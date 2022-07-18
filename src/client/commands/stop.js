@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import { EmbedBuilder } from "discord.js";
 
 module.exports = {
     name: 'stop',
@@ -11,11 +11,14 @@ module.exports = {
             radio.connection?.destroy();
             client.funcs.logger('Radio', interaction.guild.id + " / " + 'Stop');
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setTitle(client.user.username)
                 .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["stop"].replace(/[^0-9]+/g, ''))
                 .setColor(client.config.embedColor)
-                .addField(client.messages.nowplayingTitle, "-", true)
+                .addFields({
+                    name: client.messages.nowplayingTitle,
+                    value: "-"
+                })
                 .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
                 .setFooter({
                     text: client.messages.footerText,

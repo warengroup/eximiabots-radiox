@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import { ActionRowBuilder, EmbedBuilder, SelectMenuBuilder } from "discord.js";
 import Streamer from "../classes/Streamer.js";
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
 const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
@@ -72,9 +72,9 @@ module.exports = {
             }
         );
 
-        const menu = new Discord.MessageActionRow()
+        const menu = new ActionRowBuilder()
         .addComponents(
-            new Discord.MessageSelectMenu()
+            new SelectMenuBuilder()
                 .setCustomId('maintenance')
                 .setPlaceholder('Select action')
                 .addOptions(options)
@@ -90,7 +90,7 @@ module.exports = {
 
         client.funcs.logger('Maintenance', options.find(option => option.value == action).label);
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle(client.messages.maintenanceTitle)
             .setColor(client.config.embedColor)
             .setDescription(options.find(option => option.value == action).label)

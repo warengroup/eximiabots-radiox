@@ -1,7 +1,6 @@
 module.exports = function check(client, interaction, command) {
     let message = {};
     const radio = client.radio.get(interaction.guild.id);
-    const permissions = interaction.channel.permissionsFor(interaction.user);
     if(client.config.maintenanceMode){
         interaction.reply({
             content: client.messageEmojis["error"] + client.messages.maintenance,

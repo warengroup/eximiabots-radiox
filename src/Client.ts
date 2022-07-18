@@ -1,4 +1,4 @@
-import Discord, { Client, Collection } from "discord.js";
+import { Client, Collection, IntentsBitField } from "discord.js";
 import Datastore from "./client/classes/Datastore.js";
 import Radio from "./client/classes/Radio.js";
 import Stations from "./client/classes/Stations.js";
@@ -12,7 +12,7 @@ import path from "path";
 
 const events = "./client/events/";
 
-const GatewayIntents = new Discord.IntentsBitField();
+const GatewayIntents = new IntentsBitField();
 GatewayIntents.add(
     1 << 0, // GUILDS
     1 << 7, // GUILD_VOICE_STATES

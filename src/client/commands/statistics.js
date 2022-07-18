@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import { EmbedBuilder } from "discord.js";
 
 
 module.exports = {
@@ -26,7 +26,7 @@ module.exports = {
             statistics = "[Open Dashboard](https://eximiabots.waren.io/radiox/" + interaction.guild.id + "/stats?info=" + Buffer.from(JSON.stringify(currentGuild), 'utf8').toString('base64') + "&globalInfo=" + Buffer.from(JSON.stringify(global), 'utf8').toString('base64') + ")" + "\n";
         }
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle(client.messages.statisticsTitle)
             .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["statistics"].replace(/[^0-9]+/g, ''))
             .setColor(client.config.embedColor)
