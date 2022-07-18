@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import { EmbedBuilder } from "discord.js";
 
 module.exports = {
     name: 'nowplaying',
@@ -18,7 +18,7 @@ module.exports = {
             message.nowplayingDescription = message.nowplayingDescription.replace("%radio.station.owner%" + "\n", radio.station.name != radio.station.owner ? radio.station.owner + "\n" : "");
             message.nowplayingDescription = message.nowplayingDescription.replace("%client.funcs.msToTime(completed)%", client.funcs.msToTime(completed));
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setTitle(client.messages.nowplayingTitle)
                 .setThumbnail((radio.station.logo || "https://cdn.discordapp.com/emojis/" + client.messageEmojis["play"].replace(/[^0-9]+/g, '')))
                 .setColor(client.config.embedColor)

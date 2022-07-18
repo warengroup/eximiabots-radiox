@@ -14,11 +14,9 @@ module.exports = {
         client.funcs.logger('Datastore', 'Initialize');
         client.datastore = new Datastore();
 
-        client.funcs.logger('Datastore');
         client.datastore.map.forEach(datastore => {
-            console.log("- " + datastore.guild.id + " / " + datastore.guild.name);
+            client.funcs.logger('Datastore', datastore.guild.id + " / " + datastore.guild.name);
         });
-        console.log("\n");
 
         client.funcs.logger('Datastore', 'Ready');
 

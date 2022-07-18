@@ -23,7 +23,7 @@ module.exports = {
             radio.textChannel = interaction.channel;
             radio.startTime = date.getTime();
 
-            if(interaction.isCommand()) {
+            if(interaction.isChatInputCommand()) {
                 client.funcs.play(client, interaction, interaction.guild, station);
             }
             if(interaction.isButton()) {

@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
 
 module.exports = async function play(client, interaction, guild, station) {
     let message = {};
@@ -13,47 +13,50 @@ module.exports = async function play(client, interaction, guild, station) {
     message.nowplayingDescription = message.nowplayingDescription.replace("**", "");
     message.nowplayingDescription = message.nowplayingDescription.replace("**", "");
 
-    const embed = new Discord.MessageEmbed()
+    const embed = new EmbedBuilder()
         .setTitle(client.user.username)
         .setThumbnail((radio.station.logo || "https://cdn.discordapp.com/emojis/" + client.messageEmojis["play"].replace(/[^0-9]+/g, '')))
         .setColor(client.config.embedColor)
-        .addField(client.messages.nowplayingTitle, message.nowplayingDescription, true)
+        .addFields({
+            name: client.messages.nowplayingTitle,
+            value: message.nowplayingDescription
+        })
         .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
         .setFooter({
             text: client.messages.footerText,
             iconURL: "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, '')
         });
 
-    const buttons = new Discord.MessageActionRow()
+    const buttons = new ActionRowBuilder()
         .addComponents(
-            new Discord.MessageButton()
+            new ButtonBuilder()
                 .setCustomId('list')
                 .setEmoji(client.messageEmojis["list"])
-                .setStyle('SECONDARY')
+                .setStyle(ButtonStyle.Secondary)
         )
         .addComponents(
-            new Discord.MessageButton()
+            new ButtonBuilder()
                 .setCustomId('prev')
                 .setEmoji(client.messageEmojis["prev"])
-                .setStyle('SECONDARY')
+                .setStyle(ButtonStyle.Secondary)
         )
         .addComponents(
-            new Discord.MessageButton()
+            new ButtonBuilder()
                 .setCustomId('stop')
                 .setEmoji(client.messageEmojis["stop"])
-                .setStyle('SECONDARY')
+                .setStyle(ButtonStyle.Secondary)
         )
         .addComponents(
-            new Discord.MessageButton()
+            new ButtonBuilder()
                 .setCustomId('next')
                 .setEmoji(client.messageEmojis["next"])
-                .setStyle('SECONDARY')
+                .setStyle(ButtonStyle.Secondary)
         )
         .addComponents(
-            new Discord.MessageButton()
+            new ButtonBuilder()
                 .setCustomId('statistics')
                 .setEmoji(client.messageEmojis["statistics"])
-                .setStyle('SECONDARY')
+                .setStyle(ButtonStyle.Secondary)
         );
 
     if(!radio.message){

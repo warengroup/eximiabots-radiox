@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import { EmbedBuilder } from "discord.js";
 
 module.exports = {
     name: 'help',
@@ -19,7 +19,7 @@ module.exports = {
         message.helpTitle = client.messages.helpTitle.replace("%client.user.username%", client.user.username);
         message.helpDescription = client.messages.helpDescription.replace("%commands%", commands);
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle(message.helpTitle)
             .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["logo"].replace(/[^0-9]+/g, ''))
             .setColor(client.config.embedColor)

@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import { EmbedBuilder } from "discord.js";
 
 module.exports = {
     name: 'invite',
@@ -7,7 +7,7 @@ module.exports = {
     execute(interaction, client) {
         let message = {};
         message.inviteTitle = client.messages.inviteTitle.replace("%client.user.username%", client.user.username);
-        const embed = new Discord.MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle(message.inviteTitle)
             .setColor(client.config.embedColor)
             .setURL("https://discord.com/api/oauth2/authorize?client_id=" + client.user.id + "&permissions=2184465408&scope=applications.commands%20bot") //View Channels, Send Messages, Embed Links, Use External Emojis, Use Slash Commands, Connect, Speak, Use Voice Activity

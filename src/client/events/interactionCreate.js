@@ -1,16 +1,18 @@
+import { PermissionFlagsBits } from "discord.js";
+
 module.exports = {
     name: 'interactionCreate',
     async execute(client, interaction) {
 
         const permissions = interaction.channel.permissionsFor(interaction.client.user);
-        if (!permissions.has('VIEW_CHANNEL')) return;
+        if (!permissions.has(PermissionFlagsBits.ViewChannel)) return;
 
-        if (!permissions.has('EMBED_LINKS')) return interaction.reply({
+        if (!permissions.has(PermissionFlagsBits.EmbedLinks)) return interaction.reply({
             content: client.messageEmojis["error"] + client.messages.noPermsEmbed,
             ephemeral: true
         });
 
-        if(interaction.isCommand()){
+        if(interaction.isChatInputCommand()){
             const commandName = interaction.commandName;
             const command = client.commands.get(commandName);
             if (!command) return;
