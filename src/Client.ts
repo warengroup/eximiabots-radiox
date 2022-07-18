@@ -12,7 +12,7 @@ import path from "path";
 
 const events = "./client/events/";
 
-const GatewayIntents = new Discord.Intents();
+const GatewayIntents = new Discord.IntentsBitField();
 GatewayIntents.add(
     1 << 0, // GUILDS
     1 << 7, // GUILD_VOICE_STATES
