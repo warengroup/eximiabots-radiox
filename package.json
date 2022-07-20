@@ -23,7 +23,7 @@
     "@discordjs/rest": "^1.0.0",
     "@discordjs/voice": "^0.11.0",
     "discord-api-types": "^0.36.2",
-    "discord.js": "^14.0.2",
+    "discord.js": "^14.0.3",
     "dotenv": "^16.0.1",
     "libsodium-wrappers": "^0.7.10",
     "node-fetch": "^3.2.9",
