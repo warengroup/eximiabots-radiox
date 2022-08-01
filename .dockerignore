@@ -1,7 +1,8 @@
+.env_example
 .git
+.github
 .gitignore
 .vscode
+build
 datastore
-Dockerfile
-LICENSE
-README.md
+node_modules
