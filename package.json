@@ -26,7 +26,7 @@
     "discord.js": "^14.0.3",
     "dotenv": "^16.0.1",
     "libsodium-wrappers": "^0.7.10",
-    "node-fetch": "^3.2.9",
+    "node-fetch": "^3.2.10",
     "path": "^0.12.7"
   },
   "devDependencies": {
