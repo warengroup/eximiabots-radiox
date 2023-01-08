@@ -41,12 +41,12 @@ module.exports = {
             show: true
         });
 
-        setInterval(async () => {
+        /*setInterval(async () => {
             await client.stations.fetch({
                 url: client.config.stationslistUrl,
                 show: false
             });
-        }, 3600000);
+        }, 3600000);*/
 
         client.streamer = new Streamer();
         client.streamer.init(client);
