@@ -1,4 +1,4 @@
-import { ActionRowBuilder, EmbedBuilder, SelectMenuBuilder } from "discord.js";
+import { ActionRowBuilder, EmbedBuilder, StringSelectMenuBuilder } from "discord.js";
 import Streamer from "../classes/Streamer.js";
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
 const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
@@ -65,7 +65,7 @@ module.exports = {
 
         const menu = new ActionRowBuilder()
         .addComponents(
-            new SelectMenuBuilder()
+            new StringSelectMenuBuilder()
                 .setCustomId('maintenance')
                 .setPlaceholder('Select action')
                 .addOptions(options)
