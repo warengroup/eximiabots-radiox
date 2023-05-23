@@ -1,4 +1,4 @@
-import { ActionRowBuilder, SelectMenuBuilder } from "discord.js";
+import { ActionRowBuilder, StringSelectMenuBuilder } from "discord.js";
 
 module.exports = function listStations(client, interaction){
     let stations = new Array();
@@ -16,7 +16,7 @@ module.exports = function listStations(client, interaction){
 
     const menu = new ActionRowBuilder()
         .addComponents(
-            new SelectMenuBuilder()
+            new StringSelectMenuBuilder()
                 .setCustomId('play')
                 .setPlaceholder('Nothing selected')
                 .addOptions(options)

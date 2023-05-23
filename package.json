@@ -1,6 +1,6 @@
 {
   "name": "eximiabots-radiox",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Internet Radio to your Discord guild",
   "main": "index.js",
   "scripts": {
@@ -18,30 +18,30 @@
     "url": "https://github.com/warengroup/eximiabots-radiox/issues"
   },
   "dependencies": {
-    "@discordjs/builders": "^1.4.0",
+    "@discordjs/builders": "^1.6.3",
     "@discordjs/opus": "^0.9.0",
-    "@discordjs/rest": "^1.4.0",
-    "@discordjs/voice": "^0.14.0",
-    "discord-api-types": "^0.37.20",
-    "discord.js": "^14.7.0",
+    "@discordjs/rest": "^1.7.1",
+    "@discordjs/voice": "^0.16.0",
+    "discord-api-types": "^0.37.42",
+    "discord.js": "^14.11.0",
     "dotenv": "^16.0.3",
-    "libsodium-wrappers": "^0.7.10",
-    "node-fetch": "^3.3.0",
+    "libsodium-wrappers": "^0.7.11",
+    "node-fetch": "^3.3.1",
     "path": "^0.12.7"
   },
   "devDependencies": {
-    "@types/node": "^18.11.9",
-    "@types/ws": "^8.5.3",
-    "@typescript-eslint/eslint-plugin": "^5.45.0",
-    "@typescript-eslint/parser": "^5.45.0",
-    "eslint": "^8.28.0",
-    "eslint-config-prettier": "^8.5.0",
+    "@types/node": "^20.2.3",
+    "@types/ws": "^8.5.4",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
+    "@typescript-eslint/parser": "^5.59.7",
+    "eslint": "^8.41.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.8.0",
-    "rimraf": "^3.0.2",
+    "prettier": "^2.8.8",
+    "rimraf": "^5.0.1",
     "ts-node": "^10.9.1",
-    "tsc-watch": "^5.0.3",
-    "typescript": "^4.9.3"
+    "tsc-watch": "^6.0.4",
+    "typescript": "^5.0.4"
   },
   "engines": {
       "node": ">=16.9.1",

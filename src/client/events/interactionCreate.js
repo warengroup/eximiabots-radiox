@@ -26,7 +26,7 @@ module.exports = {
                 });
                 console.error(error);
             }
-        } else if (interaction.isSelectMenu() || interaction.isButton()){
+        } else if (interaction.isStringSelectMenu() || interaction.isButton()){
             const commandName = interaction.customId;
             const command = client.commands.get(commandName);
             if (!command) return;
