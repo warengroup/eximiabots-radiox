@@ -2,6 +2,8 @@ name: Docker Build
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, assigned, edited, ready_for_review]
+  push:
   workflow_dispatch:
 
 jobs:
