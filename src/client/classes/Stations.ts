@@ -13,7 +13,7 @@ export default class Stations extends Array {
 
     async fetch(options: any){
         try {
-            this.logger('Stations', 'Started fetching list – ' + options.url);
+            this.logger('Stations', 'Started fetching list - ' + options.url);
             let list = await fetch(options.url)
                 .then(this.checkFetchStatus)
                 .then((response: { json: () => any; }) => response.json());
