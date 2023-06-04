@@ -1,5 +1,5 @@
 import { ActionRowBuilder, EmbedBuilder, StringSelectMenuBuilder } from "discord.js";
-import Streamer from "../classes/Streamer.js";
+import Streamer from "../classes/Streamer";
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
 const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
 

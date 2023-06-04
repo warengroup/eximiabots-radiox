@@ -1,8 +1,8 @@
-import Datastore from "../classes/Datastore.js";
-import Radio from "../classes/Radio.js";
-import Stations from "../classes/Stations.js";
-import Streamer from "../classes/Streamer.js";
-import Statistics from "../classes/Statistics.js";
+import Datastore from "../classes/Datastore";
+import Radio from "../classes/Radio";
+import Stations from "../classes/Stations";
+import Streamer from "../classes/Streamer";
+import Statistics from "../classes/Statistics";
 
 module.exports = {
     name: 'ready',

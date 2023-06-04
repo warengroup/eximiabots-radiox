@@ -9,7 +9,7 @@ module.exports = class {
     constructor() {
         this.map = new Map();
         this.mode = null;
-        this.logger = require("../funcs/logger.js");
+        this.logger = require("../funcs/logger");
     }
 
     init(client){

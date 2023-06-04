@@ -1,13 +1,13 @@
 import { Client, Collection, IntentsBitField } from "discord.js";
-import Datastore from "./client/classes/Datastore.js";
-import Radio from "./client/classes/Radio.js";
-import Stations from "./client/classes/Stations.js";
-import Streamer from "./client/classes/Streamer.js";
-import Statistics from "./client/classes/Statistics.js";
+import Datastore from "./client/classes/Datastore";
+import Radio from "./client/classes/Radio";
+import Stations from "./client/classes/Stations";
+import Streamer from "./client/classes/Streamer";
+import Statistics from "./client/classes/Statistics;
 import fs from "fs";
-import { command, radio } from "./client/utils/typings.js";
-import config from "./config.js";
-import messages from "./client/messages.js";
+import { command, radio } from "./client/utils/typings";
+import config from "./config";
+import messages from "./client/messages";
 import path from "path";
 
 const events = "./client/events/";
@@ -41,14 +41,14 @@ class RadioClient extends Client {
         this.radio = null;
 
         this.funcs = {};
-        this.funcs.check = require("./client/funcs/check.js");
-        this.funcs.isDev = require("./client/funcs/isDev.js");
-        this.funcs.logger = require("./client/funcs/logger.js");
-        this.funcs.msToTime = require("./client/funcs/msToTime.js");
-        this.funcs.saveState = require("./client/funcs/saveState.js");
-        this.funcs.loadState = require("./client/funcs/loadState.js");
-        this.funcs.play = require("./client/funcs/play.js");
-        this.funcs.listStations = require("./client/funcs/listStations.js");
+        this.funcs.check = require("./client/funcs/check");
+        this.funcs.isDev = require("./client/funcs/isDev");
+        this.funcs.logger = require("./client/funcs/logger");
+        this.funcs.msToTime = require("./client/funcs/msToTime");
+        this.funcs.saveState = require("./client/funcs/saveState");
+        this.funcs.loadState = require("./client/funcs/loadState");
+        this.funcs.play = require("./client/funcs/play");
+        this.funcs.listStations = require("./client/funcs/listStations");
 
         console.log('RadioX ' + this.config.version);
         console.log('Internet Radio to your Discord guild');
@@ -62,10 +62,6 @@ class RadioClient extends Client {
 
         this.on("ready", () => {
             require(`${events}ready`).execute(this);
-        });
-
-        this.on("messageCreate", msg => {
-            require(`${events}messageCreate`).execute(this, msg);
         });
 
         this.on("messageDelete", msg => {
