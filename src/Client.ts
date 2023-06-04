@@ -7,8 +7,8 @@ import Statistics from "./client/classes/Statistics";
 import { command } from "./client/utils/typings";
 import config from "./config";
 import messages from "./client/messages";
-
-const events = "./client/events/";
+import events from "./client/events"
+import funcs from "./client/funcs";
 
 const GatewayIntents = new IntentsBitField();
 GatewayIntents.add(
@@ -19,6 +19,7 @@ GatewayIntents.add(
 
 export default class RadioClient extends Client {
     readonly commands: Collection<string, command>;
+    public events: any;
     public funcs: any;
     readonly config = config;
     readonly messages = messages;
@@ -27,6 +28,7 @@ export default class RadioClient extends Client {
     public streamer: Streamer | null;
     public statistics: Statistics | null;
     public radio: Radio | null;
+
     constructor() {
         super({
             intents: GatewayIntents
@@ -38,15 +40,8 @@ export default class RadioClient extends Client {
         this.statistics = null;
         this.radio = null;
 
-        this.funcs = {};
-        this.funcs.check = require("./client/funcs/check");
-        this.funcs.isDev = require("./client/funcs/isDev");
-        this.funcs.logger = require("./client/funcs/logger");
-        this.funcs.msToTime = require("./client/funcs/msToTime");
-        this.funcs.saveState = require("./client/funcs/saveState");
-        this.funcs.loadState = require("./client/funcs/loadState");
-        this.funcs.play = require("./client/funcs/play");
-        this.funcs.listStations = require("./client/funcs/listStations");
+        this.events = events;
+        this.funcs = funcs;
 
         console.log('RadioX ' + this.config.version);
         console.log('Internet Radio to your Discord guild');
@@ -59,19 +54,19 @@ export default class RadioClient extends Client {
         this.config.maintenanceMode = true;
 
         this.on("ready", () => {
-            require(`${events}ready`).execute(this);
+            this.events.ready.execute(this);
         });
 
         this.on("messageDelete", msg => {
-            require(`${events}messageDelete`).execute(this, msg);
+            this.events.messageDelete.execute(this, msg);
         });
 
         this.on("interactionCreate", interaction => {
-            require(`${events}interactionCreate`).execute(this, interaction);
+            this.events.interactionCreate.execute(this, interaction);
         });
 
         this.on("voiceStateUpdate", (oldState, newState) => {
-            require(`${events}voiceStateUpdate`).execute(this, oldState, newState);
+            this.events.voiceStateUpdate.execute(this, oldState, newState);
         });
 
         this.on("error", error => {
@@ -81,15 +76,15 @@ export default class RadioClient extends Client {
         });
 
         process.on('SIGINT', () => {
-            require(`${events}SIGINT`).execute(this);
+            this.events.SIGINT.execute(this);
         });
 
         process.on('SIGTERM', () => {
-            require(`${events}SIGTERM`).execute(this);
+            this.events.SIGTERM.execute(this);
         });
 
         process.on('uncaughtException', (error) => {
-            require(`${events}uncaughtException`).execute(this, error);
+            this.events.uncaughtException.execute(this, error);
         });
 
         process.on('exit', () => {
@@ -97,7 +92,7 @@ export default class RadioClient extends Client {
         });
 
         process.on('warning', (warning) => {
-            require(`${events}warning`).execute(this, warning);
+            this.events.warning.execute(this, warning);
         });
 
         this.login(this.config.token).catch((err) => {

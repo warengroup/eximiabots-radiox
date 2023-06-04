@@ -1,8 +1,5 @@
-const {
-    createAudioPlayer,
-    createAudioResource,
-    NoSubscriberBehavior
-} = require("@discordjs/voice");
+import logger from "../funcs/logger";
+import { createAudioPlayer, createAudioResource, NoSubscriberBehavior } from "@discordjs/voice";
 
 export default class Streamer {
     map: any;
@@ -12,7 +9,7 @@ export default class Streamer {
     constructor() {
         this.map = new Map();
         this.mode = null;
-        this.logger = require("../funcs/logger");
+        this.logger = logger;
     }
 
     init(client: any){

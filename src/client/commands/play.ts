@@ -1,15 +1,12 @@
-import { PermissionFlagsBits } from "discord.js";
-const {
-    getVoiceConnection,
-    joinVoiceChannel
-} = require("@discordjs/voice");
+import { ApplicationCommandOptionType, PermissionFlagsBits } from "discord.js";
+import { getVoiceConnection, joinVoiceChannel } from "@discordjs/voice";
 
 export default {
     name: "play",
     usage: "<song name>",
     description: "Play radio",
     options: [
-        { type: "STRING", name: "query", description: "Select station", required: false}
+        { type: ApplicationCommandOptionType.String, name: "query", description: "Select station", required: false}
     ],
     category: "radio",
     async execute(interaction: any, client: any) {
@@ -111,7 +108,7 @@ export default {
         }
 
         let date = new Date();
-        const construct = {
+        const construct: any = {
             textChannel: interaction.channel,
             voiceChannel: voiceChannel,
             connection: null,

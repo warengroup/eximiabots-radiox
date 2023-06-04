@@ -1,12 +1,14 @@
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
+// @ts-ignore
 const fetch = (...args: any) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
+import logger from "../funcs/logger";
 
 export default class Stations extends Array {
     logger: any;
 
     constructor() {
         super();
-        this.logger = require("../funcs/logger.js");
+        this.logger = logger;
     }
 
     async fetch(options: any){

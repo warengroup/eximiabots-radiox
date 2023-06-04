@@ -1,5 +1,6 @@
 import { ActionRowBuilder, EmbedBuilder, StringSelectMenuBuilder } from "discord.js";
 import Streamer from "../classes/Streamer";
+import commands from "../commands";
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
 // @ts-ignore
 const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
@@ -120,7 +121,7 @@ export default {
             case "6":
                 client.config.maintenanceMode = true;
                 client.user.setStatus('idle');
-                require(`../commands.js`).execute(client);
+                commands.execute(client);
                 client.user.setStatus('online');
                 client.config.maintenanceMode = false;
                 break;

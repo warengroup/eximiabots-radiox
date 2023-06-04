@@ -3,6 +3,8 @@ import Radio from "../classes/Radio";
 import Stations from "../classes/Stations";
 import Streamer from "../classes/Streamer";
 import Statistics from "../classes/Statistics";
+import emojis from "../emojis"
+import commands from "../commands";
 
 export default {
     name: 'ready',
@@ -41,13 +43,6 @@ export default {
             show: true
         });
 
-        /*setInterval(async () => {
-            await client.stations.fetch({
-                url: client.config.stationslistUrl,
-                show: false
-            });
-        }, 3600000);*/
-
         client.streamer = new Streamer();
         client.streamer.init(client);
 
@@ -70,10 +65,10 @@ export default {
         client.statistics.calculateGlobal(client);
 
         /*EMOJIS*/
-        require(`../emojis.js`).execute(client);
+        emojis.execute(client);
 
         /*COMMANDS*/
-        require(`../commands.js`).execute(client);
+        commands.execute(client);
 
         /*RADIO*/
         client.radio = new Radio();

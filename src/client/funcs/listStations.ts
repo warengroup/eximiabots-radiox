@@ -1,4 +1,4 @@
-import { ActionRowBuilder, Interaction, StringSelectMenuBuilder } from "discord.js";
+import { ActionRowBuilder, StringSelectMenuBuilder } from "discord.js";
 
 export default function listStations(client: any, interaction: any){
     let stations: any  = new Array();

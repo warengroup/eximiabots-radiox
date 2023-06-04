@@ -1,7 +1,4 @@
-const {
-    getVoiceConnection,
-    joinVoiceChannel
-} = require("@discordjs/voice");
+import { getVoiceConnection, joinVoiceChannel } from "@discordjs/voice";
 
 export default class Radio extends Map {
 
