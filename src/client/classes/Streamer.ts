@@ -1,18 +1,21 @@
 const {
     createAudioPlayer,
     createAudioResource,
-    AudioPlayerStatus,
     NoSubscriberBehavior
 } = require("@discordjs/voice");
 
 export default class Streamer {
+    map: any;
+    mode: any | null;
+    logger: any;
+
     constructor() {
         this.map = new Map();
         this.mode = null;
         this.logger = require("../funcs/logger");
     }
 
-    init(client){
+    init(client: any){
         if(!client.config.streamerMode) return;
 
         switch(client.config.streamerMode){
@@ -29,24 +32,24 @@ export default class Streamer {
         if(this.mode == "auto"){
             if(!client.stations) return;
 
-            client.stations.forEach(station => {
+            client.stations.forEach((station: any) => {
                 this.play(station);
             });
         }
     }
 
-    refresh(client){
+    refresh(client: any){
         this.init(client);
 
         let streamers = this.map.keys();
-        streamers.forEach(streamer => {
-            if(client.stations.findIndex(station => station.name == streamer) == -1){
+        streamers.forEach((streamer: any) => {
+            if(client.stations.findIndex((station: { name: any; }) => station.name == streamer) == -1){
                 this.stop(streamer);
             }
         });
     }
 
-    play(station) {
+    play(station: any) {
         let audioPlayer = this.map.get(station.name);
         if(!audioPlayer) {
             if(this.mode == "auto"){
@@ -89,13 +92,13 @@ export default class Streamer {
             .on('autopaused', () => {
                 this.logger('Streamer', station.name + " / " + "AutoPaused");
             })
-            .on('error', error => {
+            .on('error', (error: string) => {
                 this.logger('Streamer', station.name + " / " + "Error" + "\n" + error);
             });
         return audioPlayer;
     }
 
-    stop(station){
+    stop(station: any){
         let audioPlayer = this.map.get(station.name);
         if(audioPlayer){
             this.logger('Streamer', station.name + " / " + "Stop");
@@ -105,15 +108,15 @@ export default class Streamer {
         this.map.delete(station.name);
     }
 
-    listen(station) {
+    listen(station: any) {
         let audioPlayer = this.map.get(station.name);
         if(!audioPlayer || this.mode == "manual" && audioPlayer.subscribers.length == 0) audioPlayer = this.play(station);
         return audioPlayer;
     }
 
-    leave(client) {
+    leave(client: any) {
         if(!client.stations) return;
-        client.stations.forEach(station => {
+        client.stations.forEach((station: any) => {
             this.stop(station);
         });
     }

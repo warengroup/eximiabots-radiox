@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 export default class {
+    map: Map<any, any>;
     constructor() {
         this.map = new Map();
         this.loadData();
@@ -27,7 +28,7 @@ export default class {
         //console.log("");
     }
 
-    checkEntry(id){
+    checkEntry(id: string){
         this.loadEntry(id);
         if(!this.map.has(id)){
             this.createEntry(id);
@@ -37,8 +38,8 @@ export default class {
         }
     }
 
-    createEntry(id){
-        let newData = {};
+    createEntry(id: string){
+        let newData: any = {};
         newData.guild = {};
         newData.guild.id = id;
         newData.statistics = {};
@@ -47,7 +48,7 @@ export default class {
         this.saveEntry(id, newData);
     }
 
-    loadEntry(id){
+    loadEntry(id: any){
         try {
             const json = require(`../../../datastore/` + id + '.json');
             this.map.set(id, json);
@@ -55,11 +56,11 @@ export default class {
         }
     }
 
-    getEntry(id){
+    getEntry(id: string){
         return this.map.get(id);
     }
 
-    updateEntry(guild, newData) {
+    updateEntry(guild: any, newData: any) {
         newData.guild.name = guild.name;
 
         let date = new Date();
@@ -70,7 +71,7 @@ export default class {
         //this.showEntry(this.getEntry(guild.id));
     }
 
-    showEntry(data){
+    showEntry(data : any){
         console.log(data);
     }
 
@@ -94,10 +95,10 @@ export default class {
         this.updateEntry(newData.guild, newData);
     }
 
-    saveEntry(file, data) {
+    saveEntry(file: string, data: any) {
         data = JSON.stringify(data, null, 4);
 
-        fs.writeFile(path.join(path.dirname(__dirname), '../../datastore') + "/" + file + ".json", data, 'utf8', function(err) {
+        fs.writeFile(path.join(path.dirname(__dirname), '../../datastore') + "/" + file + ".json", data, 'utf8', function(err: any) {
             if (err) {
                 //console.log(err);
             }

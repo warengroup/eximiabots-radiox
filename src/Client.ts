@@ -4,11 +4,9 @@ import Radio from "./client/classes/Radio";
 import Stations from "./client/classes/Stations";
 import Streamer from "./client/classes/Streamer";
 import Statistics from "./client/classes/Statistics";
-import fs from "fs";
-import { command, radio } from "./client/utils/typings";
+import { command } from "./client/utils/typings";
 import config from "./config";
 import messages from "./client/messages";
-import path from "path";
 
 const events = "./client/events/";
 
@@ -19,7 +17,7 @@ GatewayIntents.add(
     1 << 9 // GUILD_MESSAGES
 );
 
-class RadioClient extends Client {
+export default class RadioClient extends Client {
     readonly commands: Collection<string, command>;
     public funcs: any;
     readonly config = config;
@@ -109,5 +107,3 @@ class RadioClient extends Client {
         });
     }
 }
-
-export default RadioClient

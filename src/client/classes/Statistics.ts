@@ -1,9 +1,13 @@
+import { Guild } from "discord.js";
+
 export default class Statistics {
+    map: any;
+
     constructor() {
         this.map = new Map();
     }
 
-    update(client, guild, radio) {
+    update(client: any, guild: Guild, radio: any) {
 
         client.datastore.checkEntry(guild.id);
 
@@ -26,13 +30,13 @@ export default class Statistics {
         this.calculateGlobal(client);
     }
 
-    calculateGlobal(client){
+    calculateGlobal(client: any){
         if(!client.stations) return;
         if(!client.datastore.map) return;
 
         let guilds = client.datastore.map.keys();
         let stations = client.stations;
-        let statistics = {};
+        let statistics : any = {};
 
         if(!client.stations) return;
 
@@ -59,7 +63,7 @@ export default class Statistics {
             calculation = guilds.next();
         }
 
-        let newData = {};
+        let newData : any = {};
         newData.guild = {};
         newData.guild.id = "global";
         newData.guild.name = "global";

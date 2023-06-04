@@ -6,7 +6,7 @@ import Statistics from "../classes/Statistics";
 
 export default {
     name: 'ready',
-    async execute(client) {
+    async execute(client: any) {
 
         client.funcs.logger("Bot", "Ready");
 
@@ -14,7 +14,7 @@ export default {
         client.funcs.logger('Datastore', 'Initialize');
         client.datastore = new Datastore();
 
-        client.datastore.map.forEach(datastore => {
+        client.datastore.map.forEach((datastore: { guild: { id: string; name: string; }; }) => {
             client.funcs.logger('Datastore', datastore.guild.id + " / " + datastore.guild.name);
         });
 
@@ -22,7 +22,7 @@ export default {
 
         /*DEVELOPERS*/
         client.developers = "";
-        let user = "";
+        let user : any= "";
         for (let i = 0; i < client.config.devId.length; i++) {
             user = await client.users.fetch(client.config.devId[i]);
             client.funcs.logger('Developers', user.tag);
@@ -59,7 +59,7 @@ export default {
         client.funcs.logger('Guilds', 'Started fetching list');
 
         let guilds = await client.guilds.fetch();
-        guilds.forEach(guild => {
+        guilds.forEach((guild: { id: string; name: string; }) => {
             client.funcs.logger('Guilds', guild.id + " / " + guild.name);
         });
 

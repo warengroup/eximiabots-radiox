@@ -1,4 +1,4 @@
-export default function saveState(client, guild, radio){
+export default function saveState(client: any, guild: any, radio: any){
     client.datastore.checkEntry(guild.id);
 
     let date = new Date();

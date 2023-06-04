@@ -4,8 +4,8 @@ export default {
     name: 'invite',
     description: 'Invite Bot',
     category: 'info',
-    execute(interaction, client) {
-        let message = {};
+    execute(interaction: any, client: any) {
+        let message: any = {};
         message.inviteTitle = client.messages.inviteTitle.replace("%client.user.username%", client.user.username);
         const embed = new EmbedBuilder()
             .setTitle(message.inviteTitle)

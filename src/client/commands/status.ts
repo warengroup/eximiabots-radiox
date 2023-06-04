@@ -4,8 +4,8 @@ export default {
     name: 'status',
     description: 'Bot Status',
     category: 'info',
-    async execute(interaction, client) {
-        let message = {};
+    async execute(interaction: any, client: any) {
+        let message: any = {};
 
         message.statusTitle = client.messages.statusTitle.replace("%client.user.username%", client.user.username);
         let uptime = client.funcs.msToTime(client.uptime);

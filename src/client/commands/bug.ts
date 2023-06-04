@@ -4,8 +4,8 @@ export default {
     name: 'bug',
     description: 'Report a bug',
     category: 'info',
-    async execute(interaction, client) {
-        let message = {};
+    async execute(interaction: any, client: any) {
+        let message : any = {};
 
         message.bugTitle = client.messages.bugTitle.replace("%client.user.username%", client.user.username);
         message.bugDescription = client.messages.bugDescription.replace("%client.config.supportGuild%", client.config.supportGuild);

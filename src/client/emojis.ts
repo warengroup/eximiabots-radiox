@@ -1,7 +1,7 @@
 export default {
     name: 'emojis',
-    async execute(client) {
-        let customEmojis = {
+    async execute(client: any): Promise<any> {
+        let customEmojis: any = {
             logo: "<:RadioX:688765708808487072>",
             eximiabots: "<:EximiaBots:693277919929303132>",
             list: "<:RadioXList:688541155519889482>",
@@ -14,7 +14,7 @@ export default {
             next: "<:RadioXNext:882153637474893834>"
         };
 
-        let fallbackEmojis = {
+        let fallbackEmojis: any = {
             logo: "RadioX",
             eximiabots: "EximiaBots",
             list: "📜",

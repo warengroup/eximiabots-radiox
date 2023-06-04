@@ -2,7 +2,7 @@ import { PermissionFlagsBits } from "discord.js";
 
 export default {
     name: 'interactionCreate',
-    async execute(client, interaction) {
+    async execute(client: any, interaction: any) {
 
         const permissions = interaction.channel.permissionsFor(interaction.client.user);
         if (!permissions.has(PermissionFlagsBits.ViewChannel)) return;

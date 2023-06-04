@@ -4,7 +4,7 @@ export default {
     name: 'stop',
     description: 'Stop radio',
     category: 'radio',
-    async execute(interaction, client, command) {
+    async execute(interaction: any, client: any, command: any) {
         if (client.funcs.check(client, interaction, command)) {
             const radio = client.radio.get(interaction.guild.id);
             client.statistics.update(client, interaction.guild, radio);

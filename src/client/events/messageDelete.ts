@@ -1,6 +1,8 @@
+import { Message } from "discord.js";
+
 export default {
     name: 'messageDelete',
-    async execute(client, msg) {
+    async execute(client: any, msg: Message) {
         if(!msg.author.bot || !msg.guild) return;
         const radio = client.radio.get(msg.guild.id);
         if(!radio) return;

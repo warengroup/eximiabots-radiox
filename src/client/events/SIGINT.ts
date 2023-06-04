@@ -1,6 +1,6 @@
 export default {
     name: 'SIGINT',
-    execute(client) {
+    execute(client: any) {
         client.user.setStatus('dnd');
 
         client.streamer.leave(client);

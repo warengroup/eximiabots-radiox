@@ -1,10 +1,10 @@
-import { ActionRowBuilder, StringSelectMenuBuilder } from "discord.js";
+import { ActionRowBuilder, Interaction, StringSelectMenuBuilder } from "discord.js";
 
-export default function listStations(client, interaction){
-    let stations = new Array();
-    let options = new Array();
+export default function listStations(client: any, interaction: any){
+    let stations: any  = new Array();
+    let options: any = new Array();
 
-    stations = client.stations.forEach(station => {
+    stations = client.stations.forEach((station: { name?: any; owner?: any; label?: any; description?: any; value?: any; }) => {
         if(station.name == "GrooveFM") return;
         station = {
             label: station.name,

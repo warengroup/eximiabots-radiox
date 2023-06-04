@@ -1,5 +1,5 @@
-export default function check(client, interaction, command) {
-    let message = {};
+export default function check(client: any, interaction: any, command: any) {
+    let message: any = {};
     const radio = client.radio.get(interaction.guild.id);
     if(client.config.maintenanceMode){
         interaction.reply({

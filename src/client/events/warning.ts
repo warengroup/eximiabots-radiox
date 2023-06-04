@@ -1,6 +1,6 @@
 export default {
     name: 'warning',
-    execute(client, warning) {
+    execute(client: any, warning: any) {
         if(warning.name == "ExperimentalWarning" && warning.message.startsWith("stream/web")) return;
 
         client.funcs.logger("Warning");

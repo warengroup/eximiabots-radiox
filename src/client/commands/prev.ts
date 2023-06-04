@@ -2,11 +2,11 @@ export default {
     name: 'prev',
     description: 'Previous Station',
     category: 'radio',
-    async execute(interaction, client, command) {
+    async execute(interaction: any, client: any, command: any) {
         if (client.funcs.check(client, interaction, command)) {
             const radio = client.radio.get(interaction.guild.id);
 
-            let index = client.stations.findIndex(station => station.name == radio.station.name) - 1;
+            let index = client.stations.findIndex((station: { name: any; }) => station.name == radio.station.name) - 1;
             if(index == -1) index = client.stations.length - 1;
 
             let station = client.stations[index];

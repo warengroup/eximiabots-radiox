@@ -4,11 +4,12 @@ const {
 } = require("@discordjs/voice");
 
 export default class Radio extends Map {
+
     constructor() {
         super();
     }
 
-    save(client) {
+    save(client: any) {
         let currentRadios = this.keys();
         let radio = currentRadios.next();
 
@@ -29,16 +30,16 @@ export default class Radio extends Map {
         }
     }
 
-    restore(client, guilds) {
+    restore(client: any, guilds: any) {
         if(!client.stations) return;
 
-        guilds.forEach(async guild => {
+        guilds.forEach(async (guild: { id: any; }) => {
             let state = client.funcs.loadState(client, guild);
             if(!state) return;
             if(!state.station || !state.channels.voice || !state.channels.text) return;
             let voiceChannel = client.channels.cache.get(state.channels.voice);
             if(!voiceChannel) return;
-            if(voiceChannel.members.filter(member => !member.user.bot).size === 0) return;
+            if(voiceChannel.members.filter((member: { user: { bot: any; }; }) => !member.user.bot).size === 0) return;
 
 
             const sstation = await client.stations.search(state.station.name, "direct");

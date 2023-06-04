@@ -1,22 +1,24 @@
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
-const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = (...args: any) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
 
 export default class Stations extends Array {
+    logger: any;
+
     constructor() {
         super();
         this.logger = require("../funcs/logger.js");
     }
 
-    async fetch(options){
+    async fetch(options: any){
         try {
             this.logger('Stations', 'Started fetching list – ' + options.url);
             let list = await fetch(options.url)
                 .then(this.checkFetchStatus)
-                .then(response => response.json());
+                .then((response: { json: () => any; }) => response.json());
 
             if(list){
                 this.length = 0;
-                list.forEach(station => {
+                list.forEach((station: any) => {
                     try {
                         this.push(station);
                     } catch (error) {
@@ -25,12 +27,12 @@ export default class Stations extends Array {
                 });
 
                 if(options.show){
-                    list.forEach(station => {
+                    list.forEach((station: { name: any; }) => {
                         this.logger('Stations', station.name);
                     });
                 }
 
-                list.forEach(async station => {
+                list.forEach(async (station: { stream: { [x: string]: any; default: string | number; }; }) => {
                     try {
                         let stationTest = await fetch(station.stream[station.stream.default]);
                         if(stationTest.ok === true) return;
@@ -50,7 +52,7 @@ export default class Stations extends Array {
         }
     }
 
-    checkFetchStatus(response) {
+    checkFetchStatus(response: any) {
         if (response.ok) { // res.status >= 200 && res.status < 300
             return response;
         } else {
@@ -58,7 +60,7 @@ export default class Stations extends Array {
         }
     }
 
-    search(key, type) {
+    search(key: string, type: string) {
         if (this === null) return false;
         if (!key) return false;
         if (!type) return false;
@@ -73,7 +75,7 @@ export default class Stations extends Array {
             return foundStation;
         } else {
 
-            let foundStations = [];
+            let foundStations : any[] = [];
             if (key == "radio") return false;
 
             this

@@ -1,7 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
 
-export default async function play(client, interaction, guild, station) {
-    let message = {};
+export default async function play(client: any, interaction: any, guild: any, station: any) {
+    let message: any = {};
     const radio = client.radio.get(guild.id);
     const audioPlayer = client.streamer.listen(station);
     radio.connection.subscribe(audioPlayer);

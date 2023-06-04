@@ -5,8 +5,8 @@ export default {
     name: 'statistics',
     description: 'Show statistics',
     category: 'info',
-    execute(interaction, client) {
-        let message = {};
+    execute(interaction: any, client: any) {
+        let message: any = {};
         let stations = client.stations;
         let currentGuild = client.datastore.getEntry(interaction.guild.id);
         let global = client.datastore.getEntry("global");

@@ -4,16 +4,16 @@ export default {
     name: 'help',
     description: 'Get help using bot',
     category: 'info',
-    execute(interaction, client) {
-        let message = {};
+    execute(interaction: any, client: any) {
+        let message: any = {};
 
-        const categories = [];
+        const categories : any= [];
         for (let i = 0; i < client.commands.size; i++) {
             if (!categories.includes([...client.commands.values()][i].category)) categories.push([...client.commands.values()][i].category);
         }
         let commands = '';
         for (let i = 0; i < categories.length; i++) {
-            commands += `**» ${categories[i].toUpperCase()}**\n${client.commands.filter(x => x.category === categories[i] && !x.omitFromHelp).map(x => `\`${x.name}\``).join(', ')}\n`;
+            commands += `**» ${categories[i].toUpperCase()}**\n${client.commands.filter(x => x.category === categories[i] && !x.omitFromHelp).map((x: { name: any; }) => `\`${x.name}\``).join(', ')}\n`;
         }
 
         message.helpTitle = client.messages.helpTitle.replace("%client.user.username%", client.user.username);

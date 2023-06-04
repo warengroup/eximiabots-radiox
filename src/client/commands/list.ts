@@ -4,8 +4,8 @@ export default {
     name: 'list',
     description: 'List radio stations',
     category: 'radio',
-    execute(interaction, client) {
-        let message = {};
+    execute(interaction: any, client: any) {
+        let message: any = {};
 
         if(!client.stations) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
@@ -20,7 +20,7 @@ export default {
         if(radio && !client.config.maintenanceMode){
             client.funcs.listStations(client, interaction);
         } else {
-            let stations = `${client.stations.map(s => `**#** ${s.name}`).join('\n')}`
+            let stations = `${client.stations.map((s: { name: any; }) => `**#** ${s.name}`).join('\n')}`
             const hashs = stations.split('**#**').length;
             for (let i = 0; i < hashs; i++) {
                 stations = stations.replace('**#**', `**${i + 1}.**`);

@@ -12,8 +12,8 @@ export default {
         { type: "STRING", name: "query", description: "Select station", required: false}
     ],
     category: "radio",
-    async execute(interaction, client) {
-        let message = {};
+    async execute(interaction: any, client: any) {
+        let message: any = {};
 
         if(client.config.maintenanceMode){
             return interaction.reply({
@@ -119,7 +119,8 @@ export default {
             voiceChannel: voiceChannel,
             connection: null,
             message: null,
-            station: station
+            station: station,
+            startTime: number
         };
         client.radio.set(interaction.guild.id, construct);
 

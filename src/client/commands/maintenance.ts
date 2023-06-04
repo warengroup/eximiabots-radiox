@@ -1,21 +1,21 @@
 import { ActionRowBuilder, EmbedBuilder, StringSelectMenuBuilder } from "discord.js";
 import Streamer from "../classes/Streamer";
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
-const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = (...args: any) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
 
 export default {
     name: 'maintenance',
     description: 'Bot Maintenance',
     category: 'info',
-    async execute(interaction, client) {
-        let message = {};
+    async execute(interaction: any, client: any) {
+        let message: any = {};
 
         if(!client.funcs.isDev(client.config.devId, interaction.user.id)) return interaction.reply({
             content: client.messageEmojis["error"] + client.messages.notAllowed,
             ephemeral: true
         });
         let action = interaction.options?.getNumber("action") ?? interaction.values?.[0];
-        const options = new Array(
+        const options: any = new Array(
             {
                 emoji: "🌀",
                 label: "Restart Bot",
@@ -79,12 +79,12 @@ export default {
             });
         }
 
-        client.funcs.logger('Maintenance', options.find(option => option.value == action).label);
+        client.funcs.logger('Maintenance', options.find((option: { value: any; }) => option.value == action).label);
 
         const embed = new EmbedBuilder()
             .setTitle(client.messages.maintenanceTitle)
             .setColor(client.config.embedColor)
-            .setDescription(options.find(option => option.value == action).label)
+            .setDescription(options.find((option: { value: any; }) => option.value == action).label)
             .setFooter({
                 text: client.messages.footerText,
                 iconURL: "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, '')
@@ -163,7 +163,7 @@ export default {
                     }
 
                     if(!client.config.maintenanceMode){
-                        clearInterval();
+                        clearInterval(undefined);
                     }
                 }, 500);
 
@@ -187,7 +187,7 @@ export default {
                     }
 
                     if(!client.config.maintenanceMode){
-                        clearInterval();
+                        clearInterval(undefined);
                     }
                 }, 500);
 

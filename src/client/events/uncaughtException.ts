@@ -1,6 +1,6 @@
 export default {
     name: 'uncaughtException',
-    execute(client, error) {
+    execute(client: any, error: any) {
         client.funcs.logger("Error");
         console.log(error.stack);
         console.log('');

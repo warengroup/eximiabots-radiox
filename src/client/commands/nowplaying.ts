@@ -4,9 +4,9 @@ export default {
     name: 'nowplaying',
     description: 'Current Radio Station',
     category: 'radio',
-    async execute(interaction, client, command) {
+    async execute(interaction: any, client: any, command: any) {
         if (client.funcs.check(client, interaction, command)) {
-            let message = {};
+            let message: any = {};
             const radio = client.radio.get(interaction.guild.id);
 
             let date = new Date();

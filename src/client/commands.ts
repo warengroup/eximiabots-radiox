@@ -5,10 +5,10 @@ const fs = require('fs');
 const path = require ('path');
 
 export default {
-    async execute(client) {
+    async execute(client: any) {
 
-        const commands = [];
-        const commandFiles = fs.readdirSync(path.join("./src/client/commands")).filter(f => f.endsWith(".ts"));
+        const commands : any[] = [];
+        const commandFiles = fs.readdirSync(path.join("./src/client/commands")).filter((f: string) => f.endsWith(".ts"));
 
         for (const file of commandFiles) {
             const command = require(`./commands/${file}`);
@@ -20,7 +20,7 @@ export default {
 
             command.data = command.data.toJSON();
             if(command.options) {
-                command.options.forEach(function(option) {
+                command.options.forEach(function(option: { type: string | number; }) {
                     if(option.type == "STRING") option.type = 3;
                     if(option.type == "NUMBER") option.type = 10;
                     command.data.options.push(option);
@@ -43,14 +43,14 @@ export default {
                     );
 
                     let guilds = await client.guilds.fetch();
-                    guilds.forEach(async guild => {
+                    guilds.forEach(async (guild: { id: string; name: string; }) => {
                         try {
                             await rest.put(
                                 Routes.applicationGuildCommands(client.user.id, guild.id),
                                 { body: commands }
                             );
                             client.funcs.logger('Slash Commands', 'Guild Applications – Successful' + "\n" + guild.id + " / " + guild.name);
-                        } catch (DiscordAPIError) {
+                        } catch (DiscordAPIError: any) {
                             client.funcs.logger('Slash Commands', 'Guild Applications – Failed' + "\n" + guild.id + " / " + guild.name);
                             if(DiscordAPIError.name != "DiscordAPIError[50001]") console.error(DiscordAPIError.message + "\n\n");
                         }
@@ -62,7 +62,7 @@ export default {
                     );
 
                     let guilds = await client.guilds.fetch();
-                    guilds.forEach(async guild => {
+                    guilds.forEach(async (guild: { id: any; }) => {
                         try {
                             await rest.put(
                                 Routes.applicationGuildCommands(client.user.id, guild.id),

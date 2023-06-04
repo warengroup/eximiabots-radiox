@@ -1,6 +1,6 @@
 export default {
     name: 'SIGTERM',
-    execute(client) {
+    execute(client: any) {
         process.emit('SIGINT');
     }
 }
