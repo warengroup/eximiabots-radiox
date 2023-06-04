@@ -1,3 +1,3 @@
-const { default: RadioClient } = require("./Client");
+import RadioClient from "./Client";
 
 const client = new RadioClient();

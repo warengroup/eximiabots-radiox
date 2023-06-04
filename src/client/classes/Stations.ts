@@ -1,6 +1,5 @@
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
-// @ts-ignore
-const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = (...args: any) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
 
 export default class Stations extends Array {
     logger: any;

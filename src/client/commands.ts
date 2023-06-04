@@ -1,3 +1,4 @@
+import { Snowflake } from "discord.js";
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
@@ -7,7 +8,7 @@ const path = require ('path');
 export default {
     async execute(client: any) {
 
-        const commands : any[] = [];
+        const commands : any = [];
         const commandFiles = fs.readdirSync(path.join("./src/client/commands")).filter((f: string) => f.endsWith(".ts"));
 
         for (const file of commandFiles) {
@@ -30,6 +31,8 @@ export default {
             commands.push(command.data);
         }
 
+        console.log(commands);
+/*
         const rest = new REST({ version: '9' }).setToken(client.config.token);
 
         (async () => {
@@ -62,7 +65,7 @@ export default {
                     );
 
                     let guilds = await client.guilds.fetch();
-                    guilds.forEach(async (guild: { id: any; }) => {
+                    guilds.forEach(async (guild: { id: Snowflake; }) => {
                         try {
                             await rest.put(
                                 Routes.applicationGuildCommands(client.user.id, guild.id),
@@ -79,5 +82,7 @@ export default {
                 console.error(error);
             }
         })();
+*/
+
     }
 }
