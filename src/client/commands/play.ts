@@ -4,7 +4,7 @@ const {
     joinVoiceChannel
 } = require("@discordjs/voice");
 
-module.exports = {
+export default {
     name: "play",
     usage: "<song name>",
     description: "Play radio",

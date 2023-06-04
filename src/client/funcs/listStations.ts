@@ -1,6 +1,6 @@
 import { ActionRowBuilder, StringSelectMenuBuilder } from "discord.js";
 
-module.exports = function listStations(client, interaction){
+export default function listStations(client, interaction){
     let stations = new Array();
     let options = new Array();
 

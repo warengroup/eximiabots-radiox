@@ -3,7 +3,7 @@ import Streamer from "../classes/Streamer";
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
 const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
 
-module.exports = {
+export default {
     name: 'maintenance',
     description: 'Bot Maintenance',
     category: 'info',

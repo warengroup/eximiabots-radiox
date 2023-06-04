@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     name: 'uncaughtException',
     execute(client, error) {
         client.funcs.logger("Error");

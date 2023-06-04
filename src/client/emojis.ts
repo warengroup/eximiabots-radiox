@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     name: 'emojis',
     async execute(client) {
         let customEmojis = {

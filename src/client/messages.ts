@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     wrongVoiceChannel: "You need to be in the same voice channel as RadioX to use this command!",
     noPerms: "You need the %command.permission% permission to use this command!",
     notPlaying: "There is nothing playing!",

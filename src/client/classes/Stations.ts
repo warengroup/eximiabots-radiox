@@ -1,7 +1,7 @@
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
 const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
 
-module.exports = class Stations extends Array {
+export default class Stations extends Array {
     constructor() {
         super();
         this.logger = require("../funcs/logger.js");

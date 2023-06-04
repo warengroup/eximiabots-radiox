@@ -4,7 +4,7 @@ import Stations from "../classes/Stations";
 import Streamer from "../classes/Streamer";
 import Statistics from "../classes/Statistics";
 
-module.exports = {
+export default {
     name: 'ready',
     async execute(client) {
 

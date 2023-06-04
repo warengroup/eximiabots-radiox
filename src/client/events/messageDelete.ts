@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     name: 'messageDelete',
     async execute(client, msg) {
         if(!msg.author.bot || !msg.guild) return;

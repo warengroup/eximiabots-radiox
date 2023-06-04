@@ -3,7 +3,7 @@ const {
     joinVoiceChannel
 } = require("@discordjs/voice");
 
-module.exports = class Radio extends Map {
+export default class Radio extends Map {
     constructor() {
         super();
     }

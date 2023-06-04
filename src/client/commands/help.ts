@@ -1,6 +1,6 @@
 import { EmbedBuilder } from "discord.js";
 
-module.exports = {
+export default {
     name: 'help',
     description: 'Get help using bot',
     category: 'info',

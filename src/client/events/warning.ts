@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     name: 'warning',
     execute(client, warning) {
         if(warning.name == "ExperimentalWarning" && warning.message.startsWith("stream/web")) return;

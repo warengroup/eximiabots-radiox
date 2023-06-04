@@ -1,6 +1,6 @@
 require('dotenv/config');
 
-module.exports = {
+export default {
 
     //credentials
     token: process.env.DISCORD_TOKEN,

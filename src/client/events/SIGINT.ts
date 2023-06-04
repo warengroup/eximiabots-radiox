@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     name: 'SIGINT',
     execute(client) {
         client.user.setStatus('dnd');

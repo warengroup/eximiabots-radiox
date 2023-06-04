@@ -1,6 +1,6 @@
 import { EmbedBuilder } from "discord.js";
 
-module.exports = {
+export default {
     name: 'nowplaying',
     description: 'Current Radio Station',
     category: 'radio',

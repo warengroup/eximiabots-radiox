@@ -1,6 +1,6 @@
 import { PermissionFlagsBits } from "discord.js";
 
-module.exports = {
+export default {
     name: 'interactionCreate',
     async execute(client, interaction) {
 

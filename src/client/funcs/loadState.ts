@@ -1,4 +1,4 @@
-module.exports = function loadState(client, guild){
+export default function loadState(client, guild){
     let data = client.datastore.getEntry(guild.id);
     if(!data) return;
     let state;

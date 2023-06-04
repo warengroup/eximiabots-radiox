@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-module.exports = class {
+export default class {
     constructor() {
         this.map = new Map();
         this.loadData();

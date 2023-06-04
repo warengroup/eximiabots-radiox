@@ -4,7 +4,7 @@ const {
     joinVoiceChannel
 } = require("@discordjs/voice");
 
-module.exports = {
+export default {
     name: "voiceStateUpdate",
     async execute(client, oldState, newState) {
         if (oldState.channel === null) return;

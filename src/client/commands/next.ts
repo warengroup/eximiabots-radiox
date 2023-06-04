@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     name: 'next',
     description: 'Next Station',
     category: 'radio',

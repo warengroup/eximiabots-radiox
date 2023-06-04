@@ -1,4 +1,4 @@
-module.exports = function check(client, interaction, command) {
+export default function check(client, interaction, command) {
     let message = {};
     const radio = client.radio.get(interaction.guild.id);
     if(client.config.maintenanceMode){

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     name: 'prev',
     description: 'Previous Station',
     category: 'radio',

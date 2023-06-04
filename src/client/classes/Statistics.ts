@@ -1,4 +1,4 @@
-module.exports = class {
+export default class Statistics {
     constructor() {
         this.map = new Map();
     }

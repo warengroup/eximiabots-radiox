@@ -5,7 +5,7 @@ const {
     NoSubscriberBehavior
 } = require("@discordjs/voice");
 
-module.exports = class {
+export default class Streamer {
     constructor() {
         this.map = new Map();
         this.mode = null;

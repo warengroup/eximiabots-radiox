@@ -3,7 +3,7 @@ import Datastore from "./client/classes/Datastore";
 import Radio from "./client/classes/Radio";
 import Stations from "./client/classes/Stations";
 import Streamer from "./client/classes/Streamer";
-import Statistics from "./client/classes/Statistics;
+import Statistics from "./client/classes/Statistics";
 import fs from "fs";
 import { command, radio } from "./client/utils/typings";
 import config from "./config";
