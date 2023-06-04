@@ -1,7 +1,8 @@
 import { ActionRowBuilder, EmbedBuilder, StringSelectMenuBuilder } from "discord.js";
 import Streamer from "../classes/Streamer";
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
-const fetch = (...args: any) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
+// @ts-ignore
+const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
 
 export default {
     name: 'maintenance',

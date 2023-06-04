@@ -13,7 +13,7 @@ export default {
         }
         let commands = '';
         for (let i = 0; i < categories.length; i++) {
-            commands += `**» ${categories[i].toUpperCase()}**\n${client.commands.filter(x => x.category === categories[i] && !x.omitFromHelp).map((x: { name: any; }) => `\`${x.name}\``).join(', ')}\n`;
+            commands += `**» ${categories[i].toUpperCase()}**\n${client.commands.filter((x: { category: any; omitFromHelp: any; }) => x.category === categories[i] && !x.omitFromHelp).map((x: { name: any; }) => `\`${x.name}\``).join(', ')}\n`;
         }
 
         message.helpTitle = client.messages.helpTitle.replace("%client.user.username%", client.user.username);

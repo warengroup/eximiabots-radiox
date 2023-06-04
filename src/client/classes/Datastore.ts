@@ -14,7 +14,7 @@ export default class {
             fs.mkdirSync(dir);
         }
         //console.log("");
-        const dataFiles = fs.readdirSync(path.join(path.dirname(__dirname), '../../datastore')).filter(f => f.endsWith('.json'));
+        const dataFiles = fs.readdirSync(path.join(path.dirname(__dirname), '../../datastore')).filter((f: string) => f.endsWith('.json'));
         for (const file of dataFiles) {
             try {
                 const json = require(`../../../datastore/${file}`);

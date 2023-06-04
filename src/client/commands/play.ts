@@ -34,7 +34,7 @@ export default {
         if(!query){
             return client.funcs.listStations(client, interaction);
         }
-        let url = query ? query.replace(/<(.+)>/g, "$1") : "";
+
         const radio = client.radio.get(interaction.guild.id);
         const voiceChannel = interaction.member.voice.channel;
         if (!voiceChannel) return interaction.reply({
@@ -65,13 +65,9 @@ export default {
             });
         }
         let station;
-        const number = parseInt(query - 1);
-        if (url.startsWith("http")) {
-            return interaction.reply({
-                content: client.messageEmojis["error"] + client.messages.errorStationURL,
-                ephemeral: true
-            });
-        } else if (!isNaN(number)) {
+
+        if (!isNaN(query)) {
+            const number = parseInt((query - 1) as unknown as string);
             if (number > client.stations.length - 1) {
                 return interaction.reply({
                     content: client.messageEmojis["error"] + client.messages.wrongStationNumber,
@@ -114,13 +110,14 @@ export default {
             return;
         }
 
+        let date = new Date();
         const construct = {
             textChannel: interaction.channel,
             voiceChannel: voiceChannel,
             connection: null,
             message: null,
             station: station,
-            startTime: number
+            startTime: date.getTime()
         };
         client.radio.set(interaction.guild.id, construct);
 

@@ -47,7 +47,7 @@ export default class Radio extends Map {
 
             if(!station) return;
 
-            const construct = {
+            const construct: any = {
                 textChannel: client.channels.cache.get(state.channels.text),
                 voiceChannel: client.channels.cache.get(state.channels.voice),
                 connection: null,
