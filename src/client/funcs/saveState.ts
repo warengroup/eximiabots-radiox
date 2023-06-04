@@ -1,4 +1,7 @@
-export default function saveState(client: any, guild: any, radio: any){
+import RadioClient from "../../Client";
+
+export default function saveState(client: RadioClient, guild: any, radio: any){
+    if(!client.datastore) return;
     client.datastore.checkEntry(guild.id);
 
     let date = new Date();

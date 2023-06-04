@@ -1,5 +1,6 @@
-import { ApplicationCommandOptionType, PermissionFlagsBits } from "discord.js";
+import { ApplicationCommandOptionType, ButtonInteraction, ChatInputCommandInteraction, PermissionFlagsBits, StringSelectMenuInteraction } from "discord.js";
 import { getVoiceConnection, joinVoiceChannel } from "@discordjs/voice";
+import RadioClient from "../../Client";
 
 export default {
     name: "play",
@@ -9,7 +10,7 @@ export default {
         { type: ApplicationCommandOptionType.String, name: "query", description: "Select station", required: false}
     ],
     category: "radio",
-    async execute(interaction: any, client: any) {
+    async execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient) {
         let message: any = {};
 
         if(client.config.maintenanceMode){

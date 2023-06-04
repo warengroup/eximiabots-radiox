@@ -1,3 +1,4 @@
+import RadioClient from "../../Client";
 import Datastore from "../classes/Datastore";
 import Radio from "../classes/Radio";
 import Stations from "../classes/Stations";
@@ -8,7 +9,7 @@ import commands from "../commands";
 
 export default {
     name: 'ready',
-    async execute(client: any) {
+    async execute(client: RadioClient) {
 
         client.funcs.logger("Bot", "Ready");
 

@@ -1,4 +1,5 @@
 import { PermissionFlagsBits, VoiceState } from "discord.js";
+import RadioClient from "../../Client";
 const {
     getVoiceConnection,
     joinVoiceChannel
@@ -6,7 +7,7 @@ const {
 
 export default {
     name: "voiceStateUpdate",
-    async execute(client: any, oldState: VoiceState, newState: VoiceState) {
+    async execute(client: RadioClient, oldState: VoiceState, newState: VoiceState) {
         if (oldState.channel === null) return;
         let change = false;
         const radio = client.radio?.get(newState.guild.id);
@@ -15,11 +16,11 @@ export default {
         if (newState.member?.id === client.user.id && oldState.member?.id === client.user.id) {
 
             if (newState.channel === null) {
-                client.statistics.update(client, newState.guild, radio);
+                client.statistics?.update(client, newState.guild, radio);
                 radio.connection?.destroy();
                 radio.message?.delete();
                 client.funcs.logger('Radio', newState.guild.id + " / " + 'Stop');
-                return client.radio.delete(newState.guild.id);
+                return client.radio?.delete(newState.guild.id);
             }
 
             const newPermissions = newState.channel.permissionsFor(newState.client.user);
@@ -37,11 +38,11 @@ export default {
                         1000
                     );
                 } catch (error) {
-                    client.statistics.update(client, newState.guild, radio);
+                    client.statistics?.update(client, newState.guild, radio);
                     radio.connection?.destroy();
                     radio.message?.delete();
                     client.funcs.logger('Radio', newState.guild.id + " / " + 'Stop');
-                    client.radio.delete(oldState.guild.id);
+                    client.radio?.delete(oldState.guild.id);
                 }
                 return;
             }
@@ -56,11 +57,11 @@ export default {
             setTimeout(() => {
                 if (!radio || !radio.connection || !radio.connection === null) return;
                 if (radio.voiceChannel.members.filter((member: { user: { bot: any; }; }) => !member.user.bot).size === 0) {
-                    client.statistics.update(client, newState.guild, radio);
+                    client.statistics?.update(client, newState.guild, radio);
                     radio.connection?.destroy();
                     radio.message?.delete();
                     client.funcs.logger('Radio', newState.guild.id + " / " + 'Stop');
-                    client.radio.delete(newState.guild.id);
+                    client.radio?.delete(newState.guild.id);
                 }
             }, 5000);
         }

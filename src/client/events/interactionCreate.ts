@@ -1,8 +1,9 @@
 import { PermissionFlagsBits } from "discord.js";
+import RadioClient from "../../Client";
 
 export default {
     name: 'interactionCreate',
-    async execute(client: any, interaction: any) {
+    async execute(client: RadioClient, interaction: any) {
 
         const permissions = interaction.channel.permissionsFor(interaction.client.user);
         if (!permissions.has(PermissionFlagsBits.ViewChannel)) return;

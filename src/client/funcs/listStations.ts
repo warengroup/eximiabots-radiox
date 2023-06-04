@@ -1,8 +1,11 @@
 import { ActionRowBuilder, StringSelectMenuBuilder } from "discord.js";
+import RadioClient from "../../Client";
 
-export default function listStations(client: any, interaction: any){
-    let stations: any  = new Array();
+export default function listStations(client: RadioClient, interaction: any){
+    let stations: any = new Array();
     let options: any = new Array();
+
+    if(!client.stations) return;
 
     stations = client.stations.forEach((station: { name?: any; owner?: any; label?: any; description?: any; value?: any; }) => {
         if(station.name == "GrooveFM") return;

@@ -1,5 +1,6 @@
 import logger from "../funcs/logger";
 import { createAudioPlayer, createAudioResource, NoSubscriberBehavior } from "@discordjs/voice";
+import RadioClient from "../../Client";
 
 export default class Streamer {
     map: any;
@@ -12,7 +13,7 @@ export default class Streamer {
         this.logger = logger;
     }
 
-    init(client: any){
+    init(client: RadioClient){
         if(!client.config.streamerMode) return;
 
         switch(client.config.streamerMode){
@@ -35,12 +36,12 @@ export default class Streamer {
         }
     }
 
-    refresh(client: any){
+    refresh(client: RadioClient){
         this.init(client);
 
         let streamers = this.map.keys();
         streamers.forEach((streamer: any) => {
-            if(client.stations.findIndex((station: { name: any; }) => station.name == streamer) == -1){
+            if(client.stations?.findIndex((station: { name: any; }) => station.name == streamer) == -1){
                 this.stop(streamer);
             }
         });
@@ -111,7 +112,7 @@ export default class Streamer {
         return audioPlayer;
     }
 
-    leave(client: any) {
+    leave(client: RadioClient) {
         if(!client.stations) return;
         client.stations.forEach((station: any) => {
             this.stop(station);

@@ -1,4 +1,6 @@
 import { getVoiceConnection, joinVoiceChannel } from "@discordjs/voice";
+import { VoiceChannel } from "discord.js";
+import RadioClient from "../../Client";
 
 export default class Radio extends Map {
 
@@ -6,7 +8,7 @@ export default class Radio extends Map {
         super();
     }
 
-    save(client: any) {
+    save(client: RadioClient) {
         let currentRadios = this.keys();
         let radio = currentRadios.next();
 
@@ -14,9 +16,9 @@ export default class Radio extends Map {
             let currentRadio = this.get(radio.value);
 
             if (currentRadio) {
-                currentRadio.guild = client.datastore.getEntry(radio.value).guild;
+                currentRadio.guild = client.datastore?.getEntry(radio.value).guild;
 
-                client.statistics.update(client, currentRadio.guild, currentRadio);
+                client.statistics?.update(client, currentRadio.guild, currentRadio);
                 client.funcs.saveState(client, currentRadio.guild, currentRadio);
                 currentRadio.connection?.destroy();
                 currentRadio.message?.delete();
@@ -27,7 +29,7 @@ export default class Radio extends Map {
         }
     }
 
-    restore(client: any, guilds: any) {
+    restore(client: RadioClient, guilds: any) {
         if(!client.stations) return;
 
         guilds.forEach(async (guild: { id: any; }) => {
@@ -39,7 +41,7 @@ export default class Radio extends Map {
             if(voiceChannel.members.filter((member: { user: { bot: any; }; }) => !member.user.bot).size === 0) return;
 
 
-            const sstation = await client.stations.search(state.station.name, "direct");
+            const sstation = await client.stations?.search(state.station.name, "direct");
             let station = sstation;
 
             if(!station) return;
@@ -65,7 +67,7 @@ export default class Radio extends Map {
                 construct.connection = connection;
                 let date = new Date();
                 construct.startTime = date.getTime();
-                client.datastore.checkEntry(guild.id);
+                client.datastore?.checkEntry(guild.id);
                 client.funcs.play(client, null, guild, station);
             } catch (error) {
                 console.log(error);

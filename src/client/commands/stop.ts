@@ -1,20 +1,21 @@
-import { EmbedBuilder } from "discord.js";
+import { ButtonInteraction, ChatInputCommandInteraction, ColorResolvable, EmbedBuilder, StringSelectMenuInteraction } from "discord.js";
+import RadioClient from "../../Client";
 
 export default {
     name: 'stop',
     description: 'Stop radio',
     category: 'radio',
-    async execute(interaction: any, client: any, command: any) {
+    async execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient, command: any) {
         if (client.funcs.check(client, interaction, command)) {
-            const radio = client.radio.get(interaction.guild.id);
-            client.statistics.update(client, interaction.guild, radio);
+            const radio = client.radio?.get(interaction.guild.id);
+            client.statistics?.update(client, interaction.guild, radio);
             radio.connection?.destroy();
             client.funcs.logger('Radio', interaction.guild.id + " / " + 'Stop');
 
             const embed = new EmbedBuilder()
                 .setTitle(client.user.username)
                 .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["stop"].replace(/[^0-9]+/g, ''))
-                .setColor(client.config.embedColor)
+                .setColor(client.config.embedColor as ColorResolvable)
                 .addFields({
                     name: client.messages.nowplayingTitle,
                     value: "-"
@@ -39,7 +40,7 @@ export default {
                 await radio.message?.delete();
             }, 5000);
 
-            client.radio.delete(interaction.guild.id);
+            client.radio?.delete(interaction.guild.id);
 
             interaction.reply({
                 content: client.messageEmojis["stop"] + client.messages.stop,

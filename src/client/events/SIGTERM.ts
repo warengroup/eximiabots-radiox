@@ -1,6 +1,8 @@
+import RadioClient from "../../Client";
+
 export default {
     name: 'SIGTERM',
-    execute(client: any) {
+    execute(client: RadioClient) {
         process.emit('SIGINT');
     }
 }

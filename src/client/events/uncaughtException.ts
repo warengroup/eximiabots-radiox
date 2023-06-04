@@ -1,6 +1,8 @@
+import RadioClient from "../../Client";
+
 export default {
     name: 'uncaughtException',
-    execute(client: any, error: any) {
+    execute(client: RadioClient, error: any) {
         client.funcs.logger("Error");
         console.log(error.stack);
         console.log('');

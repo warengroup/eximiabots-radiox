@@ -1,10 +1,11 @@
-import { EmbedBuilder } from "discord.js";
+import { ChatInputCommandInteraction, ColorResolvable, EmbedBuilder } from "discord.js";
+import RadioClient from "../../Client";
 
 export default {
     name: 'bug',
     description: 'Report a bug',
     category: 'info',
-    async execute(interaction: any, client: any) {
+    async execute(interaction: ChatInputCommandInteraction, client: RadioClient) {
         let message : any = {};
 
         message.bugTitle = client.messages.bugTitle.replace("%client.user.username%", client.user.username);
@@ -13,7 +14,7 @@ export default {
         const embed = new EmbedBuilder()
             .setTitle(message.bugTitle)
             .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["logo"].replace(/[^0-9]+/g, ''))
-            .setColor(client.config.embedColor)
+            .setColor(client.config.embedColor as ColorResolvable)
             .setDescription(message.bugDescription)
             .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
             .setFooter({

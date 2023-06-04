@@ -1,6 +1,8 @@
-export default function check(client: any, interaction: any, command: any) {
+import RadioClient from "../../Client";
+
+export default function check(client: RadioClient, interaction: any, command: any) {
     let message: any = {};
-    const radio = client.radio.get(interaction.guild.id);
+    const radio = client.radio?.get(interaction.guild.id);
     if(client.config.maintenanceMode){
         interaction.reply({
             content: client.messageEmojis["error"] + client.messages.maintenance,

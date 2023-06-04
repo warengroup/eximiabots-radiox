@@ -1,6 +1,8 @@
+import RadioClient from "../Client";
+
 export default {
     name: 'emojis',
-    async execute(client: any): Promise<any> {
+    async execute(client: RadioClient): Promise<any> {
         let customEmojis: any = {
             logo: "<:RadioX:688765708808487072>",
             eximiabots: "<:EximiaBots:693277919929303132>",

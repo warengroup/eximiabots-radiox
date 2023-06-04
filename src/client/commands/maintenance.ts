@@ -1,4 +1,5 @@
-import { ActionRowBuilder, EmbedBuilder, StringSelectMenuBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonInteraction, ChatInputCommandInteraction, ColorResolvable, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuInteraction } from "discord.js";
+import RadioClient from "../../Client";
 import Streamer from "../classes/Streamer";
 import commands from "../commands";
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
@@ -9,7 +10,7 @@ export default {
     name: 'maintenance',
     description: 'Bot Maintenance',
     category: 'info',
-    async execute(interaction: any, client: any) {
+    async execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient) {
         let message: any = {};
 
         if(!client.funcs.isDev(client.config.devId, interaction.user.id)) return interaction.reply({
@@ -55,12 +56,12 @@ export default {
             },
             {
                 emoji: "💤",
-                label: "Streamer Mode – Manual",
+                label: "Streamer Mode - Manual",
                 value: "10"
             },
             {
                 emoji: "📡",
-                label: "Streamer Mode – Auto",
+                label: "Streamer Mode - Auto",
                 value: "11"
             }
         );
@@ -85,7 +86,7 @@ export default {
 
         const embed = new EmbedBuilder()
             .setTitle(client.messages.maintenanceTitle)
-            .setColor(client.config.embedColor)
+            .setColor(client.config.embedColor as ColorResolvable)
             .setDescription(options.find((option: { value: any; }) => option.value == action).label)
             .setFooter({
                 text: client.messages.footerText,

@@ -1,4 +1,5 @@
 import { Snowflake } from "discord.js";
+import RadioClient from "../Client";
 import bug from "./commands/bug";
 import help from "./commands/help";
 import invite from "./commands/invite";
@@ -12,20 +13,30 @@ import statistics from "./commands/statistics";
 import status from "./commands/status";
 import stop from "./commands/stop";
 
+export interface command {
+    name: string,
+    description: string,
+    category: string,
+    options?: [],
+    execute: any
+}
+
 export default {
-    async execute(client: any) {
-        const commands : any = [ bug, help, invite, list, maintenance, next, nowplaying, play, prev, statistics, status, stop ];
+    async execute(client: RadioClient) {
+        const commands : command[] = [ bug, help, invite, list, maintenance, next, nowplaying, play, prev, statistics, status, stop ];
 
         for(const command of commands){
             client.commands.set(command.name, command);
         }
 
+        if(!client.application) return;
         client.funcs.logger('Application Commands', 'Started refreshing application (/) commands.');
         if(client.config.devMode){
             client.application.commands.set([]);
             for(const command of commands){
                 let guilds = await client.guilds.fetch();
                 guilds.forEach(async (guild: { id: Snowflake; name: string; }) => {
+                    if(!client.application) return;
                     client.application.commands.create({
                         name: command.name,
                         description: command.description,
@@ -47,6 +58,7 @@ export default {
 
             let guilds = await client.guilds.fetch();
             guilds.forEach(async (guild: { id: Snowflake; }) => {
+                if(!client.application) return;
                 client.application.commands.set([], guild.id);
             });
         }

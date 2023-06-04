@@ -1,10 +1,11 @@
-import { EmbedBuilder } from "discord.js";
+import { ButtonInteraction, ChatInputCommandInteraction, ColorResolvable, EmbedBuilder, StringSelectMenuInteraction } from "discord.js";
+import RadioClient from "../../Client";
 
 export default {
     name: 'list',
     description: 'List radio stations',
     category: 'radio',
-    execute(interaction: any, client: any) {
+    execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient) {
         let message: any = {};
 
         if(!client.stations) {
@@ -15,7 +16,7 @@ export default {
             });
         }
 
-        const radio = client.radio.get(interaction.guild.id);
+        const radio = client.radio?.get(interaction.guild.id);
 
         if(radio && !client.config.maintenanceMode){
             client.funcs.listStations(client, interaction);
@@ -29,7 +30,7 @@ export default {
             let embed = new EmbedBuilder()
                 .setTitle(client.messages.listTitle)
                 .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["list"].replace(/[^0-9]+/g, ''))
-                .setColor(client.config.embedColor)
+                .setColor(client.config.embedColor as ColorResolvable)
                 .setDescription(stations)
                 .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
                 .setFooter({

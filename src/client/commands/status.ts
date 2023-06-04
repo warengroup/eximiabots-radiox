@@ -1,10 +1,11 @@
-import { EmbedBuilder } from "discord.js";
+import { ColorResolvable, EmbedBuilder } from "discord.js";
+import RadioClient from "../../Client";
 
 export default {
     name: 'status',
     description: 'Bot Status',
     category: 'info',
-    async execute(interaction: any, client: any) {
+    async execute(interaction: any, client: RadioClient) {
         let message: any = {};
 
         message.statusTitle = client.messages.statusTitle.replace("%client.user.username%", client.user.username);
@@ -13,7 +14,7 @@ export default {
         const embed = new EmbedBuilder()
             .setTitle(message.statusTitle)
             .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["logo"].replace(/[^0-9]+/g, ''))
-            .setColor(client.config.embedColor)
+            .setColor(client.config.embedColor as ColorResolvable)
             .addFields(
                 { name: client.messages.statusField1, value: uptime },
                 { name: client.messages.statusField2, value: client.config.version },

@@ -4,7 +4,7 @@ import Radio from "./client/classes/Radio";
 import Stations from "./client/classes/Stations";
 import Streamer from "./client/classes/Streamer";
 import Statistics from "./client/classes/Statistics";
-import { command } from "./client/utils/typings";
+import { command } from "./client/commands";
 import config from "./config";
 import messages from "./client/messages";
 import events from "./client/events"
@@ -28,6 +28,8 @@ export default class RadioClient extends Client {
     public streamer: Streamer | null;
     public statistics: Statistics | null;
     public radio: Radio | null;
+    public messageEmojis: any | null;
+    public developers: string | undefined;
 
     constructor() {
         super({
@@ -39,6 +41,7 @@ export default class RadioClient extends Client {
         this.streamer = null;
         this.statistics = null;
         this.radio = null;
+        this.messageEmojis = null;
 
         this.events = events;
         this.funcs = funcs;

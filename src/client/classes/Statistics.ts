@@ -1,4 +1,5 @@
 import { Guild } from "discord.js";
+import RadioClient from "../../Client";
 
 export default class Statistics {
     map: any;
@@ -7,17 +8,17 @@ export default class Statistics {
         this.map = new Map();
     }
 
-    update(client: any, guild: Guild, radio: any) {
+    update(client: RadioClient, guild: Guild, radio: any) {
 
-        client.datastore.checkEntry(guild.id);
+        client.datastore?.checkEntry(guild.id);
 
-        radio.datastore = client.datastore.getEntry(guild.id);
+        radio.datastore = client.datastore?.getEntry(guild.id);
 
         if(!radio.datastore.statistics[radio.station.name]){
             radio.datastore.statistics[radio.station.name] = {};
             radio.datastore.statistics[radio.station.name].time = 0;
             radio.datastore.statistics[radio.station.name].used = 0;
-            client.datastore.updateEntry(guild, radio.datastore);
+            client.datastore?.updateEntry(guild, radio.datastore);
         }
 
         let date = new Date();
@@ -26,13 +27,13 @@ export default class Statistics {
         radio.datastore.statistics[radio.station.name].time = parseInt(radio.datastore.statistics[radio.station.name].time)+parseInt(radio.playTime);
 
         radio.datastore.statistics[radio.station.name].used = parseInt(radio.datastore.statistics[radio.station.name].used)+1;
-        client.datastore.updateEntry(guild, radio.datastore);
+        client.datastore?.updateEntry(guild, radio.datastore);
         this.calculateGlobal(client);
     }
 
-    calculateGlobal(client: any){
+    calculateGlobal(client: RadioClient){
         if(!client.stations) return;
-        if(!client.datastore.map) return;
+        if(!client.datastore?.map) return;
 
         let guilds = client.datastore.map.keys();
         let stations = client.stations;

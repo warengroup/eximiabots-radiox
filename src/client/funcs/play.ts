@@ -1,9 +1,10 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ColorResolvable, EmbedBuilder } from "discord.js";
+import RadioClient from "../../Client";
 
-export default async function play(client: any, interaction: any, guild: any, station: any) {
+export default async function play(client: RadioClient, interaction: any, guild: any, station: any) {
     let message: any = {};
-    const radio = client.radio.get(guild.id);
-    const audioPlayer = client.streamer.listen(station);
+    const radio = client.radio?.get(guild.id);
+    const audioPlayer = client.streamer?.listen(station);
     radio.connection.subscribe(audioPlayer);
     client.funcs.logger('Radio', guild.id + " / " + "Play" + " / " + radio.station.name);
 
@@ -16,7 +17,7 @@ export default async function play(client: any, interaction: any, guild: any, st
     const embed = new EmbedBuilder()
         .setTitle(client.user.username)
         .setThumbnail((radio.station.logo || "https://cdn.discordapp.com/emojis/" + client.messageEmojis["play"].replace(/[^0-9]+/g, '')))
-        .setColor(client.config.embedColor)
+        .setColor(client.config.embedColor as ColorResolvable)
         .addFields({
             name: client.messages.nowplayingTitle,
             value: message.nowplayingDescription

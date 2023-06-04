@@ -1,15 +1,16 @@
-import { EmbedBuilder } from "discord.js";
+import { ButtonInteraction, ChatInputCommandInteraction, ColorResolvable, EmbedBuilder, StringSelectMenuInteraction } from "discord.js";
+import RadioClient from "../../Client";
 
 
 export default {
     name: 'statistics',
     description: 'Show statistics',
     category: 'info',
-    execute(interaction: any, client: any) {
+    execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient) {
         let message: any = {};
         let stations = client.stations;
-        let currentGuild = client.datastore.getEntry(interaction.guild.id);
-        let global = client.datastore.getEntry("global");
+        let currentGuild = client.datastore?.getEntry(interaction.guild.id);
+        let global = client.datastore?.getEntry("global");
         let statistics = "";
 
         if(!client.stations) {
@@ -29,7 +30,7 @@ export default {
         const embed = new EmbedBuilder()
             .setTitle(client.messages.statisticsTitle)
             .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["statistics"].replace(/[^0-9]+/g, ''))
-            .setColor(client.config.embedColor)
+            .setColor(client.config.embedColor as ColorResolvable)
             .setDescription(statistics)
             .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
             .setFooter({

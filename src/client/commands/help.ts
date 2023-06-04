@@ -1,10 +1,11 @@
-import { EmbedBuilder } from "discord.js";
+import { ChatInputCommandInteraction, ColorResolvable, EmbedBuilder } from "discord.js";
+import RadioClient from "../../Client";
 
 export default {
     name: 'help',
     description: 'Get help using bot',
     category: 'info',
-    execute(interaction: any, client: any) {
+    execute(interaction: ChatInputCommandInteraction, client: RadioClient) {
         let message: any = {};
 
         const categories : any= [];
@@ -22,7 +23,7 @@ export default {
         const embed = new EmbedBuilder()
             .setTitle(message.helpTitle)
             .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["logo"].replace(/[^0-9]+/g, ''))
-            .setColor(client.config.embedColor)
+            .setColor(client.config.embedColor as ColorResolvable)
             .setDescription(message.helpDescription)
             .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
             .setFooter({
