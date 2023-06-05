@@ -15,7 +15,7 @@ export default async function play(client: RadioClient, interaction: any, guild:
     message.nowplayingDescription = message.nowplayingDescription.replace("**", "");
 
     const embed = new EmbedBuilder()
-        .setTitle(client.user.username)
+        .setTitle(client.user?.username || "-")
         .setThumbnail((radio.station.logo || "https://cdn.discordapp.com/emojis/" + client.messageEmojis["play"].replace(/[^0-9]+/g, '')))
         .setColor(client.config.embedColor as ColorResolvable)
         .addFields({

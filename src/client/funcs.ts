@@ -7,6 +7,6 @@ import msToTime from "./funcs/msToTime";
 import play from "./funcs/play";
 import saveState from "./funcs/saveState";
 
-export default {
+export const funcs = {
     check, isDev, listStations, loadState, logger, msToTime, play, saveState
 }

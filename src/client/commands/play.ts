@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, ButtonInteraction, ChatInputCommandInteraction, PermissionFlagsBits, StringSelectMenuInteraction } from "discord.js";
+import { ApplicationCommandOptionType, ChatInputCommandInteraction, GuildMember, PermissionFlagsBits, StringSelectMenuInteraction } from "discord.js";
 import { getVoiceConnection, joinVoiceChannel } from "@discordjs/voice";
 import RadioClient from "../../Client";
 
@@ -10,15 +10,8 @@ export default {
         { type: ApplicationCommandOptionType.String, name: "query", description: "Select station", required: false}
     ],
     category: "radio",
-    async execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient) {
+    async execute(interaction: ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient) {
         let message: any = {};
-
-        if(client.config.maintenanceMode){
-            return interaction.reply({
-                content: client.messageEmojis["error"] + client.messages.maintenance,
-                ephemeral: true
-            });
-        }
 
         if(!client.stations) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
@@ -28,13 +21,23 @@ export default {
             });
         }
 
-        let query = interaction.options?.getString("query") ?? interaction.values?.[0];
+        let query : number | string | null = null;
+
+        if(interaction.isChatInputCommand()){
+            query = interaction.options?.getNumber("query");
+        }
+
+        if(interaction.isStringSelectMenu()){
+            query = interaction.values?.[0];
+        }
+
         if(!query){
             return client.funcs.listStations(client, interaction);
         }
 
-        const radio = client.radio.get(interaction.guild.id);
-        const voiceChannel = interaction.member.voice.channel;
+        const radio = client.radio?.get(interaction.guild?.id);
+        if(!(interaction.member instanceof GuildMember)) return;
+        const voiceChannel = interaction.member?.voice.channel;
         if (!voiceChannel) return interaction.reply({
             content: client.messageEmojis["error"] + client.messages.noVoiceChannel,
             ephemeral: true
@@ -50,13 +53,13 @@ export default {
             ephemeral: true
         });
         const permissions = voiceChannel.permissionsFor(interaction.client.user);
-        if (!permissions.has(PermissionFlagsBits.Connect)) {
+        if (!permissions?.has(PermissionFlagsBits.Connect)) {
             return interaction.reply({
                 content: client.messageEmojis["error"] + client.messages.noPermsConnect,
                 ephemeral: true
             });
         }
-        if (!permissions.has(PermissionFlagsBits.Speak)) {
+        if (!permissions?.has(PermissionFlagsBits.Speak)) {
             return interaction.reply({
                 content: client.messageEmojis["error"] + client.messages.noPermsSpeak,
                 ephemeral: true
@@ -64,7 +67,7 @@ export default {
         }
         let station;
 
-        if (!isNaN(query)) {
+        if (typeof query === 'number') {
             const number = parseInt((query - 1) as unknown as string);
             if (number > client.stations.length - 1) {
                 return interaction.reply({
@@ -75,17 +78,20 @@ export default {
                 station = client.stations[number];
             }
         } else {
-            if (query.length < 3) return interaction.reply({
+            if(!(typeof query === 'string')) return;
+            if(query.length < 3) return interaction.reply({
                 content: client.messageEmojis["error"] + client.messages.tooShortSearch,
                 ephemeral: true
             });
 
             let type = "";
 
-            if(interaction.values?.[0]){
-                type = "direct";
-            } else {
-                type = "text";
+            if(interaction.isStringSelectMenu()){
+                if(interaction.values?.[0]){
+                    type = "direct";
+                } else {
+                    type = "text";
+                }
             }
 
             const sstation = await client.stations.search(query, type);
@@ -97,7 +103,7 @@ export default {
         }
 
         if (radio) {
-            client.statistics.update(client, interaction.guild, radio);
+            client.statistics?.update(client, interaction.guild, radio);
 
             let date = new Date();
             radio.station = station;
@@ -117,7 +123,7 @@ export default {
             station: station,
             startTime: date.getTime()
         };
-        client.radio.set(interaction.guild.id, construct);
+        client.radio?.set(interaction.guild?.id, construct);
 
         try {
             const connection =
@@ -130,11 +136,11 @@ export default {
             construct.connection = connection;
             let date = new Date();
             construct.startTime = date.getTime();
-            client.datastore.checkEntry(interaction.guild.id);
+            client.datastore?.checkEntry(interaction.guild?.id);
             client.funcs.play(client, interaction, interaction.guild, station);
         } catch (error) {
             console.log(error);
-            client.radio.delete(interaction.guild.id);
+            client.radio?.delete(interaction.guild?.id);
             return interaction.reply({
                 content: client.messageEmojis["error"] + `An error occured: ${error}`,
                 ephemeral: true

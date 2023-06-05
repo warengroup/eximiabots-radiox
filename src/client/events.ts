@@ -7,6 +7,6 @@ import uncaughtException from "./events/uncaughtException"
 import voiceStateUpdate from "./events/voiceStateUpdate"
 import warning from "./events/warning"
 
-export default {
+export const events = {
     interactionCreate, messageDelete, ready, SIGINT, SIGTERM, uncaughtException, voiceStateUpdate, warning
 }

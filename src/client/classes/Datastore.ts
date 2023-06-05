@@ -28,7 +28,8 @@ export default class {
         //console.log("");
     }
 
-    checkEntry(id: string){
+    checkEntry(id: string | undefined){
+        if(!id) return;
         this.loadEntry(id);
         if(!this.map.has(id)){
             this.createEntry(id);

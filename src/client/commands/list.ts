@@ -16,7 +16,7 @@ export default {
             });
         }
 
-        const radio = client.radio?.get(interaction.guild.id);
+        const radio = client.radio?.get(interaction.guild?.id);
 
         if(radio && !client.config.maintenanceMode){
             client.funcs.listStations(client, interaction);

@@ -13,7 +13,7 @@ export default {
         const radio = client.radio?.get(newState.guild.id);
         if (!radio) return;
 
-        if (newState.member?.id === client.user.id && oldState.member?.id === client.user.id) {
+        if (newState.member?.id === client.user?.id && oldState.member?.id === client.user?.id) {
 
             if (newState.channel === null) {
                 client.statistics?.update(client, newState.guild, radio);

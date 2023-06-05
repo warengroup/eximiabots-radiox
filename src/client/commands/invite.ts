@@ -6,6 +6,12 @@ export default {
     description: 'Invite Bot',
     category: 'info',
     execute(interaction: ChatInputCommandInteraction, client: RadioClient) {
+
+        if(!client.user) return interaction.reply({
+            content: client.messageEmojis["error"] + client.messages.maintenance,
+            ephemeral: true
+        });
+
         let message: any = {};
         message.inviteTitle = client.messages.inviteTitle.replace("%client.user.username%", client.user.username);
         const embed = new EmbedBuilder()

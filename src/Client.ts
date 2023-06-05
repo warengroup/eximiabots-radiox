@@ -6,9 +6,9 @@ import Streamer from "./client/classes/Streamer";
 import Statistics from "./client/classes/Statistics";
 import { command } from "./client/commands";
 import config from "./config";
-import messages from "./client/messages";
-import events from "./client/events"
-import funcs from "./client/funcs";
+import { messages } from "./client/messages";
+import { events } from "./client/events"
+import { funcs } from "./client/funcs";
 
 const GatewayIntents = new IntentsBitField();
 GatewayIntents.add(
@@ -19,8 +19,8 @@ GatewayIntents.add(
 
 export default class RadioClient extends Client {
     readonly commands: Collection<string, command>;
-    public events: any;
-    public funcs: any;
+    readonly events = events;
+    readonly funcs = funcs;
     readonly config = config;
     readonly messages = messages;
     public datastore: Datastore | null;
@@ -42,9 +42,6 @@ export default class RadioClient extends Client {
         this.statistics = null;
         this.radio = null;
         this.messageEmojis = null;
-
-        this.events = events;
-        this.funcs = funcs;
 
         console.log('RadioX ' + this.config.version);
         console.log('Internet Radio to your Discord guild');
@@ -73,7 +70,7 @@ export default class RadioClient extends Client {
         });
 
         this.on("error", error => {
-            this.funcs.logger("Discord Client / Error");
+            this.funcs.logger("Discord Client", "Error");
             console.error(error);
             console.log('');
         });
@@ -99,7 +96,7 @@ export default class RadioClient extends Client {
         });
 
         this.login(this.config.token).catch((err) => {
-            this.funcs.logger("Discord Client / Error");
+            this.funcs.logger("Discord Client", "Login Error");
             console.log(err);
             console.log('');
         });

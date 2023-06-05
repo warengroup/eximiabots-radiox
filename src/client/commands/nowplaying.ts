@@ -6,9 +6,9 @@ export default {
     description: 'Current Radio Station',
     category: 'radio',
     async execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient, command: any) {
-        if (client.funcs.check(client, interaction, command)) {
+        if(client.funcs.check(client, interaction, command)) {
             let message: any = {};
-            const radio = client.radio?.get(interaction.guild.id);
+            const radio = client.radio?.get(interaction.guild?.id);
 
             let date = new Date();
             radio.currentTime = date.getTime();

@@ -1,6 +1,7 @@
 import { ButtonInteraction, ChatInputCommandInteraction, StringSelectMenuInteraction } from "discord.js";
 import RadioClient from "../../Client";
 import { command } from "../commands";
+import { station } from "../classes/Stations"
 
 export default {
     name: 'prev',
@@ -8,9 +9,14 @@ export default {
     category: 'radio',
     async execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient, command: command) {
         if (client.funcs.check(client, interaction, command)) {
-            const radio = client.radio.get(interaction.guild.id);
+            const radio = client.radio?.get(interaction.guild?.id);
 
-            let index = client.stations.findIndex((station: { name: any; }) => station.name == radio.station.name) - 1;
+            if(!client.stations) return interaction.reply({
+                content: client.messageEmojis["error"] + client.messages.maintenance,
+                ephemeral: true
+            });
+
+            let index = client.stations.findIndex((station: station) => station.name == radio.station.name) - 1;
             if(index == -1) index = client.stations.length - 1;
 
             let station = client.stations[index];
@@ -20,7 +26,7 @@ export default {
                 ephemeral: true
             });
 
-            client.statistics.update(client, interaction.guild, radio);
+            client.statistics?.update(client, interaction.guild, radio);
 
             let date = new Date();
             radio.station = station;

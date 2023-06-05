@@ -1,6 +1,6 @@
 import RadioClient from "../Client";
 
-export default {
+export const emojis = {
     name: 'emojis',
     async execute(client: RadioClient): Promise<any> {
         let customEmojis: any = {

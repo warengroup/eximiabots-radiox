@@ -18,7 +18,7 @@ export default {
     hostedBy: "[Warén Group](https://waren.io)",
 
     //Settings
-    version: process.env.DEV_MODE ? process.env.npm_package_version + "-dev" : process.env.npm_package_version,
+    version: process.env.DEV_MODE ? (process.env.npm_package_version ?? "0.0.0") + "-dev" : process.env.npm_package_version ?? "-",
     debug: process.env.DEBUG_MODE || false,
     devMode: process.env.DEV_MODE || false,
     maintenanceMode: false,

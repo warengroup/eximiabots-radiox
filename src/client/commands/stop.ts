@@ -7,13 +7,13 @@ export default {
     category: 'radio',
     async execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient, command: any) {
         if (client.funcs.check(client, interaction, command)) {
-            const radio = client.radio?.get(interaction.guild.id);
+            const radio = client.radio?.get(interaction.guild?.id);
             client.statistics?.update(client, interaction.guild, radio);
             radio.connection?.destroy();
-            client.funcs.logger('Radio', interaction.guild.id + " / " + 'Stop');
+            client.funcs.logger('Radio', interaction.guild?.id + " / " + 'Stop');
 
             const embed = new EmbedBuilder()
-                .setTitle(client.user.username)
+                .setTitle(client.user?.username || "-")
                 .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["stop"].replace(/[^0-9]+/g, ''))
                 .setColor(client.config.embedColor as ColorResolvable)
                 .addFields({
@@ -40,7 +40,7 @@ export default {
                 await radio.message?.delete();
             }, 5000);
 
-            client.radio?.delete(interaction.guild.id);
+            client.radio?.delete(interaction.guild?.id);
 
             interaction.reply({
                 content: client.messageEmojis["stop"] + client.messages.stop,

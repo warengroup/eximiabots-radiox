@@ -8,6 +8,12 @@ export default {
     category: 'info',
     execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient) {
         let message: any = {};
+
+        if(!interaction.guild) return interaction.reply({
+            content: client.messageEmojis["error"] + client.messages.maintenance,
+            ephemeral: true
+        });
+
         let stations = client.stations;
         let currentGuild = client.datastore?.getEntry(interaction.guild.id);
         let global = client.datastore?.getEntry("global");

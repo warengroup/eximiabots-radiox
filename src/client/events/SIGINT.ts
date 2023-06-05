@@ -3,7 +3,7 @@ import RadioClient from "../../Client";
 export default {
     name: 'SIGINT',
     execute(client: RadioClient) {
-        client.user.setStatus('dnd');
+        client.user?.setStatus('dnd');
 
         client.streamer?.leave(client);
         client.radio?.save(client);

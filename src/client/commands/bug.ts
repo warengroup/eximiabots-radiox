@@ -6,6 +6,11 @@ export default {
     description: 'Report a bug',
     category: 'info',
     async execute(interaction: ChatInputCommandInteraction, client: RadioClient) {
+        if(!client.user) return interaction.reply({
+            content: client.messageEmojis["error"] + client.messages.maintenance,
+            ephemeral: true
+        });
+
         let message : any = {};
 
         message.bugTitle = client.messages.bugTitle.replace("%client.user.username%", client.user.username);

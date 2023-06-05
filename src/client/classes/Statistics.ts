@@ -8,7 +8,8 @@ export default class Statistics {
         this.map = new Map();
     }
 
-    update(client: RadioClient, guild: Guild, radio: any) {
+    update(client: RadioClient, guild: Guild | null, radio: any) {
+        if(!guild) return;
 
         client.datastore?.checkEntry(guild.id);
 
@@ -47,18 +48,18 @@ export default class Statistics {
             let currentGuild = client.datastore.getEntry(calculation.value);
             if(calculation.value != 'global'){
                 if(stations){
-                    Object.keys(stations).forEach(function(station) {
-                        if(currentGuild.statistics[stations[station].name] && currentGuild.statistics[stations[station].name].time && parseInt(currentGuild.statistics[stations[station].name].time) != 0  && currentGuild.statistics[stations[station].name].used && parseInt(currentGuild.statistics[stations[station].name].used) != 0){
-                            if(!statistics[stations[station].name]){
-                                statistics[stations[station].name] = {};
-                                statistics[stations[station].name].time = 0;
-                                statistics[stations[station].name].used = 0;
+                    for(const station of stations) {
+                        if(currentGuild.statistics[station.name] && currentGuild.statistics[station.name].time && parseInt(currentGuild.statistics[station.name].time) != 0  && currentGuild.statistics[station.name].used && parseInt(currentGuild.statistics[station.name].used) != 0){
+                            if(!statistics[station.name]){
+                                statistics[station.name] = {};
+                                statistics[station.name].time = 0;
+                                statistics[station.name].used = 0;
                             }
 
-                            statistics[stations[station].name].time = parseInt(statistics[stations[station].name].time)+parseInt(currentGuild.statistics[stations[station].name].time);
-                            statistics[stations[station].name].used = parseInt(statistics[stations[station].name].used)+parseInt(currentGuild.statistics[stations[station].name].used);
+                            statistics[station.name].time = parseInt(statistics[station.name].time)+parseInt(currentGuild.statistics[station.name].time);
+                            statistics[station.name].used = parseInt(statistics[station.name].used)+parseInt(currentGuild.statistics[station.name].used);
                         }
-                    });
+                    }
                 }
             }
             calculation = guilds.next();

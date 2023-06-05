@@ -4,7 +4,7 @@ import Radio from "../classes/Radio";
 import Stations from "../classes/Stations";
 import Streamer from "../classes/Streamer";
 import Statistics from "../classes/Statistics";
-import emojis from "../emojis"
+import { emojis } from "../emojis"
 import commands from "../commands";
 
 export default {
@@ -48,7 +48,7 @@ export default {
         client.streamer.init(client);
 
         if(!client.stations) {
-            client.user.setStatus('dnd');
+            client.user?.setStatus('dnd');
         }
 
         /*GUILDS*/
@@ -76,7 +76,7 @@ export default {
 
         setTimeout(function () {
             /*RESTORE RADIOS*/
-            client.radio.restore(client, guilds);
+            client.radio?.restore(client, guilds);
         }, 5000);
 
         setTimeout(function () {

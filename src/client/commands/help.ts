@@ -6,6 +6,12 @@ export default {
     description: 'Get help using bot',
     category: 'info',
     execute(interaction: ChatInputCommandInteraction, client: RadioClient) {
+
+        if(!client.user) return interaction.reply({
+            content: client.messageEmojis["error"] + client.messages.maintenance,
+            ephemeral: true
+        });
+
         let message: any = {};
 
         const categories : any= [];
@@ -14,10 +20,10 @@ export default {
         }
         let commands = '';
         for (let i = 0; i < categories.length; i++) {
-            commands += `**» ${categories[i].toUpperCase()}**\n${client.commands.filter((x: { category: any; omitFromHelp: any; }) => x.category === categories[i] && !x.omitFromHelp).map((x: { name: any; }) => `\`${x.name}\``).join(', ')}\n`;
+            commands += `**» ${categories[i].toUpperCase()}**\n${client.commands.filter(x => x.category === categories[i]).map((x: { name: any; }) => `\`${x.name}\``).join(', ')}\n`;
         }
 
-        message.helpTitle = client.messages.helpTitle.replace("%client.user.username%", client.user.username);
+        message.helpTitle = client.messages.helpTitle.replace("%client.user.username%", client.user?.username || "-");
         message.helpDescription = client.messages.helpDescription.replace("%commands%", commands);
 
         const embed = new EmbedBuilder()

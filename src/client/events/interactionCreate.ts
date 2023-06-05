@@ -5,6 +5,13 @@ export default {
     name: 'interactionCreate',
     async execute(client: RadioClient, interaction: any) {
 
+        if(client.config.maintenanceMode){
+            return interaction.reply({
+                content: client.messageEmojis["error"] + client.messages.maintenance,
+                ephemeral: true
+            });
+        }
+
         const permissions = interaction.channel.permissionsFor(interaction.client.user);
         if (!permissions.has(PermissionFlagsBits.ViewChannel)) return;
 

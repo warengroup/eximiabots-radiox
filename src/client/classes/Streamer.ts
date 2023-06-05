@@ -10,7 +10,6 @@ export default class Streamer {
     constructor() {
         this.map = new Map();
         this.mode = null;
-        this.logger = logger;
     }
 
     init(client: RadioClient){
@@ -73,25 +72,25 @@ export default class Streamer {
         audioPlayer.play(resource);
         audioPlayer
             .on('playing', () => {
-	            this.logger('Streamer', station.name + " / " + "Playing");
+	            logger('Streamer', station.name + " / " + "Playing");
             })
             .on('idle', () => {
-                this.logger('Streamer', station.name + " / " + "Idle");
+                logger('Streamer', station.name + " / " + "Idle");
                 audioPlayer.removeAllListeners();
                 if(this.mode == "manual" && audioPlayer.subscribers.length == 0) return;
                 this.play(station);
             })
             .on('paused', () => {
-                this.logger('Streamer', station.name + " / " + "Paused");
+                logger('Streamer', station.name + " / " + "Paused");
             })
             .on('buffering', () => {
-                this.logger('Streamer', station.name + " / " + "Buffering");
+                logger('Streamer', station.name + " / " + "Buffering");
             })
             .on('autopaused', () => {
-                this.logger('Streamer', station.name + " / " + "AutoPaused");
+                logger('Streamer', station.name + " / " + "AutoPaused");
             })
             .on('error', (error: string) => {
-                this.logger('Streamer', station.name + " / " + "Error" + "\n" + error);
+                logger('Streamer', station.name + " / " + "Error" + "\n" + error);
             });
         return audioPlayer;
     }
@@ -99,7 +98,7 @@ export default class Streamer {
     stop(station: any){
         let audioPlayer = this.map.get(station.name);
         if(audioPlayer){
-            this.logger('Streamer', station.name + " / " + "Stop");
+            logger('Streamer', station.name + " / " + "Stop");
             audioPlayer.removeAllListeners();
             audioPlayer.stop();
         }

@@ -3,17 +3,23 @@ const _importDynamic = new Function('modulePath', 'return import(modulePath)');
 const fetch = (...args: any) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
 import logger from "../funcs/logger";
 
+export interface station {
+    name: string,
+    owner: string,
+    logo: string,
+    stream: []
+}
+
 export default class Stations extends Array {
     logger: any;
 
     constructor() {
         super();
-        this.logger = logger;
     }
 
     async fetch(options: any){
         try {
-            this.logger('Stations', 'Started fetching list - ' + options.url);
+            logger('Stations', 'Started fetching list - ' + options.url);
             let list = await fetch(options.url)
                 .then(this.checkFetchStatus)
                 .then((response: { json: () => any; }) => response.json());
@@ -30,7 +36,7 @@ export default class Stations extends Array {
 
                 if(options.show){
                     list.forEach((station: { name: any; }) => {
-                        this.logger('Stations', station.name);
+                        logger('Stations', station.name);
                     });
                 }
 
@@ -45,9 +51,9 @@ export default class Stations extends Array {
                 });
             }
 
-            this.logger('Stations', 'Successfully fetched list');
+            logger('Stations', 'Successfully fetched list');
         } catch (error) {
-            this.logger('Stations', 'Fetching list failed');
+            logger('Stations', 'Fetching list failed');
             console.error(error + "\n");
 
             if(this.length == 0) this.fetch(options);

@@ -1,15 +1,9 @@
 import RadioClient from "../../Client";
+import { command } from "../commands";
 
-export default function check(client: RadioClient, interaction: any, command: any) {
+export default function check(client: RadioClient, interaction: any, command: command) {
     let message: any = {};
     const radio = client.radio?.get(interaction.guild.id);
-    if(client.config.maintenanceMode){
-        interaction.reply({
-            content: client.messageEmojis["error"] + client.messages.maintenance,
-            ephemeral: true
-        });
-        return false;
-    }
     if(!client.stations) {
         message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
         interaction.reply({
