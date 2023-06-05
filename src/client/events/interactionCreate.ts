@@ -7,7 +7,7 @@ export default {
 
         if(client.config.maintenanceMode){
             return interaction.reply({
-                content: client.messageEmojis["error"] + client.messages.maintenance,
+                content: client.messages.emojis["error"] + client.messages.maintenance,
                 ephemeral: true
             });
         }
@@ -16,7 +16,7 @@ export default {
         if (!permissions.has(PermissionFlagsBits.ViewChannel)) return;
 
         if (!permissions.has(PermissionFlagsBits.EmbedLinks)) return interaction.reply({
-            content: client.messageEmojis["error"] + client.messages.noPermsEmbed,
+            content: client.messages.emojis["error"] + client.messages.noPermsEmbed,
             ephemeral: true
         });
 
@@ -29,7 +29,7 @@ export default {
                 command.execute(interaction, client);
             } catch (error) {
                 interaction.reply({
-                    content: client.messageEmojis["error"] + client.messages.runningCommandFailed,
+                    content: client.messages.emojis["error"] + client.messages.runningCommandFailed,
                     ephemeral: true
                 });
                 console.error(error);
@@ -43,7 +43,7 @@ export default {
                 command.execute(interaction, client, command);
             } catch (error) {
                 interaction.reply({
-                    content: client.messageEmojis["error"] + client.messages.runningCommandFailed,
+                    content: client.messages.emojis["error"] + client.messages.runningCommandFailed,
                     ephemeral: true
                 });
                 console.error(error);

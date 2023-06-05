@@ -14,7 +14,7 @@ export default {
 
             const embed = new EmbedBuilder()
                 .setTitle(client.user?.username || "-")
-                .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["stop"].replace(/[^0-9]+/g, ''))
+                .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messages.emojis["stop"].replace(/[^0-9]+/g, ''))
                 .setColor(client.config.embedColor as ColorResolvable)
                 .addFields({
                     name: client.messages.nowplayingTitle,
@@ -23,7 +23,7 @@ export default {
                 .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
                 .setFooter({
                     text: client.messages.footerText,
-                    iconURL: "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, '')
+                    iconURL: "https://cdn.discordapp.com/emojis/" + client.messages.emojis["eximiabots"].replace(/[^0-9]+/g, '')
                 });
 
             if(!radio.message){
@@ -43,7 +43,7 @@ export default {
             client.radio?.delete(interaction.guild?.id);
 
             interaction.reply({
-                content: client.messageEmojis["stop"] + client.messages.stop,
+                content: client.messages.emojis["stop"] + client.messages.stop,
                 ephemeral: true
             });
         }

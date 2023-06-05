@@ -16,7 +16,7 @@ export default {
         if(!client.stations) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
             return interaction.reply({
-                content: client.messageEmojis["error"] + message.errorToGetPlaylist,
+                content: client.messages.emojis["error"] + message.errorToGetPlaylist,
                 ephemeral: true
             });
         }
@@ -39,12 +39,12 @@ export default {
         if(!(interaction.member instanceof GuildMember)) return;
         const voiceChannel = interaction.member?.voice.channel;
         if (!voiceChannel) return interaction.reply({
-            content: client.messageEmojis["error"] + client.messages.noVoiceChannel,
+            content: client.messages.emojis["error"] + client.messages.noVoiceChannel,
             ephemeral: true
         });
         if (radio) {
             if (voiceChannel !== radio.voiceChannel) return interaction.reply({
-                content: client.messageEmojis["error"] + client.messages.wrongVoiceChannel,
+                content: client.messages.emojis["error"] + client.messages.wrongVoiceChannel,
                 ephemeral: true
             });
         }
@@ -55,13 +55,13 @@ export default {
         const permissions = voiceChannel.permissionsFor(interaction.client.user);
         if (!permissions?.has(PermissionFlagsBits.Connect)) {
             return interaction.reply({
-                content: client.messageEmojis["error"] + client.messages.noPermsConnect,
+                content: client.messages.emojis["error"] + client.messages.noPermsConnect,
                 ephemeral: true
             });
         }
         if (!permissions?.has(PermissionFlagsBits.Speak)) {
             return interaction.reply({
-                content: client.messageEmojis["error"] + client.messages.noPermsSpeak,
+                content: client.messages.emojis["error"] + client.messages.noPermsSpeak,
                 ephemeral: true
             });
         }
@@ -71,7 +71,7 @@ export default {
             const number = parseInt((query - 1) as unknown as string);
             if (number > client.stations.length - 1) {
                 return interaction.reply({
-                    content: client.messageEmojis["error"] + client.messages.wrongStationNumber,
+                    content: client.messages.emojis["error"] + client.messages.wrongStationNumber,
                     ephemeral: true
                 });
             } else {
@@ -80,7 +80,7 @@ export default {
         } else {
             if(!(typeof query === 'string')) return;
             if(query.length < 3) return interaction.reply({
-                content: client.messageEmojis["error"] + client.messages.tooShortSearch,
+                content: client.messages.emojis["error"] + client.messages.tooShortSearch,
                 ephemeral: true
             });
 
@@ -96,7 +96,7 @@ export default {
 
             const sstation = await client.stations.search(query, type);
             if (!sstation) return interaction.reply({
-                content: client.messageEmojis["error"] + client.messages.noSearchResults,
+                content: client.messages.emojis["error"] + client.messages.noSearchResults,
                 ephemeral: true
             });
             station = sstation;
@@ -142,7 +142,7 @@ export default {
             console.log(error);
             client.radio?.delete(interaction.guild?.id);
             return interaction.reply({
-                content: client.messageEmojis["error"] + `An error occured: ${error}`,
+                content: client.messages.emojis["error"] + `An error occured: ${error}`,
                 ephemeral: true
             });
         }

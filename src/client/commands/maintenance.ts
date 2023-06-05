@@ -14,7 +14,7 @@ export default {
         let message: any = {};
 
         if(!client.funcs.isDev(client.config.devId, interaction.user.id)) return interaction.reply({
-            content: client.messageEmojis["error"] + client.messages.notAllowed,
+            content: client.messages.emojis["error"] + client.messages.notAllowed,
             ephemeral: true
         });
 
@@ -123,7 +123,7 @@ export default {
             .setDescription(options.find((option: APISelectMenuOption) => option.value == action)?.label || "-")
             .setFooter({
                 text: client.messages.footerText,
-                iconURL: "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, '')
+                iconURL: "https://cdn.discordapp.com/emojis/" + client.messages.emojis["eximiabots"].replace(/[^0-9]+/g, '')
             });
 
         interaction.reply({

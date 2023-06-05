@@ -12,7 +12,7 @@ export default {
             const radio = client.radio?.get(interaction.guild?.id);
 
             if(!client.stations) return interaction.reply({
-                content: client.messageEmojis["error"] + client.messages.maintenance,
+                content: client.messages.emojis["error"] + client.messages.maintenance,
                 ephemeral: true
             });
 
@@ -22,7 +22,7 @@ export default {
             let station = client.stations[index];
 
             if(!station) return interaction.reply({
-                content: client.messageEmojis["error"] + client.messages.noSearchResults,
+                content: client.messages.emojis["error"] + client.messages.noSearchResults,
                 ephemeral: true
             });
 

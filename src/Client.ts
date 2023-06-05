@@ -6,9 +6,10 @@ import Streamer from "./client/classes/Streamer";
 import Statistics from "./client/classes/Statistics";
 import { command } from "./client/commands";
 import config from "./config";
-import { messages } from "./client/messages";
 import { events } from "./client/events"
 import { funcs } from "./client/funcs";
+import { messages } from "./client/messages";
+
 
 const GatewayIntents = new IntentsBitField();
 GatewayIntents.add(
@@ -28,7 +29,6 @@ export default class RadioClient extends Client {
     public streamer: Streamer | null;
     public statistics: Statistics | null;
     public radio: Radio | null;
-    public messageEmojis: any | null;
     public developers: string | undefined;
 
     constructor() {
@@ -41,7 +41,6 @@ export default class RadioClient extends Client {
         this.streamer = null;
         this.statistics = null;
         this.radio = null;
-        this.messageEmojis = null;
 
         console.log('RadioX ' + this.config.version);
         console.log('Internet Radio to your Discord guild');

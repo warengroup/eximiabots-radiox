@@ -10,7 +10,7 @@ export default {
         let message: any = {};
 
         if(!interaction.guild) return interaction.reply({
-            content: client.messageEmojis["error"] + client.messages.maintenance,
+            content: client.messages.emojis["error"] + client.messages.maintenance,
             ephemeral: true
         });
 
@@ -22,7 +22,7 @@ export default {
         if(!client.stations) {
             message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
             return interaction.reply({
-                content: client.messageEmojis["error"] + message.errorToGetPlaylist,
+                content: client.messages.emojis["error"] + message.errorToGetPlaylist,
                 ephemeral: true
             });
         }
@@ -35,13 +35,13 @@ export default {
 
         const embed = new EmbedBuilder()
             .setTitle(client.messages.statisticsTitle)
-            .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["statistics"].replace(/[^0-9]+/g, ''))
+            .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messages.emojis["statistics"].replace(/[^0-9]+/g, ''))
             .setColor(client.config.embedColor as ColorResolvable)
             .setDescription(statistics)
             .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
             .setFooter({
                 text: client.messages.footerText,
-                iconURL: "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, '')
+                iconURL: "https://cdn.discordapp.com/emojis/" + client.messages.emojis["eximiabots"].replace(/[^0-9]+/g, '')
             });
 
         interaction.reply({

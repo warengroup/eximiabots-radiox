@@ -16,7 +16,7 @@ export default async function play(client: RadioClient, interaction: any, guild:
 
     const embed = new EmbedBuilder()
         .setTitle(client.user?.username || "-")
-        .setThumbnail((radio.station.logo || "https://cdn.discordapp.com/emojis/" + client.messageEmojis["play"].replace(/[^0-9]+/g, '')))
+        .setThumbnail((radio.station.logo || "https://cdn.discordapp.com/emojis/" + client.messages.emojis["play"].replace(/[^0-9]+/g, '')))
         .setColor(client.config.embedColor as ColorResolvable)
         .addFields({
             name: client.messages.nowplayingTitle,
@@ -25,38 +25,38 @@ export default async function play(client: RadioClient, interaction: any, guild:
         .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
         .setFooter({
             text: client.messages.footerText,
-            iconURL: "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, '')
+            iconURL: "https://cdn.discordapp.com/emojis/" + client.messages.emojis["eximiabots"].replace(/[^0-9]+/g, '')
         });
 
     const buttons = new ActionRowBuilder()
         .addComponents(
             new ButtonBuilder()
                 .setCustomId('list')
-                .setEmoji(client.messageEmojis["list"])
+                .setEmoji(client.messages.emojis["list"])
                 .setStyle(ButtonStyle.Secondary)
         )
         .addComponents(
             new ButtonBuilder()
                 .setCustomId('prev')
-                .setEmoji(client.messageEmojis["prev"])
+                .setEmoji(client.messages.emojis["prev"])
                 .setStyle(ButtonStyle.Secondary)
         )
         .addComponents(
             new ButtonBuilder()
                 .setCustomId('stop')
-                .setEmoji(client.messageEmojis["stop"])
+                .setEmoji(client.messages.emojis["stop"])
                 .setStyle(ButtonStyle.Secondary)
         )
         .addComponents(
             new ButtonBuilder()
                 .setCustomId('next')
-                .setEmoji(client.messageEmojis["next"])
+                .setEmoji(client.messages.emojis["next"])
                 .setStyle(ButtonStyle.Secondary)
         )
         .addComponents(
             new ButtonBuilder()
                 .setCustomId('statistics')
-                .setEmoji(client.messageEmojis["statistics"])
+                .setEmoji(client.messages.emojis["statistics"])
                 .setStyle(ButtonStyle.Secondary)
         );
 
@@ -74,7 +74,7 @@ export default async function play(client: RadioClient, interaction: any, guild:
     message.play = client.messages.play.replace("%radio.station.name%", radio.station.name);
 
     interaction?.reply({
-        content: client.messageEmojis["play"] + message.play,
+        content: client.messages.emojis["play"] + message.play,
         ephemeral: true
     });
 

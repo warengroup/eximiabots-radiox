@@ -4,7 +4,6 @@ import Radio from "../classes/Radio";
 import Stations from "../classes/Stations";
 import Streamer from "../classes/Streamer";
 import Statistics from "../classes/Statistics";
-import { emojis } from "../emojis"
 import commands from "../commands";
 
 export default {
@@ -64,9 +63,6 @@ export default {
         /*STATISTICS*/
         client.statistics = new Statistics();
         client.statistics.calculateGlobal(client);
-
-        /*EMOJIS*/
-        emojis.execute(client);
 
         /*COMMANDS*/
         commands.execute(client);

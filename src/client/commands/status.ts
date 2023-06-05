@@ -9,7 +9,7 @@ export default {
         let message: any = {};
 
         if(!client.user) return interaction.reply({
-            content: client.messageEmojis["error"] + client.messages.maintenance,
+            content: client.messages.emojis["error"] + client.messages.maintenance,
             ephemeral: true
         });
 
@@ -18,7 +18,7 @@ export default {
 
         const embed = new EmbedBuilder()
             .setTitle(message.statusTitle)
-            .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messageEmojis["logo"].replace(/[^0-9]+/g, ''))
+            .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messages.emojis["logo"].replace(/[^0-9]+/g, ''))
             .setColor(client.config.embedColor as ColorResolvable)
             .addFields([
                 { name: client.messages.statusField1, value: uptime },
@@ -30,7 +30,7 @@ export default {
             .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
             .setFooter({
                 text: client.messages.footerText,
-                iconURL: "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, '')
+                iconURL: "https://cdn.discordapp.com/emojis/" + client.messages.emojis["eximiabots"].replace(/[^0-9]+/g, '')
             });
 
         interaction.reply({

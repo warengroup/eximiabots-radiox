@@ -21,13 +21,13 @@ export default {
 
             const embed = new EmbedBuilder()
                 .setTitle(client.messages.nowplayingTitle)
-                .setThumbnail((radio.station.logo || "https://cdn.discordapp.com/emojis/" + client.messageEmojis["play"].replace(/[^0-9]+/g, '')))
+                .setThumbnail((radio.station.logo || "https://cdn.discordapp.com/emojis/" + client.messages.emojis["play"].replace(/[^0-9]+/g, '')))
                 .setColor(client.config.embedColor as ColorResolvable)
                 .setDescription(message.nowplayingDescription)
                 .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
                 .setFooter({
                     text: client.messages.footerText,
-                    iconURL: "https://cdn.discordapp.com/emojis/" + client.messageEmojis["eximiabots"].replace(/[^0-9]+/g, '')
+                    iconURL: "https://cdn.discordapp.com/emojis/" + client.messages.emojis["eximiabots"].replace(/[^0-9]+/g, '')
                 });
 
             interaction.reply({
