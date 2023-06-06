@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 export default class {
-    map: Map<any, any>;
+    map: Map<string, any>;
     constructor() {
         this.map = new Map();
         this.loadData();
@@ -49,7 +49,7 @@ export default class {
         this.saveEntry(id, newData);
     }
 
-    loadEntry(id: any){
+    loadEntry(id: string){
         try {
             const json = require(`../../../datastore/` + id + '.json');
             this.map.set(id, json);

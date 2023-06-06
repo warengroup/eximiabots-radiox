@@ -1,20 +1,19 @@
-import { ActionRowBuilder, StringSelectMenuBuilder } from "discord.js";
+import { ActionRowBuilder, SelectMenuComponentOptionData, StringSelectMenuBuilder } from "discord.js";
 import RadioClient from "../../Client";
+import { station } from "../classes/Stations";
 
 export default function listStations(client: RadioClient, interaction: any){
-    let stations: any = new Array();
-    let options: any = new Array();
-
     if(!client.stations) return;
 
-    stations = client.stations.forEach((station: { name?: any; owner?: any; label?: any; description?: any; value?: any; }) => {
+    let options : SelectMenuComponentOptionData[] = new Array();
+
+    client.stations.forEach((station: station) => {
         if(station.name == "GrooveFM") return;
-        station = {
+        options.push({
             label: station.name,
             description: station.owner,
             value: station.name
-        };
-        options.push(station);
+        });
     });
 
     const menu = new ActionRowBuilder()
@@ -24,9 +23,6 @@ export default function listStations(client: RadioClient, interaction: any){
                 .setPlaceholder('Nothing selected')
                 .addOptions(options)
         );
-
-    stations = null;
-    options = null;
 
     return interaction.reply({
         content: '**Select station:**',

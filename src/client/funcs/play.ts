@@ -1,8 +1,11 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ColorResolvable, EmbedBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, ColorResolvable, EmbedBuilder, Guild, StringSelectMenuInteraction } from "discord.js";
 import RadioClient from "../../Client";
+import { station } from "../classes/Stations";
 
-export default async function play(client: RadioClient, interaction: any, guild: any, station: any) {
+export default async function play(client: RadioClient, interaction: ChatInputCommandInteraction | StringSelectMenuInteraction | null, guild: Guild | null, station: station) {
+    if(!guild) return;
     let message: any = {};
+
     const radio = client.radio?.get(guild.id);
     const audioPlayer = client.streamer?.listen(station);
     radio.connection.subscribe(audioPlayer);

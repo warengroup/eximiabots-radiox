@@ -1,6 +1,7 @@
+import { Guild } from "discord.js";
 import RadioClient from "../../Client";
 
-export default function saveState(client: RadioClient, guild: any, radio: any){
+export default function saveState(client: RadioClient, guild: Guild, radio: any){
     if(!client.datastore) return;
     client.datastore.checkEntry(guild.id);
 

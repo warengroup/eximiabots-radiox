@@ -7,7 +7,7 @@ export interface station {
     name: string,
     owner: string,
     logo: string,
-    stream: []
+    stream: any
 }
 
 export default class Stations extends Array {
@@ -22,11 +22,11 @@ export default class Stations extends Array {
             logger('Stations', 'Started fetching list - ' + options.url);
             let list = await fetch(options.url)
                 .then(this.checkFetchStatus)
-                .then((response: { json: () => any; }) => response.json());
+                .then((response: { json: () => station; }) => response.json());
 
             if(list){
                 this.length = 0;
-                list.forEach((station: any) => {
+                list.forEach((station: station) => {
                     try {
                         this.push(station);
                     } catch (error) {
@@ -61,7 +61,7 @@ export default class Stations extends Array {
     }
 
     checkFetchStatus(response: any) {
-        if (response.ok) { // res.status >= 200 && res.status < 300
+        if (response.ok) {
             return response;
         } else {
             throw new Error(response.status + " " + response.statusText);

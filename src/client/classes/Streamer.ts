@@ -1,6 +1,7 @@
 import logger from "../funcs/logger";
 import { createAudioPlayer, createAudioResource, NoSubscriberBehavior } from "@discordjs/voice";
 import RadioClient from "../../Client";
+import { station } from "./Stations";
 
 export default class Streamer {
     map: any;
@@ -29,7 +30,7 @@ export default class Streamer {
         if(this.mode == "auto"){
             if(!client.stations) return;
 
-            client.stations.forEach((station: any) => {
+            client.stations.forEach((station: station) => {
                 this.play(station);
             });
         }
@@ -40,13 +41,13 @@ export default class Streamer {
 
         let streamers = this.map.keys();
         streamers.forEach((streamer: any) => {
-            if(client.stations?.findIndex((station: { name: any; }) => station.name == streamer) == -1){
+            if(client.stations?.findIndex((station: station) => station.name == streamer) == -1){
                 this.stop(streamer);
             }
         });
     }
 
-    play(station: any) {
+    play(station: station) {
         let audioPlayer = this.map.get(station.name);
         if(!audioPlayer) {
             if(this.mode == "auto"){
@@ -95,7 +96,7 @@ export default class Streamer {
         return audioPlayer;
     }
 
-    stop(station: any){
+    stop(station: station){
         let audioPlayer = this.map.get(station.name);
         if(audioPlayer){
             logger('Streamer', station.name + " / " + "Stop");
@@ -105,7 +106,7 @@ export default class Streamer {
         this.map.delete(station.name);
     }
 
-    listen(station: any) {
+    listen(station: station) {
         let audioPlayer = this.map.get(station.name);
         if(!audioPlayer || this.mode == "manual" && audioPlayer.subscribers.length == 0) audioPlayer = this.play(station);
         return audioPlayer;
@@ -113,7 +114,7 @@ export default class Streamer {
 
     leave(client: RadioClient) {
         if(!client.stations) return;
-        client.stations.forEach((station: any) => {
+        client.stations.forEach((station: station) => {
             this.stop(station);
         });
     }
