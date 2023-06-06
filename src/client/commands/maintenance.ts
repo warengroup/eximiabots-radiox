@@ -155,7 +155,7 @@ export default {
             case "6":
                 client.config.maintenanceMode = true;
                 client.user?.setStatus('idle');
-                commands.execute(client);
+                commands(client);
                 client.user?.setStatus('online');
                 client.config.maintenanceMode = false;
                 break;
