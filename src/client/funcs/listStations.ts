@@ -1,8 +1,8 @@
-import { ActionRowBuilder, SelectMenuComponentOptionData, StringSelectMenuBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonInteraction, ChatInputCommandInteraction, SelectMenuComponentOptionData, StringSelectMenuBuilder, StringSelectMenuInteraction } from "discord.js";
 import RadioClient from "../../Client";
 import { station } from "../classes/Stations";
 
-export default function listStations(client: RadioClient, interaction: any){
+export default function listStations(client: RadioClient, interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction){
     if(!client.stations) return;
 
     let options : SelectMenuComponentOptionData[] = new Array();
@@ -16,7 +16,7 @@ export default function listStations(client: RadioClient, interaction: any){
         });
     });
 
-    const menu = new ActionRowBuilder()
+    const menu: ActionRowBuilder<any> = new ActionRowBuilder()
         .addComponents(
             new StringSelectMenuBuilder()
                 .setCustomId('play')
