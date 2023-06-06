@@ -11,16 +11,15 @@ export default {
             ephemeral: true
         });
 
-        let message : any = {};
-
-        message.bugTitle = client.messages.bugTitle.replace("%client.user.username%", client.user.username);
-        message.bugDescription = client.messages.bugDescription.replace("%client.config.supportGuild%", client.config.supportGuild);
-
         const embed = new EmbedBuilder()
-            .setTitle(message.bugTitle)
+            .setTitle(client.messages.replace(client.messages.bugTitle, {
+                "%client.user.username%": client.user.username
+            }))
             .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messages.emojis["logo"].replace(/[^0-9]+/g, ''))
             .setColor(client.config.embedColor as ColorResolvable)
-            .setDescription(message.bugDescription)
+            .setDescription(client.messages.replace(client.messages.bugDescription, {
+                    "%client.config.supportGuild%": client.config.supportGuild
+            }))
             .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
             .setFooter({
                 text: client.messages.footerText,

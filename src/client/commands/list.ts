@@ -9,9 +9,10 @@ export default {
         let message: any = {};
 
         if(!client.stations) {
-            message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
             return interaction.reply({
-                content: client.messages.emojis["error"] + message.errorToGetPlaylist,
+                content: client.messages.emojis["error"] + client.messages.replace(client.messages.errorToGetPlaylist, {
+                    "%client.config.supportGuild%": client.config.supportGuild
+                }),
                 ephemeral: true
             });
         }

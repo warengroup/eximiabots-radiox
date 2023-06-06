@@ -4,18 +4,11 @@ import { station } from "../classes/Stations";
 
 export default async function play(client: RadioClient, interaction: ChatInputCommandInteraction | StringSelectMenuInteraction | null, guild: Guild | null, station: station) {
     if(!guild) return;
-    let message: any = {};
 
     const radio = client.radio?.get(guild.id);
     const audioPlayer = client.streamer?.listen(station);
     radio.connection.subscribe(audioPlayer);
     client.funcs.logger('Radio', guild.id + " / " + "Play" + " / " + radio.station.name);
-
-    message.nowplayingDescription = client.messages.nowplayingDescription.replace("%radio.station.name%", radio.station.name);
-    message.nowplayingDescription = message.nowplayingDescription.replace("%radio.station.owner%", radio.station.name != radio.station.owner ? radio.station.owner + "\n" : "");
-    message.nowplayingDescription = message.nowplayingDescription.replace("%client.funcs.msToTime(completed)%", "");
-    message.nowplayingDescription = message.nowplayingDescription.replace("**", "");
-    message.nowplayingDescription = message.nowplayingDescription.replace("**", "");
 
     const embed = new EmbedBuilder()
         .setTitle(client.user?.username || "-")
@@ -23,7 +16,13 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
         .setColor(client.config.embedColor as ColorResolvable)
         .addFields({
             name: client.messages.nowplayingTitle,
-            value: message.nowplayingDescription
+            value: client.messages.replace(client.messages.nowplayingDescription, {
+                "%radio.station.name%": radio.station.name,
+                "%radio.station.owner%\n": radio.station.name != radio.station.owner ? radio.station.owner + "\n" : "",
+                "%client.funcs.msToTime(completed)%": "",
+                "**": "",
+                "**:2": ""
+            })
         })
         .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
         .setFooter({
@@ -74,10 +73,10 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
         }
     }
 
-    message.play = client.messages.play.replace("%radio.station.name%", radio.station.name);
-
     interaction?.reply({
-        content: client.messages.emojis["play"] + message.play,
+        content: client.messages.emojis["play"] + client.messages.replace(client.messages.play, {
+            "%radio.station.name%": radio.station.name
+        }),
         ephemeral: true
     });
 

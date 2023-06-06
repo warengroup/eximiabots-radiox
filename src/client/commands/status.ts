@@ -17,7 +17,9 @@ export default {
         let uptime = client.funcs.msToTime(client.uptime || 0);
 
         const embed = new EmbedBuilder()
-            .setTitle(message.statusTitle)
+            .setTitle(client.messages.replace(client.messages.statusTitle, {
+                "%client.user.username%": client.user.username
+            }))
             .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messages.emojis["logo"].replace(/[^0-9]+/g, ''))
             .setColor(client.config.embedColor as ColorResolvable)
             .addFields([

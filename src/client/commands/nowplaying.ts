@@ -15,15 +15,15 @@ export default {
             radio.playTime = parseInt(radio.currentTime)-parseInt(radio.startTime);
             const completed = (radio.playTime);
 
-            message.nowplayingDescription = client.messages.nowplayingDescription.replace("%radio.station.name%", radio.station.name);
-            message.nowplayingDescription = message.nowplayingDescription.replace("%radio.station.owner%" + "\n", radio.station.name != radio.station.owner ? radio.station.owner + "\n" : "");
-            message.nowplayingDescription = message.nowplayingDescription.replace("%client.funcs.msToTime(completed)%", client.funcs.msToTime(completed));
-
             const embed = new EmbedBuilder()
                 .setTitle(client.messages.nowplayingTitle)
                 .setThumbnail((radio.station.logo || "https://cdn.discordapp.com/emojis/" + client.messages.emojis["play"].replace(/[^0-9]+/g, '')))
                 .setColor(client.config.embedColor as ColorResolvable)
-                .setDescription(message.nowplayingDescription)
+                .setDescription(client.messages.replace(client.messages.nowplayingDescription, {
+                    "%radio.station.name%": radio.station.name,
+                    "%radio.station.owner%\n": radio.station.name != radio.station.owner ? radio.station.owner + "\n" : "",
+                    "%client.funcs.msToTime(completed)%": client.funcs.msToTime(completed)
+                }))
                 .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
                 .setFooter({
                     text: client.messages.footerText,

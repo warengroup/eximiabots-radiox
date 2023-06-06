@@ -13,9 +13,10 @@ export default {
         });
 
         let message: any = {};
-        message.inviteTitle = client.messages.inviteTitle.replace("%client.user.username%", client.user.username);
         const embed = new EmbedBuilder()
-            .setTitle(message.inviteTitle)
+            .setTitle(client.messages.replace(client.messages.inviteTitle, {
+                "%client.user.username%": client.user.username
+            }))
             .setColor(client.config.embedColor as ColorResolvable)
             .setURL("https://discord.com/api/oauth2/authorize?client_id=" + client.user.id + "&permissions=2184465408&scope=applications.commands%20bot") //View Channels, Send Messages, Embed Links, Use External Emojis, Use Slash Commands, Connect, Speak, Use Voice Activity
             .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')

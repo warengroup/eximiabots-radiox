@@ -4,9 +4,10 @@ export default function check(client: RadioClient, interaction: any, command: co
     let message: any = {};
     const radio = client.radio?.get(interaction.guild.id);
     if(!client.stations) {
-        message.errorToGetPlaylist = client.messages.errorToGetPlaylist.replace("%client.config.supportGuild%", client.config.supportGuild);
         interaction.reply({
-            content: client.messages.emojis["error"] + message.errorToGetPlaylist,
+            content: client.messages.emojis["error"] + client.messages.replace(client.messages.errorToGetPlaylist, {
+                "%client.config.supportGuild%": client.config.supportGuild
+            }),
             ephemeral: true
         });
         return false;

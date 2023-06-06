@@ -12,8 +12,6 @@ export default {
             ephemeral: true
         });
 
-        let message: any = {};
-
         const categories : any= [];
         for (let i = 0; i < client.commands.size; i++) {
             if (!categories.includes([...client.commands.values()][i].category)) categories.push([...client.commands.values()][i].category);
@@ -23,14 +21,15 @@ export default {
             commands += `**» ${categories[i].toUpperCase()}**\n${client.commands.filter(x => x.category === categories[i]).map((x: { name: any; }) => `\`${x.name}\``).join(', ')}\n`;
         }
 
-        message.helpTitle = client.messages.helpTitle.replace("%client.user.username%", client.user?.username || "-");
-        message.helpDescription = client.messages.helpDescription.replace("%commands%", commands);
-
         const embed = new EmbedBuilder()
-            .setTitle(message.helpTitle)
+            .setTitle(client.messages.replace(client.messages.helpTitle, {
+                "%client.user.username%": client.user.username
+            }))
             .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messages.emojis["logo"].replace(/[^0-9]+/g, ''))
             .setColor(client.config.embedColor as ColorResolvable)
-            .setDescription(message.helpDescription)
+            .setDescription(client.messages.replace(client.messages.helpDescription, {
+                "%commands%": commands
+            }))
             .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
             .setFooter({
                 text: client.messages.footerText,
