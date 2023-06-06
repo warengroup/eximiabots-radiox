@@ -6,7 +6,7 @@ import Streamer from "./client/classes/Streamer";
 import Statistics from "./client/classes/Statistics";
 import { command } from "./client/commands";
 import config from "./config";
-import { events } from "./client/events"
+import events from "./client/events"
 import { funcs } from "./client/funcs";
 import { messages } from "./client/messages";
 
@@ -20,7 +20,6 @@ GatewayIntents.add(
 
 export default class RadioClient extends Client {
     readonly commands: Collection<string, command>;
-    readonly events = events;
     readonly funcs = funcs;
     readonly config = config;
     readonly messages = messages;
@@ -52,47 +51,7 @@ export default class RadioClient extends Client {
         this.funcs.logger("Maintenance Mode", "Enabled");
         this.config.maintenanceMode = true;
 
-        this.on("ready", () => {
-            this.events.ready.execute(this);
-        });
-
-        this.on("messageDelete", msg => {
-            this.events.messageDelete.execute(this, msg);
-        });
-
-        this.on("interactionCreate", interaction => {
-            this.events.interactionCreate.execute(this, interaction);
-        });
-
-        this.on("voiceStateUpdate", (oldState, newState) => {
-            this.events.voiceStateUpdate.execute(this, oldState, newState);
-        });
-
-        this.on("error", error => {
-            this.funcs.logger("Discord Client", "Error");
-            console.error(error);
-            console.log('');
-        });
-
-        process.on('SIGINT', () => {
-            this.events.SIGINT.execute(this);
-        });
-
-        process.on('SIGTERM', () => {
-            this.events.SIGTERM.execute(this);
-        });
-
-        process.on('uncaughtException', (error) => {
-            this.events.uncaughtException.execute(this, error);
-        });
-
-        process.on('exit', () => {
-            this.funcs.logger("Bot", "Stopping");
-        });
-
-        process.on('warning', (warning) => {
-            this.events.warning.execute(this, warning);
-        });
+        events(this);
 
         this.login(this.config.token).catch((err) => {
             this.funcs.logger("Discord Client", "Login Error");
