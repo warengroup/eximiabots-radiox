@@ -1,6 +1,19 @@
-import { getVoiceConnection, joinVoiceChannel } from "@discordjs/voice";
-import { Guild, GuildMember, VoiceChannel } from "discord.js";
+import { Guild, GuildMember, TextBasedChannel, VoiceBasedChannel, VoiceChannel } from "discord.js";
+import { getVoiceConnection, joinVoiceChannel, VoiceConnection } from "@discordjs/voice";
 import RadioClient from "../../Client";
+import { station } from "./Stations";
+
+export interface radio {
+    textChannel: TextBasedChannel | null,
+    voiceChannel: VoiceBasedChannel,
+    connection: VoiceConnection | null,
+    message: null,
+    station: station,
+    datastore?: any,
+    currentTime?: number,
+    startTime: number,
+    playTime?: number,
+}
 
 export default class Radio extends Map {
 

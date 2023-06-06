@@ -1,7 +1,8 @@
 import { Guild } from "discord.js";
 import RadioClient from "../../Client";
+import { radio } from "../classes/Radio";
 
-export default function saveState(client: RadioClient, guild: Guild, radio: any){
+export default function saveState(client: RadioClient, guild: Guild, radio: radio){
     if(!client.datastore) return;
     client.datastore.checkEntry(guild.id);
 
@@ -11,7 +12,7 @@ export default function saveState(client: RadioClient, guild: Guild, radio: any)
 
     data.state = {};
     data.state.channels = {};
-    data.state.channels.text = radio.textChannel.id;
+    data.state.channels.text = radio.textChannel?.id;
     data.state.channels.voice = radio.voiceChannel.id;
     data.state.date = date.toISOString();
     data.state.station = {};

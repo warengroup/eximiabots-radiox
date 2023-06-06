@@ -1,5 +1,6 @@
 import { ChatInputCommandInteraction, ColorResolvable, EmbedBuilder } from "discord.js";
 import RadioClient from "../../Client";
+import { command } from "../commands";
 
 export default {
     name: 'help',
@@ -12,13 +13,13 @@ export default {
             ephemeral: true
         });
 
-        const categories : any= [];
+        const categories: string[] = [];
         for (let i = 0; i < client.commands.size; i++) {
             if (!categories.includes([...client.commands.values()][i].category)) categories.push([...client.commands.values()][i].category);
         }
         let commands = '';
         for (let i = 0; i < categories.length; i++) {
-            commands += `**» ${categories[i].toUpperCase()}**\n${client.commands.filter(x => x.category === categories[i]).map((x: { name: any; }) => `\`${x.name}\``).join(', ')}\n`;
+            commands += `**» ${categories[i].toUpperCase()}**\n${client.commands.filter(x => x.category === categories[i]).map((x: command) => `\`${x.name}\``).join(', ')}\n`;
         }
 
         const embed = new EmbedBuilder()

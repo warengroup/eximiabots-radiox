@@ -1,11 +1,12 @@
 import { ButtonInteraction, ChatInputCommandInteraction, ColorResolvable, EmbedBuilder, StringSelectMenuInteraction } from "discord.js";
 import RadioClient from "../../Client";
+import { command } from "../commands";
 
 export default {
     name: 'stop',
     description: 'Stop radio',
     category: 'radio',
-    async execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient, command: any) {
+    async execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient, command: command) {
         if (client.funcs.check(client, interaction, command)) {
             const radio = client.radio?.get(interaction.guild?.id);
             client.statistics?.update(client, interaction.guild, radio);

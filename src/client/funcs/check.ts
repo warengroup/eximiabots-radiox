@@ -1,9 +1,10 @@
+import { ButtonInteraction, ChatInputCommandInteraction, StringSelectMenuInteraction } from "discord.js";
 import RadioClient from "../../Client";
 import { command } from "../commands";
 
-export default function check(client: RadioClient, interaction: any, command: command) {
+export default function check(client: RadioClient, interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, command: command) {
 
-    const radio = client.radio?.get(interaction.guild.id);
+    const radio = client.radio?.get(interaction.guild?.id);
     if(!client.stations) {
         interaction.reply({
             content: client.messages.emojis["error"] + client.messages.replace(client.messages.errorToGetPlaylist, {
@@ -20,6 +21,7 @@ export default function check(client: RadioClient, interaction: any, command: co
         });
         return false;
     }
+    //@ts-ignore
     if (interaction.member.voice.channel !== radio.voiceChannel) {
         interaction.reply({
             content: client.messages.emojis["error"] + client.messages.wrongVoiceChannel,

@@ -5,12 +5,10 @@ import { station } from "./Stations";
 
 export default class Streamer {
     map: any;
-    mode: any | null;
-    logger: any;
+    mode: "auto" | "manual" = "manual";
 
     constructor() {
         this.map = new Map();
-        this.mode = null;
     }
 
     init(client: RadioClient){

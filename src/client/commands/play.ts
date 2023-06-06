@@ -1,6 +1,7 @@
 import { ApplicationCommandOptionType, ChatInputCommandInteraction, GuildMember, PermissionFlagsBits, StringSelectMenuInteraction } from "discord.js";
 import { getVoiceConnection, joinVoiceChannel } from "@discordjs/voice";
 import RadioClient from "../../Client";
+import { radio } from "../classes/Radio"
 
 export default {
     name: "play",
@@ -116,7 +117,7 @@ export default {
         }
 
         let date = new Date();
-        const construct: any = {
+        const construct: radio = {
             textChannel: interaction.channel,
             voiceChannel: voiceChannel,
             connection: null,

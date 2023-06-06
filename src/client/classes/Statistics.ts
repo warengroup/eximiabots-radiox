@@ -1,14 +1,15 @@
 import { Guild } from "discord.js";
 import RadioClient from "../../Client";
+import { radio } from "./Radio";
 
 export default class Statistics {
-    map: any;
+    map: Map<any, any>;
 
     constructor() {
         this.map = new Map();
     }
 
-    update(client: RadioClient, guild: Guild | null, radio: any) {
+    update(client: RadioClient, guild: Guild | null, radio: radio) {
         if(!guild) return;
 
         client.datastore?.checkEntry(guild.id);
@@ -24,8 +25,8 @@ export default class Statistics {
 
         let date = new Date();
         radio.currentTime = date.getTime();
-        radio.playTime = parseInt(radio.currentTime)-parseInt(radio.startTime);
-        radio.datastore.statistics[radio.station.name].time = parseInt(radio.datastore.statistics[radio.station.name].time)+parseInt(radio.playTime);
+        radio.playTime = radio.currentTime - radio.startTime;
+        radio.datastore.statistics[radio.station.name].time = parseInt(radio.datastore.statistics[radio.station.name].time) + radio.playTime;
 
         radio.datastore.statistics[radio.station.name].used = parseInt(radio.datastore.statistics[radio.station.name].used)+1;
         client.datastore?.updateEntry(guild, radio.datastore);

@@ -1,11 +1,11 @@
-import { ColorResolvable, EmbedBuilder } from "discord.js";
+import { ChatInputCommandInteraction, ColorResolvable, EmbedBuilder } from "discord.js";
 import RadioClient from "../../Client";
 
 export default {
     name: 'status',
     description: 'Bot Status',
     category: 'info',
-    async execute(interaction: any, client: RadioClient) {
+    async execute(interaction: ChatInputCommandInteraction, client: RadioClient) {
 
         if(!client.user) return interaction.reply({
             content: client.messages.emojis["error"] + client.messages.maintenance,

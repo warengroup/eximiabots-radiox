@@ -40,7 +40,7 @@ export default class Stations extends Array {
                     });
                 }
 
-                list.forEach(async (station: { stream: { [x: string]: any; default: string | number; }; }) => {
+                list.forEach(async (station: station) => {
                     try {
                         let stationTest = await fetch(station.stream[station.stream.default]);
                         if(stationTest.ok === true) return;
@@ -83,7 +83,7 @@ export default class Stations extends Array {
             return foundStation;
         } else {
 
-            let foundStations : any[] = [];
+            let foundStations : { station: string, name: string, probability: number }[] = [];
             if (key == "radio") return false;
 
             this
@@ -126,7 +126,7 @@ export default class Stations extends Array {
                     }
                 }
             }
-            let highestProbabilityStation;
+            let highestProbabilityStation : any | { station: string, name: string, probability: number } | string | null = null;
             for (let i = 0; i < foundStations.length; i++) {
                 if (
                     !highestProbabilityStation ||

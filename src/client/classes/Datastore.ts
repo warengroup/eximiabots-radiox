@@ -1,5 +1,31 @@
-import fs from 'fs';
+import { Guild } from 'discord.js';
+import fs, { NoParamCallback } from 'fs';
 import path from 'path';
+
+interface entry {
+    guild: {
+        id: string,
+        name?: string
+    },
+    statistics: {
+        [key: string]: {
+            "time": number,
+            "used": number
+        }
+    } | {},
+    state: {
+        channels: {
+            "text": string,
+            "voice": string
+        },
+        date: string,
+        station: {
+            name: string,
+            owner: string
+        }
+    } | {},
+    updated?: string
+}
 
 export default class {
     map: Map<string, any>;
@@ -40,11 +66,13 @@ export default class {
     }
 
     createEntry(id: string){
-        let newData: any = {};
-        newData.guild = {};
-        newData.guild.id = id;
-        newData.statistics = {};
-        newData.state = {};
+        let newData: entry = {
+            guild: {
+                id: id,
+            },
+            statistics: {},
+            state: {}
+        };
         this.map.set(id, newData);
         this.saveEntry(id, newData);
     }
@@ -61,7 +89,7 @@ export default class {
         return this.map.get(id);
     }
 
-    updateEntry(guild: any, newData: any) {
+    updateEntry(guild: Guild | { id: string, name: string }, newData: entry) {
         newData.guild.name = guild.name;
 
         let date = new Date();
@@ -72,7 +100,7 @@ export default class {
         //this.showEntry(this.getEntry(guild.id));
     }
 
-    showEntry(data : any){
+    showEntry(data : entry){
         console.log(data);
     }
 
@@ -96,12 +124,10 @@ export default class {
         this.updateEntry(newData.guild, newData);
     }
 
-    saveEntry(file: string, data: any) {
-        data = JSON.stringify(data, null, 4);
-
-        fs.writeFile(path.join(path.dirname(__dirname), '../../datastore') + "/" + file + ".json", data, 'utf8', function(err: any) {
+    saveEntry(file: string, data: entry) {
+        fs.writeFile(path.join(path.dirname(__dirname), '../../datastore') + "/" + file + ".json", JSON.stringify(data, null, 4), 'utf8', function(err: any) {
             if (err) {
-                //console.log(err);
+
             }
         });
     }
