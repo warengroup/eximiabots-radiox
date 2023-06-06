@@ -20,17 +20,11 @@ export default async function ready(client: RadioClient) {
     client.funcs.logger('Datastore', 'Ready');
 
     /*DEVELOPERS*/
-    client.developers = "";
-    let user : any= "";
-    for (let i = 0; i < client.config.devId.length; i++) {
-        user = await client.users.fetch(client.config.devId[i]);
-        client.funcs.logger('Developers', user.tag);
-        if (i == client.config.devId.length - 1) {
-            client.developers += user.tag;
-        } else {
-            client.developers += user.tag + " & ";
-        }
+    let developers : string[] = [];
+    for(let devID of client.config.devIDs){
+        developers.push((await client.users.fetch(devID)).tag);
     }
+    client.funcs.logger('Developers', developers.join(" & "));
 
     /*STATIONS*/
     client.stations = new Stations();

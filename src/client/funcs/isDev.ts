@@ -1,10 +1,10 @@
-export default function isDev(devList : any, authorID : any){
+import { Snowflake } from "discord.js";
+
+export default function isDev(devIDs : any[], authorID : Snowflake){
     let response = false;
-    Object.keys(devList).forEach(function(oneDev) {
-        let devID = devList[oneDev];
+    for (const devID of devIDs){
         if(authorID == devID){
-            response = true;
+            return true;
         }
-    });
-    return response;
+    }
 }

@@ -28,7 +28,6 @@ export default class RadioClient extends Client {
     public streamer: Streamer | null;
     public statistics: Statistics | null;
     public radio: Radio | null;
-    public developers: string | undefined;
 
     constructor() {
         super({

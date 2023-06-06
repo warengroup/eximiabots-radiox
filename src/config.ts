@@ -8,7 +8,7 @@ export default {
 
     //support
     supportGuild: "https://discord.gg/rRA65Mn",
-    devId: [
+    devIDs: [
         "493174343484833802",
         "360363051792203779"
     ],
