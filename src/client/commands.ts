@@ -22,46 +22,44 @@ export interface command {
 }
 
 export default async function commands(client: RadioClient) {
-        const commands : command[] = [ bug, help, invite, list, maintenance, next, nowplaying, play, prev, statistics, status, stop ];
+    const commands : command[] = [ bug, help, invite, list, maintenance, next, nowplaying, play, prev, statistics, status, stop ];
 
+    for(const command of commands){
+        client.commands.set(command.name, command);
+    }
+
+    if(!client.application) return;
+    client.funcs.logger('Application Commands', 'Started refreshing application (/) commands.');
+    if(client.config.devMode){
+        client.application.commands.set([]);
         for(const command of commands){
-            client.commands.set(command.name, command);
-        }
-
-        if(!client.application) return;
-        client.funcs.logger('Application Commands', 'Started refreshing application (/) commands.');
-        if(client.config.devMode){
-            client.application.commands.set([]);
-            for(const command of commands){
-                let guilds = await client.guilds.fetch();
-                guilds.forEach(async (guild: { id: Snowflake; name: string; }) => {
-                    if(!client.application) return;
-                    client.application.commands.create({
-                        name: command.name,
-                        description: command.description,
-                        options: command.options || []
-                    }, guild.id);
-                    client.funcs.logger('Application Commands', 'Guild: ' + guild.id + " (" + guild.name + ") \n" + 'Command: ' + command.name);
-                });
-            }
-        } else {
-            for(const command of commands){
+            let guilds = await client.guilds.fetch();
+            guilds.forEach(async (guild: { id: Snowflake; name: string; }) => {
+                if(!client.application) return;
                 client.application.commands.create({
                     name: command.name,
                     description: command.description,
                     options: command.options || []
-                });
-
-                client.funcs.logger('Application Commands', 'Command: ' + command.name);
-            }
-
-            let guilds = await client.guilds.fetch();
-            guilds.forEach(async (guild: { id: Snowflake; }) => {
-                if(!client.application) return;
-                client.application.commands.set([], guild.id);
+                }, guild.id);
+                client.funcs.logger('Application Commands', 'Guild: ' + guild.id + " (" + guild.name + ") \n" + 'Command: ' + command.name);
             });
         }
-        client.funcs.logger('Application Commands', 'Successfully reloaded application (/) commands.' + "\n");
+    } else {
+        for(const command of commands){
+            client.application.commands.create({
+                name: command.name,
+                description: command.description,
+                options: command.options || []
+            });
 
+            client.funcs.logger('Application Commands', 'Command: ' + command.name);
+        }
+
+        let guilds = await client.guilds.fetch();
+        guilds.forEach(async (guild: { id: Snowflake; }) => {
+            if(!client.application) return;
+            client.application.commands.set([], guild.id);
+        });
     }
+    client.funcs.logger('Application Commands', 'Successfully reloaded application (/) commands.' + "\n");
 }
