@@ -62,7 +62,7 @@ export default async function ready(client: RadioClient) {
     client.statistics.calculateGlobal(client);
 
     /*COMMANDS*/
-    commands.execute(client);
+    commands(client);
 
     /*RADIO*/
     client.radio = new Radio();

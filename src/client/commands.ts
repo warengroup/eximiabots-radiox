@@ -21,8 +21,7 @@ export interface command {
     execute: any
 }
 
-export default {
-    async execute(client: RadioClient) {
+export default async function commands(client: RadioClient) {
         const commands : command[] = [ bug, help, invite, list, maintenance, next, nowplaying, play, prev, statistics, status, stop ];
 
         for(const command of commands){
