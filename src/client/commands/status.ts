@@ -6,14 +6,12 @@ export default {
     description: 'Bot Status',
     category: 'info',
     async execute(interaction: any, client: RadioClient) {
-        let message: any = {};
 
         if(!client.user) return interaction.reply({
             content: client.messages.emojis["error"] + client.messages.maintenance,
             ephemeral: true
         });
 
-        message.statusTitle = client.messages.statusTitle.replace("%client.user.username%", client.user.username);
         let uptime = client.funcs.msToTime(client.uptime || 0);
 
         const embed = new EmbedBuilder()

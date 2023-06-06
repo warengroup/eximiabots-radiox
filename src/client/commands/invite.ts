@@ -12,7 +12,6 @@ export default {
             ephemeral: true
         });
 
-        let message: any = {};
         const embed = new EmbedBuilder()
             .setTitle(client.messages.replace(client.messages.inviteTitle, {
                 "%client.user.username%": client.user.username

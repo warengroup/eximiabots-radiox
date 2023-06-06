@@ -7,7 +7,7 @@ export default {
     category: 'radio',
     async execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient, command: any) {
         if(client.funcs.check(client, interaction, command)) {
-            let message: any = {};
+
             const radio = client.radio?.get(interaction.guild?.id);
 
             let date = new Date();

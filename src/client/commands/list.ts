@@ -6,7 +6,6 @@ export default {
     description: 'List radio stations',
     category: 'radio',
     execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient) {
-        let message: any = {};
 
         if(!client.stations) {
             return interaction.reply({

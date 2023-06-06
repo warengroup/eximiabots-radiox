@@ -7,7 +7,6 @@ export default {
     description: 'Show statistics',
     category: 'info',
     execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient) {
-        let message: any = {};
 
         if(!interaction.guild) return interaction.reply({
             content: client.messages.emojis["error"] + client.messages.maintenance,

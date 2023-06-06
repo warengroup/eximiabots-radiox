@@ -11,7 +11,6 @@ export default {
     description: 'Bot Maintenance',
     category: 'info',
     async execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient) {
-        let message: any = {};
 
         if(!client.funcs.isDev(client.config.devIDs, interaction.user.id)) return interaction.reply({
             content: client.messages.emojis["error"] + client.messages.notAllowed,

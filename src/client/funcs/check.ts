@@ -1,7 +1,8 @@
 import RadioClient from "../../Client";
 import { command } from "../commands";
+
 export default function check(client: RadioClient, interaction: any, command: command) {
-    let message: any = {};
+
     const radio = client.radio?.get(interaction.guild.id);
     if(!client.stations) {
         interaction.reply({

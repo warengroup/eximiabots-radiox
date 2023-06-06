@@ -11,7 +11,6 @@ export default {
     ],
     category: "radio",
     async execute(interaction: ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient) {
-        let message: any = {};
 
         if(!client.stations) {
             return interaction.reply({
