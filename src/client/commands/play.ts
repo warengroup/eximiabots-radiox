@@ -22,10 +22,10 @@ export default {
             });
         }
 
-        let query : number | string | null = null;
+        let query: string | null = null;
 
         if(interaction.isChatInputCommand()){
-            query = interaction.options?.getNumber("query");
+            query = interaction.options?.getString("query");
         }
 
         if(interaction.isStringSelectMenu()){
@@ -37,22 +37,27 @@ export default {
         }
 
         const radio = client.radio?.get(interaction.guild?.id);
+
         if(!(interaction.member instanceof GuildMember)) return;
         const voiceChannel = interaction.member?.voice.channel;
+
         if (!voiceChannel) return interaction.reply({
             content: client.messages.emojis["error"] + client.messages.noVoiceChannel,
             ephemeral: true
         });
+
         if (radio) {
             if (voiceChannel !== radio.voiceChannel) return interaction.reply({
                 content: client.messages.emojis["error"] + client.messages.wrongVoiceChannel,
                 ephemeral: true
             });
         }
+
         if (!query) return interaction.reply({
             content: client.messages.noQuery,
             ephemeral: true
         });
+
         const permissions = voiceChannel.permissionsFor(interaction.client.user);
         if (!permissions?.has(PermissionFlagsBits.Connect)) {
             return interaction.reply({
@@ -68,9 +73,9 @@ export default {
         }
         let station;
 
-        if (typeof query === 'number') {
-            const number = parseInt((query - 1) as unknown as string);
-            if (number > client.stations.length - 1) {
+        if(!isNaN(parseInt(query) - 1)){
+            let number = parseInt(query) - 1;
+            if(number > client.stations.length - 1) {
                 return interaction.reply({
                     content: client.messages.emojis["error"] + client.messages.wrongStationNumber,
                     ephemeral: true
@@ -79,20 +84,16 @@ export default {
                 station = client.stations[number];
             }
         } else {
-            if(!(typeof query === 'string')) return;
+
             if(query.length < 3) return interaction.reply({
                 content: client.messages.emojis["error"] + client.messages.tooShortSearch,
                 ephemeral: true
             });
 
-            let type = "";
+            let type = "text";
 
-            if(interaction.isStringSelectMenu()){
-                if(interaction.values?.[0]){
-                    type = "direct";
-                } else {
-                    type = "text";
-                }
+            if(interaction.isStringSelectMenu() && interaction.values?.[0]){
+                type = "direct";
             }
 
             const sstation = await client.stations.search(query, type);
