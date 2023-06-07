@@ -64,6 +64,23 @@ export default class Streamer {
                 });
             }
 
+            audioPlayer
+                .on(AudioPlayerStatus.Playing, () => {
+                    logger('Streamer', station.name + " / " + "Playing");
+                })
+                .on(AudioPlayerStatus.Idle, () => {
+                    logger('Streamer', station.name + " / " + "Idle");
+                })
+                .on(AudioPlayerStatus.Paused, () => {
+                    logger('Streamer', station.name + " / " + "Paused");
+                })
+                .on(AudioPlayerStatus.Buffering, () => {
+                    logger('Streamer', station.name + " / " + "Buffering");
+                })
+                .on(AudioPlayerStatus.AutoPaused, () => {
+                    logger('Streamer', station.name + " / " + "AutoPaused");
+                })
+
             this.map.set(station.name, audioPlayer);
         }
 
@@ -71,22 +88,6 @@ export default class Streamer {
         const resource = createAudioResource(url);
         audioPlayer.play(resource);
 
-        audioPlayer
-            .on(AudioPlayerStatus.Playing, () => {
-	            logger('Streamer', station.name + " / " + "Playing");
-            })
-            .on(AudioPlayerStatus.Idle, () => {
-                logger('Streamer', station.name + " / " + "Idle");
-            })
-            .on(AudioPlayerStatus.Paused, () => {
-                logger('Streamer', station.name + " / " + "Paused");
-            })
-            .on(AudioPlayerStatus.Buffering, () => {
-                logger('Streamer', station.name + " / " + "Buffering");
-            })
-            .on(AudioPlayerStatus.AutoPaused, () => {
-                logger('Streamer', station.name + " / " + "AutoPaused");
-            })
         return audioPlayer;
     }
 
