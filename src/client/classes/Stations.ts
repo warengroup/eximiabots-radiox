@@ -1,62 +1,44 @@
-const _importDynamic = new Function('modulePath', 'return import(modulePath)');
-// @ts-ignore
-const fetch = (...args: any) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
 import logger from "../funcs/logger";
 
 export interface station {
     name: string,
     owner: string,
     logo: string,
-    stream: any
+    stream: {
+        [key: string]: string
+    }
 }
 
 export default class Stations extends Array {
-    logger: any;
+    counter: number;
 
     constructor() {
         super();
+        this.counter = 0;
     }
 
-    async fetch(options: any){
+    async fetch(options: { url: string, show?: boolean }){
         try {
             logger('Stations', 'Started fetching list - ' + options.url);
-            let list = await fetch(options.url)
+            let stations = await fetch(options.url)
                 .then(this.checkFetchStatus)
-                .then((response: { json: () => station; }) => response.json());
+                .then((response: { json: () => station[]; }) => response.json());
 
-            if(list){
-                this.length = 0;
-                list.forEach((station: station) => {
-                    try {
-                        this.push(station);
-                    } catch (error) {
-
-                    }
-                });
-
-                if(options.show){
-                    list.forEach((station: { name: any; }) => {
-                        logger('Stations', station.name);
-                    });
-                }
-
-                list.forEach(async (station: station) => {
-                    try {
-                        let stationTest = await fetch(station.stream[station.stream.default]);
-                        if(stationTest.ok === true) return;
-                        this.splice(this.indexOf(station),1);
-                    } catch (error) {
-                        this.splice(this.indexOf(station),1);
-                    }
-                });
+            if(!stations) return;
+            for (const station of stations){
+                this.push(station.name);
+                if(options.show) logger('Stations', station.name);
             }
+
+            this.counter = 0;
 
             logger('Stations', 'Successfully fetched list');
         } catch (error) {
             logger('Stations', 'Fetching list failed');
             console.error(error + "\n");
 
-            if(this.length == 0) this.fetch(options);
+            this.counter = this.counter + 1;
+            if(this.length == 0 && 5 < this.counter) this.fetch(options);
         }
     }
 
@@ -126,21 +108,23 @@ export default class Stations extends Array {
                     }
                 }
             }
-            let highestProbabilityStation : any | { station: string, name: string, probability: number } | string | null = null;
+            /*let highestProbabilityStation : { station: string, name: string, probability: number } | string | undefined;
             for (let i = 0; i < foundStations.length; i++) {
                 if (
                     !highestProbabilityStation ||
+                    //@ts-ignore
                     highestProbabilityStation.probability < foundStations[i].probability
                 )
                     highestProbabilityStation = foundStations[i];
                 if (
                     highestProbabilityStation &&
+                    //@ts-ignore
                     highestProbabilityStation.probability === foundStations[i].probability
                 ) {
                     highestProbabilityStation = foundStations[i].station;
                 }
             }
-            return highestProbabilityStation;
+            return highestProbabilityStation;*/
         }
     }
 };

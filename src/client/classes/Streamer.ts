@@ -4,7 +4,7 @@ import RadioClient from "../../Client";
 import { station } from "./Stations";
 
 export default class Streamer {
-    map: any;
+    map: Map<string, any>;
     mode: "auto" | "manual" = "manual";
 
     constructor() {
@@ -37,12 +37,11 @@ export default class Streamer {
     refresh(client: RadioClient){
         this.init(client);
 
-        let streamers = this.map.keys();
-        streamers.forEach((streamer: any) => {
+        for (const streamer of this.map.keys()){
             if(client.stations?.findIndex((station: station) => station.name == streamer) == -1){
                 this.stop(streamer);
             }
-        });
+        }
     }
 
     play(station: station) {
@@ -94,14 +93,14 @@ export default class Streamer {
         return audioPlayer;
     }
 
-    stop(station: station){
-        let audioPlayer = this.map.get(station.name);
+    stop(streamer: string){
+        let audioPlayer = this.map.get(streamer);
         if(audioPlayer){
-            logger('Streamer', station.name + " / " + "Stop");
+            logger('Streamer', streamer + " / " + "Stop");
             audioPlayer.removeAllListeners();
             audioPlayer.stop();
         }
-        this.map.delete(station.name);
+        this.map.delete(streamer);
     }
 
     listen(station: station) {
@@ -113,7 +112,7 @@ export default class Streamer {
     leave(client: RadioClient) {
         if(!client.stations) return;
         client.stations.forEach((station: station) => {
-            this.stop(station);
+            this.stop(station.name);
         });
     }
 };

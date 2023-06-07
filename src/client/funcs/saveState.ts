@@ -9,15 +9,18 @@ export default function saveState(client: RadioClient, guild: Guild, radio: radi
     let date = new Date();
 
     let data = client.datastore.getEntry(guild.id);
-
-    data.state = {};
-    data.state.channels = {};
-    data.state.channels.text = radio.textChannel?.id;
-    data.state.channels.voice = radio.voiceChannel.id;
-    data.state.date = date.toISOString();
-    data.state.station = {};
-    data.state.station.name = radio.station.name;
-    data.state.station.owner = radio.station.owner;
+    if(!data) return;
+    data.state = {
+        channels: {
+            text: radio.textChannel?.id,
+            voice: radio.voiceChannel?.id
+        },
+        date: date.toISOString(),
+        station: {
+            name: radio.station.name,
+            owner: radio.station.owner
+        }
+    };
 
     client.datastore.updateEntry(guild, data);
 }

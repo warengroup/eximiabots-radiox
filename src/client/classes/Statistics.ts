@@ -2,8 +2,17 @@ import { Guild } from "discord.js";
 import RadioClient from "../../Client";
 import { radio } from "./Radio";
 
+export interface statistics {
+    [key: string]: statistic
+}
+
+interface statistic {
+    "time": number,
+    "used": number
+}
+
 export default class Statistics {
-    map: Map<any, any>;
+    map: Map<string, statistics>;
 
     constructor() {
         this.map = new Map();
@@ -16,19 +25,26 @@ export default class Statistics {
 
         radio.datastore = client.datastore?.getEntry(guild.id);
 
+        //@ts-ignore
         if(!radio.datastore.statistics[radio.station.name]){
-            radio.datastore.statistics[radio.station.name] = {};
-            radio.datastore.statistics[radio.station.name].time = 0;
-            radio.datastore.statistics[radio.station.name].used = 0;
+            //@ts-ignore
+            radio.datastore.statistics[radio.station.name] = {
+                time: 0,
+                used: 0
+            };
+            //@ts-ignore
             client.datastore?.updateEntry(guild, radio.datastore);
         }
 
         let date = new Date();
         radio.currentTime = date.getTime();
         radio.playTime = radio.currentTime - radio.startTime;
+        //@ts-ignore
         radio.datastore.statistics[radio.station.name].time = parseInt(radio.datastore.statistics[radio.station.name].time) + radio.playTime;
 
+        //@ts-ignore
         radio.datastore.statistics[radio.station.name].used = parseInt(radio.datastore.statistics[radio.station.name].used)+1;
+        //@ts-ignore
         client.datastore?.updateEntry(guild, radio.datastore);
         this.calculateGlobal(client);
     }
@@ -39,7 +55,7 @@ export default class Statistics {
 
         let guilds = client.datastore.map.keys();
         let stations = client.stations;
-        let statistics : any = {};
+        let statistics : statistics = {};
 
         if(!client.stations) return;
 
@@ -50,14 +66,18 @@ export default class Statistics {
             if(calculation.value != 'global'){
                 if(stations){
                     for(const station of stations) {
-                        if(currentGuild.statistics[station.name] && currentGuild.statistics[station.name].time && parseInt(currentGuild.statistics[station.name].time) != 0  && currentGuild.statistics[station.name].used && parseInt(currentGuild.statistics[station.name].used) != 0){
+                        //@ts-ignore
+                        if(currentGuild.statistics[station.name] && currentGuild.statistics[station.name]?.time && parseInt(currentGuild.statistics[station.name].time) != 0  && currentGuild.statistics[station.name].used && parseInt(currentGuild.statistics[station.name].used) != 0){
                             if(!statistics[station.name]){
-                                statistics[station.name] = {};
-                                statistics[station.name].time = 0;
-                                statistics[station.name].used = 0;
+                                statistics[station.name] = {
+                                    time: 0,
+                                    used: 0
+                                };
                             }
 
+                            //@ts-ignore
                             statistics[station.name].time = parseInt(statistics[station.name].time)+parseInt(currentGuild.statistics[station.name].time);
+                            //@ts-ignore
                             statistics[station.name].used = parseInt(statistics[station.name].used)+parseInt(currentGuild.statistics[station.name].used);
                         }
                     }
@@ -66,11 +86,13 @@ export default class Statistics {
             calculation = guilds.next();
         }
 
-        let newData : any = {};
-        newData.guild = {};
-        newData.guild.id = "global";
-        newData.guild.name = "global";
-        newData.statistics = statistics;
+        let newData = {
+            guild: {
+                id: "global",
+                name: "global"
+            },
+            statistics: statistics
+        };
         client.datastore.updateEntry(newData.guild, newData);
     }
 

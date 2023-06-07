@@ -1,18 +1,31 @@
-import { Guild, GuildMember, TextBasedChannel, VoiceBasedChannel, VoiceChannel } from "discord.js";
+import { Channel, Collection, GuildMember, OAuth2Guild, TextBasedChannel, VoiceBasedChannel, VoiceChannel } from "discord.js";
 import { getVoiceConnection, joinVoiceChannel, VoiceConnection } from "@discordjs/voice";
 import RadioClient from "../../Client";
 import { station } from "./Stations";
+import { datastore } from "./Datastore";
 
 export interface radio {
-    textChannel: TextBasedChannel | null,
-    voiceChannel: VoiceBasedChannel,
+    textChannel: Channel | TextBasedChannel | undefined | null,
+    voiceChannel: Channel | VoiceBasedChannel | undefined,
     connection: VoiceConnection | null,
     message: null,
     station: station,
-    datastore?: any,
+    datastore?: datastore,
     currentTime?: number,
     startTime: number,
     playTime?: number,
+}
+
+export interface state extends Object {
+    channels: {
+        "text": string,
+        "voice": string
+    },
+    date: string,
+    station: {
+        name: string,
+        owner: string
+    }
 }
 
 export default class Radio extends Map {
@@ -21,7 +34,7 @@ export default class Radio extends Map {
         super();
     }
 
-    save(client: RadioClient) {
+    save(client: RadioClient): void {
         let currentRadios = this.keys();
         let radio = currentRadios.next();
 
@@ -29,7 +42,7 @@ export default class Radio extends Map {
             let currentRadio = this.get(radio.value);
 
             if (currentRadio) {
-                currentRadio.guild = client.datastore?.getEntry(radio.value).guild;
+                currentRadio.guild = client.datastore?.getEntry(radio.value)?.guild;
 
                 client.statistics?.update(client, currentRadio.guild, currentRadio);
                 client.funcs.saveState(client, currentRadio.guild, currentRadio);
@@ -42,29 +55,32 @@ export default class Radio extends Map {
         }
     }
 
-    restore(client: RadioClient, guilds: any) {
+    restore(client: RadioClient, guilds: Collection<string, OAuth2Guild>): void {
         if(!client.stations) return;
 
-        guilds.forEach(async (guild: Guild) => {
+        guilds.forEach(async (guild: OAuth2Guild) => {
             let state = client.funcs.loadState(client, guild);
+
             if(!state) return;
-            if(!state.station || !state.channels.voice || !state.channels.text) return;
+            if(!state.hasOwnProperty('station') || !state.hasOwnProperty('channels')) return;
+
             let voiceChannel = client.channels.cache.get(state.channels.voice);
             if(!voiceChannel || !(voiceChannel instanceof VoiceChannel)) return;
             if(voiceChannel.members.filter((member: GuildMember) => !member.user.bot).size === 0) return;
 
-
-            const sstation = await client.stations?.search(state.station.name, "direct");
+            const sstation = client.stations?.search(state.station.name, "direct");
             let station = sstation;
 
             if(!station) return;
 
-            const construct: any = {
+            let date = new Date();
+            const construct: radio = {
                 textChannel: client.channels.cache.get(state.channels.text),
                 voiceChannel: client.channels.cache.get(state.channels.voice),
                 connection: null,
                 message: null,
-                station: station
+                station: station,
+                startTime: date.getTime()
             };
             this.set(guild.id, construct);
 
@@ -81,6 +97,7 @@ export default class Radio extends Map {
                 let date = new Date();
                 construct.startTime = date.getTime();
                 client.datastore?.checkEntry(guild.id);
+                //@ts-ignore
                 client.funcs.play(client, null, guild, station);
             } catch (error) {
                 console.log(error);

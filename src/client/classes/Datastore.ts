@@ -1,34 +1,21 @@
 import { Guild } from 'discord.js';
-import fs, { NoParamCallback } from 'fs';
+import fs from 'fs';
 import path from 'path';
+import { state } from './Radio';
+import { statistics } from './Statistics';
 
-interface entry {
+export interface datastore {
     guild: {
         id: string,
         name?: string
     },
-    statistics: {
-        [key: string]: {
-            "time": number,
-            "used": number
-        }
-    } | {},
-    state: {
-        channels: {
-            "text": string,
-            "voice": string
-        },
-        date: string,
-        station: {
-            name: string,
-            owner: string
-        }
-    } | {},
+    statistics: statistics | {},
+    state: state | {},
     updated?: string
 }
 
-export default class {
-    map: Map<string, any>;
+export default class Datastore {
+    map: Map<string, datastore>;
     constructor() {
         this.map = new Map();
         this.loadData();
@@ -66,7 +53,7 @@ export default class {
     }
 
     createEntry(id: string){
-        let newData: entry = {
+        let newData: datastore = {
             guild: {
                 id: id,
             },
@@ -89,7 +76,7 @@ export default class {
         return this.map.get(id);
     }
 
-    updateEntry(guild: Guild | { id: string, name: string }, newData: entry) {
+    updateEntry(guild: Guild | { id: string, name: string }, newData: datastore) {
         newData.guild.name = guild.name;
 
         let date = new Date();
@@ -100,32 +87,12 @@ export default class {
         //this.showEntry(this.getEntry(guild.id));
     }
 
-    showEntry(data : entry){
+    showEntry(data : datastore){
         console.log(data);
     }
 
-    createTestFile () {
-        let newData = {
-            "guild": {
-                "id": "test",
-                "name": "Test"
-            },
-            "statistics": {
-                "test": {
-                    "time": 0,
-                    "used": 0
-                }
-            },
-            "state": {
-
-            }
-        }
-
-        this.updateEntry(newData.guild, newData);
-    }
-
-    saveEntry(file: string, data: entry) {
-        fs.writeFile(path.join(path.dirname(__dirname), '../../datastore') + "/" + file + ".json", JSON.stringify(data, null, 4), 'utf8', function(err: any) {
+    saveEntry(file: string, data: datastore) {
+        fs.writeFile(path.join(path.dirname(__dirname), '../../datastore') + "/" + file + ".json", JSON.stringify(data, null, 4), 'utf8', function(err: NodeJS.ErrnoException | null) {
             if (err) {
 
             }

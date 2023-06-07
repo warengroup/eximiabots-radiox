@@ -1,10 +1,11 @@
 import RadioClient from "../../Client";
-import Datastore from "../classes/Datastore";
+import Datastore, { datastore } from "../classes/Datastore";
 import Radio from "../classes/Radio";
 import Stations from "../classes/Stations";
 import Streamer from "../classes/Streamer";
 import Statistics from "../classes/Statistics";
 import commands from "../commands";
+import { OAuth2Guild } from "discord.js";
 
 export default async function ready(client: RadioClient) {
     client.funcs.logger("Bot", "Ready");
@@ -13,7 +14,7 @@ export default async function ready(client: RadioClient) {
     client.funcs.logger('Datastore', 'Initialize');
     client.datastore = new Datastore();
 
-    client.datastore.map.forEach((datastore: { guild: { id: string; name: string; }; }) => {
+    client.datastore.map.forEach((datastore: datastore) => {
         client.funcs.logger('Datastore', datastore.guild.id + " / " + datastore.guild.name);
     });
 
@@ -45,7 +46,7 @@ export default async function ready(client: RadioClient) {
     client.funcs.logger('Guilds', 'Started fetching list');
 
     let guilds = await client.guilds.fetch();
-    guilds.forEach((guild: { id: string; name: string; }) => {
+    guilds.forEach((guild: OAuth2Guild) => {
         client.funcs.logger('Guilds', guild.id + " / " + guild.name);
     });
 

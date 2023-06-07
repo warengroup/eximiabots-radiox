@@ -1,10 +1,7 @@
-import { ActionRowBuilder, AnyComponentBuilder, APIActionRowComponent, APISelectMenuOption, ButtonInteraction, ChatInputCommandInteraction, ColorResolvable, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuInteraction } from "discord.js";
+import { ActionRowBuilder, APISelectMenuOption, ButtonInteraction, ChatInputCommandInteraction, ColorResolvable, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuInteraction } from "discord.js";
 import RadioClient from "../../Client";
 import Streamer from "../classes/Streamer";
 import commands from "../commands";
-const _importDynamic = new Function('modulePath', 'return import(modulePath)');
-// @ts-ignore
-const fetch = (...args) => _importDynamic('node-fetch').then(({default: fetch}) => fetch(...args));
 
 export default {
     name: 'maintenance',
