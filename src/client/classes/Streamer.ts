@@ -1,14 +1,15 @@
 import logger from "../funcs/logger";
-import { createAudioPlayer, createAudioResource, NoSubscriberBehavior } from "@discordjs/voice";
+import { AudioPlayer, AudioPlayerStatus, createAudioPlayer, createAudioResource, NoSubscriberBehavior } from "@discordjs/voice";
 import RadioClient from "../../Client";
 import { station } from "./Stations";
 
 export default class Streamer {
-    map: Map<string, any>;
-    mode: "auto" | "manual" = "manual";
+    map: Map<string, AudioPlayer>;
+    mode: "auto" | "manual";
 
     constructor() {
         this.map = new Map();
+        this.mode = "manual";
     }
 
     init(client: RadioClient){
@@ -28,9 +29,9 @@ export default class Streamer {
         if(this.mode == "auto"){
             if(!client.stations) return;
 
-            client.stations.forEach((station: station) => {
+            for(const station of client.stations){
                 this.play(station);
-            });
+            }
         }
     }
 
@@ -52,44 +53,40 @@ export default class Streamer {
                     behaviors: {
                         noSubscriber: NoSubscriberBehavior.Play,
                         maxMissedFrames: Math.round(5000 / 20),
-                    },
+                    }
                 });
-            }
-            if(this.mode == "manual"){
+            } else {
                 audioPlayer = createAudioPlayer({
                     behaviors: {
                         noSubscriber: NoSubscriberBehavior.Stop,
                         maxMissedFrames: Math.round(5000 / 20),
-                    },
+                    }
                 });
             }
+
             this.map.set(station.name, audioPlayer);
         }
+
         const url = station.stream[station.stream.default];
         const resource = createAudioResource(url);
         audioPlayer.play(resource);
+
         audioPlayer
-            .on('playing', () => {
+            .on(AudioPlayerStatus.Playing, () => {
 	            logger('Streamer', station.name + " / " + "Playing");
             })
-            .on('idle', () => {
+            .on(AudioPlayerStatus.Idle, () => {
                 logger('Streamer', station.name + " / " + "Idle");
-                audioPlayer.removeAllListeners();
-                if(this.mode == "manual" && audioPlayer.subscribers.length == 0) return;
-                this.play(station);
             })
-            .on('paused', () => {
+            .on(AudioPlayerStatus.Paused, () => {
                 logger('Streamer', station.name + " / " + "Paused");
             })
-            .on('buffering', () => {
+            .on(AudioPlayerStatus.Buffering, () => {
                 logger('Streamer', station.name + " / " + "Buffering");
             })
-            .on('autopaused', () => {
+            .on(AudioPlayerStatus.AutoPaused, () => {
                 logger('Streamer', station.name + " / " + "AutoPaused");
             })
-            .on('error', (error: string) => {
-                logger('Streamer', station.name + " / " + "Error" + "\n" + error);
-            });
         return audioPlayer;
     }
 
@@ -105,14 +102,14 @@ export default class Streamer {
 
     listen(station: station) {
         let audioPlayer = this.map.get(station.name);
-        if(!audioPlayer || this.mode == "manual" && audioPlayer.subscribers.length == 0) audioPlayer = this.play(station);
+        if(!audioPlayer) audioPlayer = this.play(station);
         return audioPlayer;
     }
 
     leave(client: RadioClient) {
         if(!client.stations) return;
-        client.stations.forEach((station: station) => {
+        for(const station of client.stations){
             this.stop(station.name);
-        });
+        }
     }
 };
