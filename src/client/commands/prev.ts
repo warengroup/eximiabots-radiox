@@ -11,10 +11,21 @@ export default {
         if (client.funcs.check(client, interaction, command)) {
             const radio = client.radio?.get(interaction.guild?.id);
 
-            if(!client.stations) return interaction.reply({
-                content: client.messages.emojis["error"] + client.messages.maintenance,
-                ephemeral: true
-            });
+            if(client.config.maintenanceMode){
+                return interaction.reply({
+                    content: client.messages.emojis["error"] + client.messages.maintenance,
+                    ephemeral: true
+                });
+            }
+
+            if(!client.stations) {
+                return interaction.reply({
+                    content: client.messages.emojis["error"] + client.messages.replace(client.messages.errorToGetPlaylist, {
+                        "%client.config.supportGuild%": client.config.supportGuild
+                    }),
+                    ephemeral: true
+                });
+            }
 
             let index = client.stations.findIndex((station: station) => station.name == radio.station.name) - 1;
             if(index == -1) index = client.stations.length - 1;

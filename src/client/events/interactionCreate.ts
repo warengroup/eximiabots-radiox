@@ -4,13 +4,6 @@ import RadioClient from "../../Client";
 export default function interactionCreate(client: RadioClient, interaction: Interaction) {
     if(!(interaction.isButton()) && !(interaction.isChatInputCommand()) && !(interaction.isStringSelectMenu())) return;
 
-    if(client.config.maintenanceMode){
-        return interaction.reply({
-            content: client.messages.emojis["error"] + client.messages.maintenance,
-            ephemeral: true
-        });
-    }
-
     //@ts-ignore
     const permissions = interaction.channel?.permissionsFor(interaction.client.user);
     if (!permissions.has(PermissionFlagsBits.ViewChannel)) return;

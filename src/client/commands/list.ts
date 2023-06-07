@@ -8,6 +8,13 @@ export default {
     category: 'radio',
     execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient) {
 
+        if(client.config.maintenanceMode){
+            return interaction.reply({
+                content: client.messages.emojis["error"] + client.messages.maintenance,
+                ephemeral: true
+            });
+        }
+
         if(!client.stations) {
             return interaction.reply({
                 content: client.messages.emojis["error"] + client.messages.replace(client.messages.errorToGetPlaylist, {
