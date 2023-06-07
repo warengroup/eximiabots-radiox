@@ -7,7 +7,7 @@ export default function loadState(client: RadioClient, guild: OAuth2Guild) {
     if(!data) return;
     let state = data.state;
     if(!state) return;
-    data.state = {};
+    data.state = null;
     client.datastore.updateEntry(guild, data);
     return state;
 }

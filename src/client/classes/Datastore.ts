@@ -9,8 +9,8 @@ export interface datastore {
         id: string,
         name?: string
     },
-    statistics: statistics | {},
-    state: state | {},
+    statistics: statistics,
+    state: state | null,
     updated?: string
 }
 
@@ -58,7 +58,7 @@ export default class Datastore {
                 id: id,
             },
             statistics: {},
-            state: {}
+            state: null
         };
         this.map.set(id, newData);
         this.saveEntry(id, newData);

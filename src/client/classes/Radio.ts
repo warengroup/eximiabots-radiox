@@ -16,10 +16,10 @@ export interface radio {
     playTime?: number,
 }
 
-export interface state extends Object {
+export interface state {
     channels: {
-        "text": string,
-        "voice": string
+        "text": string | undefined,
+        "voice": string | undefined
     },
     date: string,
     station: {
@@ -62,7 +62,7 @@ export default class Radio extends Map {
             let state = client.funcs.loadState(client, guild);
 
             if(!state) return;
-            if(!state.hasOwnProperty('station') || !state.hasOwnProperty('channels')) return;
+            if(state.channels?.text === undefined || state.channels?.voice === undefined) return;
 
             let voiceChannel = client.channels.cache.get(state.channels.voice);
             if(!voiceChannel || !(voiceChannel instanceof VoiceChannel)) return;
@@ -97,7 +97,7 @@ export default class Radio extends Map {
                 let date = new Date();
                 construct.startTime = date.getTime();
                 client.datastore?.checkEntry(guild.id);
-                //@ts-ignore
+
                 client.funcs.play(client, null, guild, station);
             } catch (error) {
                 console.log(error);

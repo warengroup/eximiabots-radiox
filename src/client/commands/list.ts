@@ -1,5 +1,6 @@
 import { ButtonInteraction, ChatInputCommandInteraction, ColorResolvable, EmbedBuilder, StringSelectMenuInteraction } from "discord.js";
 import RadioClient from "../../Client";
+import { station } from "../classes/Stations";
 
 export default {
     name: 'list',
@@ -21,7 +22,7 @@ export default {
         if(radio && !client.config.maintenanceMode){
             client.funcs.listStations(client, interaction);
         } else {
-            let stations = `${client.stations.map((s: { name: any; }) => `**#** ${s.name}`).join('\n')}`
+            let stations = `${client.stations.map((s: station) => `**#** ${s.name}`).join('\n')}`
             const hashs = stations.split('**#**').length;
             for (let i = 0; i < hashs; i++) {
                 stations = stations.replace('**#**', `**${i + 1}.**`);
