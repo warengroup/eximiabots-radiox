@@ -1,4 +1,4 @@
-import { ButtonInteraction, ChatInputCommandInteraction, StringSelectMenuInteraction } from "discord.js";
+import { ButtonInteraction, ChatInputCommandInteraction, GuildMember, StringSelectMenuInteraction } from "discord.js";
 import RadioClient from "../../Client";
 import { command } from "../commands";
 
@@ -21,8 +21,8 @@ export default function check(client: RadioClient, interaction: ButtonInteractio
         });
         return false;
     }
-    //@ts-ignore
-    if (interaction.member.voice.channel !== radio.voiceChannel) {
+
+    if (interaction.member instanceof GuildMember && interaction.member?.voice.channel !== radio.voiceChannel) {
         interaction.reply({
             content: client.messages.emojis["error"] + client.messages.wrongVoiceChannel,
             ephemeral: true

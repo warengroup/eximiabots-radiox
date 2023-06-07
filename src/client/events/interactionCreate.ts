@@ -1,17 +1,18 @@
-import { Interaction, PermissionFlagsBits } from "discord.js";
+import { ChannelType, Interaction, PermissionFlagsBits } from "discord.js";
 import RadioClient from "../../Client";
 
 export default function interactionCreate(client: RadioClient, interaction: Interaction) {
     if(!(interaction.isButton()) && !(interaction.isChatInputCommand()) && !(interaction.isStringSelectMenu())) return;
 
-    //@ts-ignore
-    const permissions = interaction.channel?.permissionsFor(interaction.client.user);
-    if (!permissions.has(PermissionFlagsBits.ViewChannel)) return;
+    if(interaction.channel?.type != ChannelType.DM){
+        const permissions = interaction.channel?.permissionsFor(interaction.client.user);
+        if (!permissions?.has(PermissionFlagsBits.ViewChannel)) return;
 
-    if (!permissions.has(PermissionFlagsBits.EmbedLinks)) return interaction.reply({
-        content: client.messages.emojis["error"] + client.messages.noPermsEmbed,
-        ephemeral: true
-    });
+        if (!permissions?.has(PermissionFlagsBits.EmbedLinks)) return interaction.reply({
+            content: client.messages.emojis["error"] + client.messages.noPermsEmbed,
+            ephemeral: true
+        });
+    }
 
     if(interaction.isChatInputCommand()){
         const commandName = interaction.commandName;
