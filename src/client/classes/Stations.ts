@@ -18,11 +18,10 @@ export default class Stations extends Array {
     async fetch(options: { url: string, show?: boolean}){
         try {
             logger('Stations', 'Started fetching list - ' + options.url);
-            let stations = await fetch(options.url)
+            let stations: station[] = await fetch(options.url)
                 .then(this.checkFetchStatus)
-                .then((response: { json: () => station[]; }) => response.json());
+                .then((response: Response) => response.json());
 
-            if(!stations) return;
             for (const station of stations){
                 this.push(station);
                 if(options.show) logger('Stations', station.name);
@@ -39,7 +38,7 @@ export default class Stations extends Array {
         }
     }
 
-    checkFetchStatus(response: any) {
+    checkFetchStatus(response: Response) {
         if (response.ok) {
             return response;
         } else {
@@ -48,14 +47,12 @@ export default class Stations extends Array {
     }
 
     search(key: string, type: string) {
-        if (this === null) return false;
-        if (!key) return false;
-        if (!type) return false;
+        if (this === null || !key || !type) return null;
 
         if(type == "direct"){
             let foundStation;
             for(const station of this){
-                if(station.name != key) return false;
+                if(station.name != key) return null;
                 foundStation = station;
             }
 
@@ -63,7 +60,7 @@ export default class Stations extends Array {
         } else {
 
             let foundStations : { station: string, name: string, probability: number }[] = [];
-            if (key == "radio") return false;
+            if (key == "radio") return null;
 
             this
                 .filter(
@@ -84,7 +81,7 @@ export default class Stations extends Array {
                         foundStations.push({ station: x, name: x.name, probability: probabilityIncrement })
                     );
             }
-            if (foundStations.length === 0) return false;
+            if (foundStations.length === 0) return null;
             for (let i = 0; i < foundStations.length; i++) {
                 for (let j = 0; j < foundStations.length; j++) {
                     if (foundStations[i] === foundStations[j] && i !== j) foundStations.splice(i, 1);
@@ -105,23 +102,23 @@ export default class Stations extends Array {
                     }
                 }
             }
-            /*let highestProbabilityStation : { station: string, name: string, probability: number } | string | undefined;
+            let highestProbabilityStation : { station: string, name: string, probability: number } | undefined;
+            let stationName = "";
+
             for (let i = 0; i < foundStations.length; i++) {
                 if (
                     !highestProbabilityStation ||
-                    //@ts-ignore
                     highestProbabilityStation.probability < foundStations[i].probability
                 )
                     highestProbabilityStation = foundStations[i];
                 if (
                     highestProbabilityStation &&
-                    //@ts-ignore
                     highestProbabilityStation.probability === foundStations[i].probability
                 ) {
-                    highestProbabilityStation = foundStations[i].station;
+                    stationName = foundStations[i].station;
                 }
             }
-            return highestProbabilityStation;*/
+            return stationName;
         }
     }
 };

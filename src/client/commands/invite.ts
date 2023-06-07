@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, ColorResolvable, EmbedBuilder } from "discord.js";
+import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import RadioClient from "../../Client";
 
 export default {
@@ -16,7 +16,7 @@ export default {
             .setTitle(client.messages.replace(client.messages.inviteTitle, {
                 "%client.user.username%": client.user.username
             }))
-            .setColor(client.config.embedColor as ColorResolvable)
+            .setColor(client.config.embedColor)
             .setURL("https://discord.com/api/oauth2/authorize?client_id=" + client.user.id + "&permissions=2184465408&scope=applications.commands%20bot") //View Channels, Send Messages, Embed Links, Use External Emojis, Use Slash Commands, Connect, Speak, Use Voice Activity
             .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
             .setFooter({

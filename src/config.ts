@@ -1,3 +1,5 @@
+import { ColorResolvable } from "discord.js";
+
 export default {
 
     //credentials
@@ -14,7 +16,7 @@ export default {
     ],
 
     //misc
-    embedColor: "#88aa00",
+    embedColor: "#88aa00" as ColorResolvable,
     hostedBy: "[Warén Group](https://waren.io)",
 
     //Settings

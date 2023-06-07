@@ -1,4 +1,4 @@
-import { ActionRowBuilder, APISelectMenuOption, ButtonInteraction, ChatInputCommandInteraction, ColorResolvable, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuInteraction } from "discord.js";
+import { ActionRowBuilder, APISelectMenuOption, ButtonInteraction, ChatInputCommandInteraction, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuInteraction } from "discord.js";
 import RadioClient from "../../Client";
 import Streamer from "../classes/Streamer";
 import commands from "../commands";
@@ -95,7 +95,7 @@ export default {
             }
         );
 
-        const menu : ActionRowBuilder<any> = new ActionRowBuilder()
+        const menu = new ActionRowBuilder<StringSelectMenuBuilder>()
             .addComponents(
                 new StringSelectMenuBuilder()
                     .setCustomId('maintenance')
@@ -115,7 +115,7 @@ export default {
 
         const embed = new EmbedBuilder()
             .setTitle(client.messages.maintenanceTitle)
-            .setColor(client.config.embedColor as ColorResolvable)
+            .setColor(client.config.embedColor)
             .setDescription(options.find((option: APISelectMenuOption) => option.value == action)?.label || "-")
             .setFooter({
                 text: client.messages.footerText,

@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, ColorResolvable, EmbedBuilder, Guild, OAuth2Guild, StringSelectMenuInteraction } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, EmbedBuilder, Guild, OAuth2Guild, StringSelectMenuInteraction } from "discord.js";
 import RadioClient from "../../Client";
 import { station } from "../classes/Stations";
 
@@ -13,7 +13,7 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
     const embed = new EmbedBuilder()
         .setTitle(client.user?.username || "-")
         .setThumbnail((radio.station.logo || "https://cdn.discordapp.com/emojis/" + client.messages.emojis["play"].replace(/[^0-9]+/g, '')))
-        .setColor(client.config.embedColor as ColorResolvable)
+        .setColor(client.config.embedColor)
         .addFields({
             name: client.messages.nowplayingTitle,
             value: client.messages.replace(client.messages.nowplayingDescription, {
@@ -30,7 +30,7 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
             iconURL: "https://cdn.discordapp.com/emojis/" + client.messages.emojis["eximiabots"].replace(/[^0-9]+/g, '')
         });
 
-    const buttons = new ActionRowBuilder()
+    const buttons = new ActionRowBuilder<ButtonBuilder>()
         .addComponents(
             new ButtonBuilder()
                 .setCustomId('list')

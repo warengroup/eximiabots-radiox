@@ -1,4 +1,4 @@
-import { ButtonInteraction, ChatInputCommandInteraction, ColorResolvable, EmbedBuilder, StringSelectMenuInteraction } from "discord.js";
+import { ButtonInteraction, ChatInputCommandInteraction, EmbedBuilder, StringSelectMenuInteraction } from "discord.js";
 import RadioClient from "../../Client";
 import { command } from "../commands";
 
@@ -16,7 +16,7 @@ export default {
             const embed = new EmbedBuilder()
                 .setTitle(client.user?.username || "-")
                 .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messages.emojis["stop"].replace(/[^0-9]+/g, ''))
-                .setColor(client.config.embedColor as ColorResolvable)
+                .setColor(client.config.embedColor)
                 .addFields({
                     name: client.messages.nowplayingTitle,
                     value: "-"

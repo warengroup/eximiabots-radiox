@@ -18,7 +18,7 @@ export interface command {
     description: string,
     category: string,
     options?: [],
-    execute: any
+    execute: Function
 }
 
 export default async function commands(client: RadioClient) {

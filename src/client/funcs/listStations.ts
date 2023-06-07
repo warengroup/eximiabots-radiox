@@ -14,7 +14,7 @@ export default function listStations(client: RadioClient, interaction: ButtonInt
         });
     }
 
-    const menu: ActionRowBuilder<any> = new ActionRowBuilder()
+    const menu = new ActionRowBuilder<StringSelectMenuBuilder>()
         .addComponents(
             new StringSelectMenuBuilder()
                 .setCustomId('play')

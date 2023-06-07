@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, ColorResolvable, EmbedBuilder } from "discord.js";
+import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import RadioClient from "../../Client";
 
 export default {
@@ -16,7 +16,7 @@ export default {
                 "%client.user.username%": client.user.username
             }))
             .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messages.emojis["logo"].replace(/[^0-9]+/g, ''))
-            .setColor(client.config.embedColor as ColorResolvable)
+            .setColor(client.config.embedColor)
             .setDescription(client.messages.replace(client.messages.bugDescription, {
                     "%client.config.supportGuild%": client.config.supportGuild
             }))

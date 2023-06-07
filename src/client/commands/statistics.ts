@@ -1,4 +1,4 @@
-import { ButtonInteraction, ChatInputCommandInteraction, ColorResolvable, EmbedBuilder, StringSelectMenuInteraction } from "discord.js";
+import { ButtonInteraction, ChatInputCommandInteraction, EmbedBuilder, StringSelectMenuInteraction } from "discord.js";
 import RadioClient from "../../Client";
 
 
@@ -36,7 +36,7 @@ export default {
         const embed = new EmbedBuilder()
             .setTitle(client.messages.statisticsTitle)
             .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messages.emojis["statistics"].replace(/[^0-9]+/g, ''))
-            .setColor(client.config.embedColor as ColorResolvable)
+            .setColor(client.config.embedColor)
             .setDescription(statistics)
             .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
             .setFooter({
