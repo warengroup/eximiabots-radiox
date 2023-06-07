@@ -96,7 +96,7 @@ export default {
                 type = "direct";
             }
 
-            const sstation = await client.stations.search(query, type);
+            const sstation = client.stations.search(query, type);
             if (!sstation) return interaction.reply({
                 content: client.messages.emojis["error"] + client.messages.noSearchResults,
                 ephemeral: true
