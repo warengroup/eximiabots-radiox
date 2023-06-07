@@ -10,14 +10,12 @@ export interface station {
 }
 
 export default class Stations extends Array {
-    counter: number;
 
     constructor() {
         super();
-        this.counter = 0;
     }
 
-    async fetch(options: { url: string, show?: boolean }){
+    async fetch(options: { url: string, show?: boolean}){
         try {
             logger('Stations', 'Started fetching list - ' + options.url);
             let stations = await fetch(options.url)
@@ -26,19 +24,18 @@ export default class Stations extends Array {
 
             if(!stations) return;
             for (const station of stations){
-                this.push(station.name);
+                this.push(station);
                 if(options.show) logger('Stations', station.name);
             }
-
-            this.counter = 0;
 
             logger('Stations', 'Successfully fetched list');
         } catch (error) {
             logger('Stations', 'Fetching list failed');
             console.error(error + "\n");
 
-            this.counter = this.counter + 1;
-            if(this.length == 0 && 5 < this.counter) this.fetch(options);
+            if(this.length == 0) setTimeout( () => {
+                this.fetch(options)
+            }, 150 );
         }
     }
 
@@ -57,10 +54,10 @@ export default class Stations extends Array {
 
         if(type == "direct"){
             let foundStation;
-            this.forEach(station => {
+            for(const station of this){
                 if(station.name != key) return false;
                 foundStation = station;
-            });
+            }
 
             return foundStation;
         } else {
