@@ -13,7 +13,6 @@ export default {
             ephemeral: true
         });
 
-        let stations = client.stations;
         let currentGuild = client.datastore?.getEntry(interaction.guild.id);
         let global = client.datastore?.getEntry("global");
         let statistics = "";
