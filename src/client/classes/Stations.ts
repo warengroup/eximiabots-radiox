@@ -22,7 +22,7 @@ export default class Stations extends Array {
                 .then(this.checkFetchStatus)
                 .then((response: Response) => response.json());
 
-            for (const station of stations){
+            for(const station of stations){
                 this.push(station);
                 if(options.show) logger('Stations', station.name);
             }
@@ -50,15 +50,8 @@ export default class Stations extends Array {
         if (this === null || !key || !type) return null;
 
         if(type == "direct"){
-            let foundStation;
-            for(const station of this){
-                if(station.name != key) return null;
-                foundStation = station;
-            }
-
-            return foundStation;
+            return this.find(station => station.name === key);
         } else {
-
             let foundStations : { station: string, name: string, probability: number }[] = [];
             if (key == "radio") return null;
 
