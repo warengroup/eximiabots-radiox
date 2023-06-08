@@ -35,18 +35,22 @@ export default async function commands(client: RadioClient) {
         for(const command of commands){
             let guilds = await client.guilds.fetch();
             guilds.forEach(async (guild: { id: Snowflake; name: string; }) => {
-                if(!client.application) return;
-                client.application.commands.create({
-                    name: command.name,
-                    description: command.description,
-                    options: command.options || []
-                }, guild.id);
-                client.funcs.logger('Application Commands', 'Guild: ' + guild.id + " (" + guild.name + ") \n" + 'Command: ' + command.name);
+                try {
+                    if(!client.application) return;
+                    await client.application.commands.create({
+                        name: command.name,
+                        description: command.description,
+                        options: command.options || []
+                    }, guild.id);
+                    client.funcs.logger('Application Commands', 'Guild: ' + guild.id + " (" + guild.name + ") \n" + 'Command: ' + command.name);
+                } catch(DiscordAPIError) {
+                    client.funcs.logger('Application Commands', 'Guild: ' + guild.id + " (" + guild.name + ") [FAILED] \n" + 'Command: ' + command.name);
+                }
             });
         }
     } else {
         for(const command of commands){
-            client.application.commands.create({
+            await client.application.commands.create({
                 name: command.name,
                 description: command.description,
                 options: command.options || []
@@ -57,8 +61,11 @@ export default async function commands(client: RadioClient) {
 
         let guilds = await client.guilds.fetch();
         guilds.forEach(async (guild: { id: Snowflake; }) => {
-            if(!client.application) return;
-            client.application.commands.set([], guild.id);
+            try {
+                if(!client.application) return;
+                await client.application.commands.set([], guild.id);
+            } catch (DiscordAPIError){
+            }
         });
     }
     client.funcs.logger('Application Commands', 'Successfully reloaded application (/) commands.' + "\n");
