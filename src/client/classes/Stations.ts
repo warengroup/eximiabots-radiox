@@ -6,6 +6,10 @@ export interface station {
     logo: string,
     stream: {
         [key: string]: string
+    },
+    playlist?: {
+        type: "supla" | "yle",
+        address: string | string
     }
 }
 
@@ -20,7 +24,7 @@ export default class Stations extends Array {
             logger('Stations', 'Started fetching list - ' + options.url);
             let stations: station[] = await fetch(options.url)
                 .then(this.checkFetchStatus)
-                .then((response: Response) => response.json());
+                .then((response: Response) => response.json() as Promise<station[]>);
 
             for(const station of stations){
                 this.push(station);
