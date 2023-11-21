@@ -70,6 +70,9 @@ export default class Streamer {
                 })
                 .on(AudioPlayerStatus.Idle, () => {
                     logger('Streamer', station.name + " / " + "Idle");
+                    const url = station.stream[station.stream.default];
+                    const resource = createAudioResource(url);
+                    audioPlayer?.play(resource);
                 })
                 .on(AudioPlayerStatus.Paused, () => {
                     logger('Streamer', station.name + " / " + "Paused");
