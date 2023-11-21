@@ -16,15 +16,19 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
             .catch(error => {
             });
 
-        switch(radio.station?.playlist.type){
-            case "supla":
-                radio.station.track = "__" + playlist.items[0].artist + "__" + "\n" + playlist.items[0].song;
-                break;
-            case "yle":
-                radio.station.track = "-";
-                break;
-            default:
-                radio.station.track = "-";
+        try {
+            switch(radio.station?.playlist.type){
+                case "supla":
+                    radio.station.track = "__" + playlist.items[0]?.artist + "__" + "\n" + playlist.items[0]?.song;
+                    break;
+                case "yle":
+                    radio.station.track = "-";
+                    break;
+                default:
+                    radio.station.track = "-";
+            }
+        } catch(TypeError) {
+
         }
     }
 
@@ -42,7 +46,7 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
         {
             name: client.messages.playTitle2,
             value: client.messages.replace(client.messages.playDescription2, {
-                "%radio.station.track%": radio.station.track
+                "%radio.station.track%": radio.station.track != undefined ? "\n\n" + radio.station.track : "-"
             })
         })
         .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
@@ -102,19 +106,22 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
                 .then((response: Response) => response.json())
                 .catch(error => {
                 });
+            try {
+                switch(radio.station?.playlist.type){
+                    case "supla":
+                        if(radio.station.track != playlist.items[0].artist + "\n" + playlist.items[0].song){
+                            changed = true;
+                            radio.station.track = "__" + playlist.items[0].artist + "__" + "\n" + playlist.items[0].song;
+                        }
+                        break;
+                    case "yle":
+                        radio.station.track = "-";
+                        break;
+                    default:
+                        radio.station.track = "-";
+                }
+            } catch(TypeError) {
 
-            switch(radio.station?.playlist.type){
-                case "supla":
-                    if(radio.station.track != playlist.items[0].artist + "\n" + playlist.items[0].song){
-                        changed = true;
-                        radio.station.track = "__" + playlist.items[0].artist + "__" + "\n" + playlist.items[0].song;
-                    }
-                    break;
-                case "yle":
-                    radio.station.track = "-";
-                    break;
-                default:
-                    radio.station.track = "-";
             }
         }
 
@@ -133,7 +140,7 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
             {
                 name: client.messages.playTitle2,
                 value: client.messages.replace(client.messages.playDescription2, {
-                    "%radio.station.track%": radio.station.track
+                    "%radio.station.track%": radio.station.track != undefined ? "\n\n" + radio.station.track : "-"
                 })
             })
             .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
