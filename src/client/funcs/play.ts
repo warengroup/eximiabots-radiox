@@ -10,18 +10,43 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
     radio.connection.subscribe(audioPlayer);
     client.funcs.logger('Radio', guild.id + " / " + "Play" + " / " + radio.station.name);
 
+    if(radio.station?.playlist?.type == "supla" || radio.station?.playlist?.type == "yle"){
+        let playlist: any = await fetch(radio.station.playlist.address)
+            .then((response: Response) => response.json())
+            .catch(error => {
+            });
+
+        try {
+            switch(radio.station?.playlist.type){
+                case "supla":
+                    radio.station.track = "__" + playlist.items[0]?.artist + "__" + "\n" + playlist.items[0]?.song;
+                    break;
+                case "yle":
+                    radio.station.track = "-";
+                    break;
+                default:
+                    radio.station.track = "-";
+            }
+        } catch(TypeError) {
+
+        }
+    }
+
     const embed = new EmbedBuilder()
         .setTitle(client.user?.username || "-")
         .setThumbnail((radio.station.logo || "https://cdn.discordapp.com/emojis/" + client.messages.emojis["play"].replace(/[^0-9]+/g, '')))
         .setColor(client.config.embedColor)
         .addFields({
-            name: client.messages.nowplayingTitle,
-            value: client.messages.replace(client.messages.nowplayingDescription, {
+            name: client.messages.playTitle1,
+            value: client.messages.replace(client.messages.playDescription1, {
                 "%radio.station.name%": radio.station.name,
-                "%radio.station.owner%\n": radio.station.name != radio.station.owner ? radio.station.owner + "\n" : "",
-                "%client.funcs.msToTime(completed)%": "",
-                "**": "",
-                "**:2": ""
+                "%radio.station.owner%": radio.station.name != radio.station.owner ? radio.station.owner + "\n" : ""
+            })
+        },
+        {
+            name: client.messages.playTitle2,
+            value: client.messages.replace(client.messages.playDescription2, {
+                "%radio.station.track%": radio.station.track != undefined ? "\n\n" + radio.station.track : "-"
             })
         })
         .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
@@ -72,6 +97,71 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
             radio.message = await radio.textChannel?.send({ embeds: [embed], components: [buttons] });
         }
     }
+
+    setInterval(async function(){
+        let changed = false;
+
+        if(radio.station?.playlist?.type == "supla" || radio.station?.playlist?.type == "yle"){
+            let playlist: any = await fetch(radio.station.playlist.address)
+                .then((response: Response) => response.json())
+                .catch(error => {
+                });
+            try {
+                switch(radio.station?.playlist.type){
+                    case "supla":
+                        if(radio.station.track != playlist.items[0].artist + "\n" + playlist.items[0].song){
+                            changed = true;
+                            radio.station.track = "__" + playlist.items[0].artist + "__" + "\n" + playlist.items[0].song;
+                        }
+                        break;
+                    case "yle":
+                        radio.station.track = "-";
+                        break;
+                    default:
+                        radio.station.track = "-";
+                }
+            } catch(TypeError) {
+
+            }
+        }
+
+        if(changed == true){
+            const embed = new EmbedBuilder()
+            .setTitle(client.user?.username || "-")
+            .setThumbnail((radio.station.logo || "https://cdn.discordapp.com/emojis/" + client.messages.emojis["play"].replace(/[^0-9]+/g, '')))
+            .setColor(client.config.embedColor)
+            .addFields({
+                name: client.messages.playTitle1,
+                value: client.messages.replace(client.messages.playDescription1, {
+                    "%radio.station.name%": radio.station.name,
+                    "%radio.station.owner%": radio.station.name != radio.station.owner ? radio.station.owner + "\n" : ""
+                })
+            },
+            {
+                name: client.messages.playTitle2,
+                value: client.messages.replace(client.messages.playDescription2, {
+                    "%radio.station.track%": radio.station.track != undefined ? "\n\n" + radio.station.track : "-"
+                })
+            })
+            .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
+            .setFooter({
+                text: client.messages.footerText,
+                iconURL: "https://cdn.discordapp.com/emojis/" + client.messages.emojis["eximiabots"].replace(/[^0-9]+/g, '')
+            });
+
+
+            if(!radio.message){
+                radio.message = await radio.textChannel?.send({ embeds: [embed], components: [buttons] });
+            } else {
+                if(radio.textChannel.id == radio.message.channel.id){
+                    radio.message.edit({ embeds: [embed], components: [buttons] });
+                } else {
+                    radio.message?.delete();
+                    radio.message = await radio.textChannel?.send({ embeds: [embed], components: [buttons] });
+                }
+            }
+        }
+    },15000);
 
     interaction?.reply({
         content: client.messages.emojis["play"] + client.messages.replace(client.messages.play, {

@@ -70,6 +70,13 @@ export default class Streamer {
                 })
                 .on(AudioPlayerStatus.Idle, () => {
                     logger('Streamer', station.name + " / " + "Idle");
+                    if(this.mode == "auto"){
+                        const url = station.stream[station.stream.default];
+                        const resource = createAudioResource(url);
+                        audioPlayer?.play(resource);
+                    } else {
+                        this.stop(station.name);
+                    }
                 })
                 .on(AudioPlayerStatus.Paused, () => {
                     logger('Streamer', station.name + " / " + "Paused");
