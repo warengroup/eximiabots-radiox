@@ -183,7 +183,7 @@ export default {
                 client.user?.setStatus('idle');
                 client.radio?.save(client);
 
-                setInterval(() => {
+                let timer : NodeJS.Timeout = setInterval(() => {
                     if(client.radio?.size == 0 && client.config.streamerMode == "manual" && client.config.maintenanceMode){
                         client.streamer?.leave(client);
                         client.streamer = new Streamer();
@@ -195,9 +195,9 @@ export default {
                     }
 
                     if(!client.config.maintenanceMode){
-                        clearInterval(undefined);
+                        clearInterval(timer);
                     }
-                }, 500);
+                }, 1000);
 
                 break;
             case "11":
@@ -207,7 +207,7 @@ export default {
                 client.user?.setStatus('idle');
                 client.radio?.save(client);
 
-                setInterval(() => {
+                let timer2 : NodeJS.Timeout = setInterval(() => {
                     if(client.radio?.size == 0 && client.config.streamerMode == "auto" && client.config.maintenanceMode){
                         client.streamer?.leave(client);
                         client.streamer = new Streamer();
@@ -219,9 +219,9 @@ export default {
                     }
 
                     if(!client.config.maintenanceMode){
-                        clearInterval(undefined);
+                        clearInterval(timer2);
                     }
-                }, 500);
+                }, 1000);
 
                 break;
             default:

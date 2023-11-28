@@ -1,10 +1,13 @@
-import { ButtonInteraction, ChatInputCommandInteraction, EmbedBuilder, StringSelectMenuInteraction } from "discord.js";
+import { ApplicationCommandOptionType, ButtonInteraction, ChatInputCommandInteraction, EmbedBuilder, StringSelectMenuInteraction } from "discord.js";
 import RadioClient from "../../Client";
 import { station } from "../classes/Stations";
 
 export default {
     name: 'list',
-    description: 'List radio stations',
+    description: 'List stations',
+    options: [
+        { type: ApplicationCommandOptionType.String, name: "query", description: "Select list", choices: [{"name": "1", "value": "1"},{"name": "2", "value": "2"}], required: false}
+    ],
     category: 'radio',
     execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient) {
 
@@ -15,6 +18,20 @@ export default {
             });
         }
 
+        if(!interaction.guild) return;
+
+        let query: string | null = null;
+
+        if(interaction.isChatInputCommand()){
+            query = interaction.options?.getString("query");
+        }
+
+        if(interaction.isStringSelectMenu()){
+            query = interaction.values?.[0];
+        }
+
+        if(!query) query = "1";
+
         if(!client.stations) {
             return interaction.reply({
                 content: client.messages.emojis["error"] + client.messages.replace(client.messages.errorToGetPlaylist, {
@@ -24,10 +41,10 @@ export default {
             });
         }
 
-        const radio = client.radio?.get(interaction.guild?.id);
+        const radio = client.radio?.get(interaction.guild.id);
 
         if(radio && !client.config.maintenanceMode){
-            client.funcs.listStations(client, interaction);
+            client.funcs.listStations(client, interaction, query);
         } else {
             let stations = `${client.stations.map((s: station) => `**#** ${s.name}`).join('\n')}`
             const hashs = stations.split('**#**').length;

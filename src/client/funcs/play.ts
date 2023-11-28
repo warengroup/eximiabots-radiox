@@ -6,30 +6,43 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
     if(!guild) return;
 
     const radio = client.radio?.get(guild.id);
+    if(!radio) return;
     const audioPlayer = client.streamer?.listen(station);
-    radio.connection.subscribe(audioPlayer);
+    if(!audioPlayer) return;
+    radio.connection?.subscribe(audioPlayer);
     client.funcs.logger('Radio', guild.id + " / " + "Play" + " / " + radio.station.name);
 
-    try {
-        if(radio.station?.playlist?.type == "supla" || radio.station?.playlist?.type == "yle"){
+    if(radio.station.playlist){
+        if(radio.station.playlist.type == "radioplay" || radio.station.playlist.type == "supla" || radio.station.playlist.type == "yle"){
             let playlist: any = await fetch(radio.station.playlist.address)
             .then((response: Response) => response.json())
             .catch(error => {
             });
 
-            switch(radio.station?.playlist.type){
-                case "supla":
-                    radio.station.track = "__" + playlist.items[0]?.artist + "__" + "\n" + playlist.items[0]?.song;
-                    break;
-                case "yle":
-                    radio.station.track = "-";
-                    break;
-                default:
-                    radio.station.track = "-";
+            radio.station.track = "-";
+
+            if(playlist){
+                switch(radio.station.playlist.type){
+                    case "radioplay":
+                        if(playlist[0] && playlist[0].stationNowPlaying && playlist[0].stationNowPlaying.nowPlayingArtist && playlist[0].stationNowPlaying.nowPlayingTrack){
+                            radio.station.track = "__" + playlist[0].stationNowPlaying.nowPlayingArtist + "__" + "\n" + playlist[0].stationNowPlaying.nowPlayingTrack;
+                        }
+                        break;
+                    case "supla":
+                        if(playlist.items && playlist.items[0] && playlist.items[0].artist && playlist.items[0].song){
+                            radio.station.track = "__" + playlist.items[0].artist + "__" + "\n" + playlist.items[0].song;
+                        }
+                        break;
+                    case "yle":
+                        if(playlist.data && playlist.data.performer && playlist.data.title){
+                            radio.station.track = "__" + playlist.data.performer + "__" + "\n" + playlist.data.title;
+                        }
+                        break;
+                    default:
+                        radio.station.track = "-";
+                }
             }
         }
-    } catch(TypeError) {
-
     }
 
     const embed = new EmbedBuilder()
@@ -95,47 +108,61 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
         );
 
     if(!radio.message){
-        radio.message = await radio.textChannel?.send({ embeds: [embed], components: [buttons] });
+        radio.message = await radio.textChannel?.send({ embeds: [embed], components: [buttons] }) ?? null;
     } else {
-        if(radio.textChannel.id == radio.message.channel.id){
+        if(radio.textChannel?.id == radio.message.channel.id){
             radio.message.edit({ embeds: [embed], components: [buttons] });
         } else {
             radio.message?.delete();
-            radio.message = await radio.textChannel?.send({ embeds: [embed], components: [buttons] });
+            radio.message = await radio.textChannel?.send({ embeds: [embed], components: [buttons] }) ?? null;
         }
     }
 
-    setInterval(async function(){
-        const radio = client.radio?.get(guild.id);
-        let changed = false;
+    const oldRadio = {...radio};
 
-        try {
-            if(radio.station?.playlist?.type == "supla" || radio.station?.playlist?.type == "yle"){
+    let timer : NodeJS.Timeout = setInterval(async function(){
+        const radio = client.radio?.get(guild.id);
+
+        if(!radio || !oldRadio || radio.station.name != oldRadio.station.name) {
+            return clearInterval(timer);
+        }
+
+        if(radio.station.playlist){
+            if(radio.station.playlist.type == "radioplay" || radio.station.playlist.type == "supla" || radio.station.playlist.type == "yle"){
                 let playlist: any = await fetch(radio.station.playlist.address)
                 .then((response: Response) => response.json())
                 .catch(error => {
                 });
 
-                switch(radio.station?.playlist.type){
-                    case "supla":
-                        if(radio.station.track != "__" + playlist.items[0]?.artist + "__" + "\n" + playlist.items[0].song){
-                            radio.station.track = "__" + playlist.items[0].artist + "__" + "\n" + playlist.items[0].song;
-                        }
-                        break;
-                    case "yle":
-                        radio.station.track = "-";
-                        break;
-                    default:
-                        radio.station.track = "-";
+                radio.station.track = "-";
+
+                if(playlist){
+                    switch(radio.station.playlist?.type){
+                        case "radioplay":
+                            if(playlist[0] && playlist[0].stationNowPlaying && playlist[0].stationNowPlaying.nowPlayingArtist && playlist[0].stationNowPlaying.nowPlayingTrack){
+                                radio.station.track = "__" + playlist[0].stationNowPlaying.nowPlayingArtist + "__" + "\n" + playlist[0].stationNowPlaying.nowPlayingTrack;
+                            }
+                            break;
+                        case "supla":
+                            if(playlist.items && playlist.items[0] && playlist.items[0].artist && playlist.items[0].song){
+                                radio.station.track = "__" + playlist.items[0].artist + "__" + "\n" + playlist.items[0].song;
+                            }
+                            break;
+                        case "yle":
+                            if(playlist.data && playlist.data.performer && playlist.data.title){
+                                radio.station.track = "__" + playlist.data.performer + "__" + "\n" + playlist.data.title;
+                            }
+                            break;
+                        default:
+                            radio.station.track = "-";
+                    }
                 }
             }
-        } catch(TypeError) {
-
         }
 
         let date = new Date();
         radio.currentTime = date.getTime();
-        radio.playTime = parseInt(radio.currentTime)-parseInt(radio.startTime);
+        radio.playTime = radio.currentTime - radio.startTime;
         const completed = (radio.playTime);
 
         const embed = new EmbedBuilder()
@@ -169,16 +196,16 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
 
 
         if(!radio.message){
-            radio.message = await radio.textChannel?.send({ embeds: [embed], components: [buttons] });
+            radio.message = await radio.textChannel?.send({ embeds: [embed], components: [buttons] }) ?? null;
         } else {
-            if(radio.textChannel.id == radio.message.channel.id){
-                radio.message.edit({ embeds: [embed], components: [buttons] });
+            if(radio.textChannel?.id == radio.message.channel.id){
+                radio.message?.edit({ embeds: [embed], components: [buttons] });
             } else {
                 radio.message?.delete();
-                radio.message = await radio.textChannel?.send({ embeds: [embed], components: [buttons] });
+                radio.message = await radio.textChannel?.send({ embeds: [embed], components: [buttons] }) ?? null;
             }
         }
-    },15000);
+    },2500);
 
     interaction?.reply({
         content: client.messages.emojis["play"] + client.messages.replace(client.messages.play, {

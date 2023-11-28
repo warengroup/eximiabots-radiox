@@ -13,6 +13,8 @@ export default {
     category: "radio",
     async execute(interaction: ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient) {
 
+        if(!interaction.guild) return;
+
         if(client.config.maintenanceMode){
             return interaction.reply({
                 content: client.messages.emojis["error"] + client.messages.maintenance,
@@ -40,10 +42,10 @@ export default {
         }
 
         if(!query){
-            return client.funcs.listStations(client, interaction);
+            return client.funcs.listStations(client, interaction, "1");
         }
 
-        const radio = client.radio?.get(interaction.guild?.id);
+        const radio = client.radio?.get(interaction.guild.id);
 
         if(!(interaction.member instanceof GuildMember)) return;
         const voiceChannel = interaction.member?.voice.channel;
