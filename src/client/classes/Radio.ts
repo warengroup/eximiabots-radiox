@@ -1,19 +1,20 @@
-import { Channel, Collection, GuildMember, OAuth2Guild, TextBasedChannel, VoiceBasedChannel, VoiceChannel } from "discord.js";
+import { Collection, GuildMember, Message, OAuth2Guild, TextBasedChannel, VoiceBasedChannel, VoiceChannel } from "discord.js";
 import { getVoiceConnection, joinVoiceChannel, VoiceConnection } from "@discordjs/voice";
 import RadioClient from "../../Client";
 import { station } from "./Stations";
 import { datastore } from "./Datastore";
 
 export interface radio {
-    textChannel: Channel | TextBasedChannel | undefined | null,
-    voiceChannel: Channel | VoiceBasedChannel | undefined,
+    textChannel: TextBasedChannel | undefined | null,
+    voiceChannel: VoiceBasedChannel | undefined,
     connection: VoiceConnection | null,
-    message: null,
+    message: Message | null,
     station: station,
     datastore?: datastore,
     currentTime?: number,
     startTime: number,
     playTime?: number,
+    guild?: any
 }
 
 export interface state {
@@ -28,7 +29,7 @@ export interface state {
     }
 }
 
-export default class Radio extends Map {
+export default class Radio extends Map<string, radio> {
 
     constructor() {
         super();
@@ -75,8 +76,8 @@ export default class Radio extends Map {
 
             let date = new Date();
             const construct: radio = {
-                textChannel: client.channels.cache.get(state.channels.text),
-                voiceChannel: client.channels.cache.get(state.channels.voice),
+                textChannel: client.channels.cache.get(state.channels.text) as TextBasedChannel,
+                voiceChannel: client.channels.cache.get(state.channels.voice) as VoiceBasedChannel,
                 connection: null,
                 message: null,
                 station: station,
