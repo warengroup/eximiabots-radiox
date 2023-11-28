@@ -18,7 +18,7 @@ export default {
                 .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messages.emojis["stop"].replace(/[^0-9]+/g, ''))
                 .setColor(client.config.embedColor)
                 .addFields({
-                    name: client.messages.nowplayingTitle,
+                    name: client.messages.playTitle1,
                     value: "-"
                 })
                 .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')

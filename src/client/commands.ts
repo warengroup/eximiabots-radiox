@@ -6,7 +6,6 @@ import invite from "./commands/invite";
 import list from "./commands/list";
 import maintenance from "./commands/maintenance";
 import next from "./commands/next";
-import nowplaying from "./commands/nowplaying";
 import play from "./commands/play";
 import prev from "./commands/prev";
 import statistics from "./commands/statistics";
@@ -22,7 +21,7 @@ export interface command {
 }
 
 export default async function commands(client: RadioClient) {
-    const commands : command[] = [ bug, help, invite, list, maintenance, next, nowplaying, play, prev, statistics, status, stop ];
+    const commands : command[] = [ bug, help, invite, list, maintenance, next, play, prev, statistics, status, stop ];
 
     for(const command of commands){
         client.commands.set(command.name, command);
