@@ -8,9 +8,10 @@ export interface station {
         [key: string]: string
     },
     playlist?: {
-        type: "supla" | "yle",
+        type: "radioplay" | "supla" | "yle",
         address: string | string
     }
+    track?: string;
 }
 
 export default class Stations extends Array {

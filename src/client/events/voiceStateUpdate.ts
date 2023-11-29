@@ -53,7 +53,7 @@ export default async function voiceStateUpdate(client: RadioClient, oldState: Vo
     if ((oldState.channel.members.filter(member => !member.user.bot).size === 0 && oldState.channel === radio.voiceChannel) || change) {
         setTimeout(() => {
             if (!radio || !radio.connection || !radio.connection === null) return;
-            if (radio.voiceChannel.members.filter((member: GuildMember) => !member.user.bot).size === 0) {
+            if (radio.voiceChannel?.members.filter((member: GuildMember) => !member.user.bot).size === 0) {
                 client.statistics?.update(client, newState.guild, radio);
                 radio.connection?.destroy();
                 radio.message?.delete();

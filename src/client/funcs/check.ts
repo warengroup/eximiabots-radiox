@@ -4,6 +4,7 @@ import { command } from "../commands";
 
 export default function check(client: RadioClient, interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, command: command) {
 
+    if(!interaction.guild) return;
     const radio = client.radio?.get(interaction.guild?.id);
     if(!client.stations) {
         interaction.reply({

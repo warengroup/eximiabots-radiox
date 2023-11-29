@@ -9,7 +9,9 @@ export default {
     category: 'radio',
     async execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient, command: command) {
         if (client.funcs.check(client, interaction, command)) {
+            if(!interaction.guild) return;
             const radio = client.radio?.get(interaction.guild?.id);
+            if(!radio) return;
 
             if(client.config.maintenanceMode){
                 return interaction.reply({

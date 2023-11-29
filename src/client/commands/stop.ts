@@ -8,7 +8,9 @@ export default {
     category: 'radio',
     async execute(interaction: ButtonInteraction | ChatInputCommandInteraction | StringSelectMenuInteraction, client: RadioClient, command: command) {
         if (client.funcs.check(client, interaction, command)) {
+            if(!interaction.guild) return;
             const radio = client.radio?.get(interaction.guild?.id);
+            if(!radio) return;
             client.statistics?.update(client, interaction.guild, radio);
             radio.connection?.destroy();
             client.funcs.logger('Radio', interaction.guild?.id + " / " + 'Stop');
@@ -18,7 +20,7 @@ export default {
                 .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messages.emojis["stop"].replace(/[^0-9]+/g, ''))
                 .setColor(client.config.embedColor)
                 .addFields({
-                    name: client.messages.nowplayingTitle,
+                    name: client.messages.playTitle1,
                     value: "-"
                 })
                 .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
@@ -28,9 +30,9 @@ export default {
                 });
 
             if(!radio.message){
-                radio.message = radio.textChannel.send({ embeds: [embed], components: [] });
+                radio.message = await radio.textChannel?.send({ embeds: [embed], components: [] }) ?? null;
             } else {
-                if(radio.textChannel.id == radio.message.channel.id){
+                if(radio.textChannel?.id == radio.message.channel.id){
                     radio.message.edit({ embeds: [embed], components: [] });
                 } else {
                     radio.message?.delete();
@@ -41,7 +43,7 @@ export default {
                 await radio.message?.delete();
             }, 5000);
 
-            client.radio?.delete(interaction.guild?.id);
+            client.radio?.delete(interaction.guild.id);
 
             interaction.reply({
                 content: client.messages.emojis["stop"] + client.messages.stop,
