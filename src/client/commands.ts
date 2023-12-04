@@ -1,6 +1,5 @@
 import { Snowflake } from "discord.js";
 import RadioClient from "../Client";
-import bug from "./commands/bug";
 import help from "./commands/help";
 import invite from "./commands/invite";
 import list from "./commands/list";
@@ -21,7 +20,7 @@ export interface command {
 }
 
 export default async function commands(client: RadioClient) {
-    const commands : command[] = [ bug, help, invite, list, maintenance, next, play, prev, statistics, status, stop ];
+    const commands : command[] = [ help, invite, list, maintenance, next, play, prev, statistics, status, stop ];
 
     for(const command of commands){
         client.commands.set(command.name, command);
