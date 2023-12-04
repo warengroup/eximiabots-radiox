@@ -51,15 +51,13 @@ export default class Streamer {
             if(this.mode == "auto"){
                 audioPlayer = createAudioPlayer({
                     behaviors: {
-                        noSubscriber: NoSubscriberBehavior.Play,
-                        maxMissedFrames: Math.round(5000 / 20),
+                        noSubscriber: NoSubscriberBehavior.Play
                     }
                 });
             } else {
                 audioPlayer = createAudioPlayer({
                     behaviors: {
-                        noSubscriber: NoSubscriberBehavior.Stop,
-                        maxMissedFrames: Math.round(5000 / 20),
+                        noSubscriber: NoSubscriberBehavior.Stop
                     }
                 });
             }
