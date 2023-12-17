@@ -5,6 +5,7 @@ export default function uncaughtException(client: RadioClient, error: Error) {
     console.log(error.stack);
     console.log('');
 
+    console.log(error.name + "/" + error.message);
     if(error.name == "DiscordAPIError" && error.message == "Unknown interaction") return;
     process.emit('SIGINT');
 }
