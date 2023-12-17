@@ -1,4 +1,4 @@
-import { Snowflake } from "discord.js";
+import { ApplicationCommand, ApplicationCommandManager, BaseGuild, Guild, GuildApplicationCommandManager, OAuth2Guild, Snowflake } from "discord.js";
 import RadioClient from "../Client";
 import help from "./commands/help";
 import invite from "./commands/invite";
@@ -20,51 +20,40 @@ export interface command {
 }
 
 export default async function commands(client: RadioClient) {
-    const commands : command[] = [ help, invite, list, maintenance, next, play, prev, statistics, status, stop ];
+    const commands1 : command[] = [ help, invite, list, maintenance, next, play, prev, statistics, status, stop ];
+    const commands2 = await client.application?.commands.fetch();
 
-    for(const command of commands){
+    for(const command of commands1){
         client.commands.set(command.name, command);
     }
 
-    if(!client.application) return;
     client.funcs.logger('Application Commands', 'Started refreshing application (/) commands.');
-    if(client.config.devMode){
-        client.application.commands.set([]);
-        for(const command of commands){
-            let guilds = await client.guilds.fetch();
-            guilds.forEach(async (guild: { id: Snowflake; name: string; }) => {
-                try {
-                    if(!client.application) return;
-                    await client.application.commands.create({
-                        name: command.name,
-                        description: command.description,
-                        options: command.options || []
-                    }, guild.id);
-                    client.funcs.logger('Application Commands', 'Guild: ' + guild.id + " (" + guild.name + ") \n" + 'Command: ' + command.name);
-                } catch(DiscordAPIError) {
-                    client.funcs.logger('Application Commands', 'Guild: ' + guild.id + " (" + guild.name + ") [FAILED] \n" + 'Command: ' + command.name);
-                }
-            });
-        }
-    } else {
-        for(const command of commands){
-            await client.application.commands.create({
+    if(commands1){
+        for(const command of commands1){
+            await client.application?.commands.create({
                 name: command.name,
                 description: command.description,
                 options: command.options || []
             });
-
-            client.funcs.logger('Application Commands', 'Command: ' + command.name);
         }
+    }
 
-        let guilds = await client.guilds.fetch();
-        guilds.forEach(async (guild: { id: Snowflake; }) => {
+    if(commands2){
+        commands2.forEach(async command2 => {
+            if(commands1.findIndex((command1) => command1.name == command2.name) == -1){
+                await client.application?.commands.delete(command2.id);
+            }
+        });
+    }
+
+    let guilds = await client.guilds.fetch();
+        guilds.forEach(async (guild: Guild | OAuth2Guild) => {
             try {
                 if(!client.application) return;
                 await client.application.commands.set([], guild.id);
             } catch (DiscordAPIError){
             }
         });
-    }
+
     client.funcs.logger('Application Commands', 'Successfully reloaded application (/) commands.' + "\n");
 }
