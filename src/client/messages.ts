@@ -16,7 +16,7 @@ export const messages = {
     notPlaying: "There is nothing playing!",
     runningCommandFailed: "Running this command failed!",
     noPermsEmbed: "I cannot send embeds (Embed links).",
-    helpTitle: "%client.user.username% - Help",
+    helpTitle: "Help",
     helpDescription: "Join to our support server" + "\n" + "%client.config.supportGuild%",
     inviteTitle: "Invite %client.user.username% to your Discord server!",
     listTitle: "Radio Stations",

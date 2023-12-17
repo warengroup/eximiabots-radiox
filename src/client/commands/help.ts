@@ -14,9 +14,7 @@ export default {
         });
 
         const embed = new EmbedBuilder()
-            .setTitle(client.messages.replace(client.messages.helpTitle, {
-                "%client.user.username%": client.user.username
-            }))
+            .setTitle(client.messages.helpTitle)
             .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messages.emojis["logo"].replace(/[^0-9]+/g, ''))
             .setColor(client.config.embedColor)
             .setDescription(client.messages.replace(client.messages.helpDescription, {
