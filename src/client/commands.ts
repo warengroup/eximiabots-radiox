@@ -1,7 +1,6 @@
 import { ApplicationCommand, ApplicationCommandManager, BaseGuild, Guild, GuildApplicationCommandManager, OAuth2Guild, Snowflake } from "discord.js";
 import RadioClient from "../Client";
 import help from "./commands/help";
-import invite from "./commands/invite";
 import list from "./commands/list";
 import maintenance from "./commands/maintenance";
 import next from "./commands/next";
@@ -20,7 +19,7 @@ export interface command {
 }
 
 export default async function commands(client: RadioClient) {
-    const commands1 : command[] = [ help, invite, list, maintenance, next, play, prev, statistics, status, stop ];
+    const commands1 : command[] = [ help, list, maintenance, next, play, prev, statistics, status, stop ];
     const commands2 = await client.application?.commands.fetch();
 
     for(const command of commands1){

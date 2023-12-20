@@ -18,7 +18,6 @@ export const messages = {
     noPermsEmbed: "I cannot send embeds (Embed links).",
     helpTitle: "Help",
     helpDescription: "Join to our support server" + "\n" + "%client.config.supportGuild%",
-    inviteTitle: "Invite %client.user.username% to your Discord server!",
     listTitle: "Radio Stations",
     playTitle1: ":radio: Channel",
     playDescription1: "__%radio.station.name%__" + "\n" + "%radio.station.owner%",
