@@ -34,6 +34,8 @@ export default async function commands(client: RadioClient) {
                 description: command.description,
                 options: command.options || []
             });
+
+            client.funcs.logger('Application Commands', 'Command: ' + command.name);
         }
     }
 
