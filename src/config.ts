@@ -6,7 +6,7 @@ export default {
     token: process.env.DISCORD_TOKEN,
 
     //radio stations
-    stationslistUrl: process.env.RADIOX_STATIONSLISTURL || "https://git.cwinfo.net/cwchristerw/radio/raw/branch/master/playlist.json",
+    stationslistUrl: process.env.RADIOX_STATIONSLISTURL || "https://eximiabots.waren.io/radiox/stations.json",
 
     //support
     supportGuild: "https://discord.gg/rRA65Mn",

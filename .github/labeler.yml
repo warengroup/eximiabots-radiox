@@ -1,9 +1,13 @@
 dependencies:
-- package-lock.json
+- changed-files:
+    - any-glob-to-any-file:
+        - package-lock.json
 
 documentation:
-- README.md
-- SECURITY.md
-- CONTRIBUTING.md
-- LICENSE
-- .env_example
+- changed-files:
+    - any-glob-to-any-file:
+        - README.md
+        - SECURITY.md
+        - CONTRIBUTING.md
+        - LICENSE
+        - .env_example

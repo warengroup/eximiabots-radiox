@@ -13,23 +13,12 @@ export default {
             ephemeral: true
         });
 
-        const categories: string[] = [];
-        for (let i = 0; i < client.commands.size; i++) {
-            if (!categories.includes([...client.commands.values()][i].category)) categories.push([...client.commands.values()][i].category);
-        }
-        let commands = '';
-        for (let i = 0; i < categories.length; i++) {
-            commands += `**» ${categories[i].toUpperCase()}**\n${client.commands.filter(x => x.category === categories[i]).map((x: command) => `\`${x.name}\``).join(', ')}\n`;
-        }
-
         const embed = new EmbedBuilder()
-            .setTitle(client.messages.replace(client.messages.helpTitle, {
-                "%client.user.username%": client.user.username
-            }))
+            .setTitle(client.messages.helpTitle)
             .setThumbnail("https://cdn.discordapp.com/emojis/" + client.messages.emojis["logo"].replace(/[^0-9]+/g, ''))
             .setColor(client.config.embedColor)
             .setDescription(client.messages.replace(client.messages.helpDescription, {
-                "%commands%": commands
+                    "%client.config.supportGuild%": client.config.supportGuild
             }))
             .setImage('https://waren.io/berriabot-temp-sa7a36a9xm6837br/images/empty-3.png')
             .setFooter({
