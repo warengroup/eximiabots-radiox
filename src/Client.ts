@@ -42,7 +42,7 @@ export default class RadioClient extends Client {
 
         console.log('RadioX ' + this.config.version);
         console.log('Internet Radio to your Discord guild');
-        console.log('(c)2020-2022 EximiaBots by Warén Group');
+        console.log('(c)2020-2024 EximiaBots by Warén Group');
         console.log('');
 
         this.funcs.logger("Bot", "Starting");
