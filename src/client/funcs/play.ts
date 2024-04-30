@@ -205,7 +205,7 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
                 radio.message = await radio.textChannel?.send({ embeds: [embed], components: [buttons] }) ?? null;
             }
         }
-    },10000);
+    },30000);
 
     interaction?.reply({
         content: client.messages.emojis["play"] + client.messages.replace(client.messages.play, {
