@@ -10,7 +10,7 @@ Patch Release
 **Documentation**
 - Add CHANGELOG.md
 
-__**Contributors:**__
+**Contributors:**
 [cwchristerw](<https://github.com/cwchristerw>)
 
 ## 0.5.5 (30.4.2023)
