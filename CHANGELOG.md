@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 0.5.7 (xx.6.2023)
+
+Patch Release
+
+**Contributors:**
+[cwchristerw](<https://github.com/cwchristerw>)
+
 ## 0.5.6 (8.6.2023)
 
 Patch Release
