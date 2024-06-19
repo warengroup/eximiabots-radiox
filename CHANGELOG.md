@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 0.5.7 (19.6.2023)
+
+Patch Release
+
+**Package**
+- Dependencies Update
+
+**Contributors:**
+[cwchristerw](<https://github.com/cwchristerw>)
+
 ## 0.5.6 (8.6.2023)
 
 Patch Release
