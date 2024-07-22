@@ -1,8 +1,12 @@
 # RadioX by EximiaBots
 Internet Radio to your Discord guild
 
-## [Radio Stations List](https://git.cwinfo.net/cwchristerw/radio)
-This bot is using Gitea repo to get radio stations from [playlist.json](https://git.cwinfo.net/cwchristerw/radio/raw/branch/master/playlist.json) file. List is currently maintained by Christer Warén. You can use alternative list with same format when using RADIOX_STATIONSLISTURL environment variable.
+## [Radio Stations List](https://eximiabots.waren.io/radiox/stations.json)
+This bot is getting radio stations from our servers.
+
+https://eximiabots.waren.io/radiox/stations.json
+
+List is generated with cwchristerw's [radio](https://git.waren.io/cwchristerw/radio) repo. This list is currently maintained by Christer Warén. You can use alternative list with same format when using RADIOX_STATIONSLISTURL environment variable.
 
 ## Docker
 
