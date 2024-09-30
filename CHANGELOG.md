@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## 0.5.8 (30.9.2024)
+
+Patch Release
+
+**Package**
+- Dependencies Update
+
+**Documentation**
+- Update radio stations list address and repo in README.md
+- Fix versions 0.5.5-0.5.7 release years in CHANGELOG.md
+
+**Contributors:**
+[cwchristerw](<https://github.com/cwchristerw>)
+
 ## 0.5.7 (19.6.2024)
 
 Patch Release
