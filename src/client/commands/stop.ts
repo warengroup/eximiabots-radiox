@@ -1,4 +1,4 @@
-import { ButtonInteraction, ChatInputCommandInteraction, EmbedBuilder, StringSelectMenuInteraction } from "discord.js";
+import { ButtonInteraction, ChannelType, ChatInputCommandInteraction, EmbedBuilder, StringSelectMenuInteraction } from "discord.js";
 import RadioClient from "../../Client";
 import { command } from "../commands";
 
@@ -11,6 +11,7 @@ export default {
             if(!interaction.guild) return;
             const radio = client.radio?.get(interaction.guild?.id);
             if(!radio) return;
+            if(radio.textChannel?.type == ChannelType.DM || radio.textChannel?.type == ChannelType.GroupDM) return;
             client.statistics?.update(client, interaction.guild, radio);
             radio.connection?.destroy();
             client.funcs.logger('Radio', interaction.guild?.id + " / " + 'Stop');

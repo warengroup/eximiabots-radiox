@@ -1,20 +1,20 @@
-import { Collection, GuildMember, Message, OAuth2Guild, TextBasedChannel, VoiceBasedChannel, VoiceChannel } from "discord.js";
-import { getVoiceConnection, joinVoiceChannel, VoiceConnection } from "@discordjs/voice";
+import { Collection, GuildMember, Message, Guild, OAuth2Guild, TextBasedChannel, VoiceBasedChannel, VoiceChannel } from "discord.js";
+import { DiscordGatewayAdapterCreator, getVoiceConnection, joinVoiceChannel, VoiceConnection } from "@discordjs/voice";
 import RadioClient from "../../Client";
 import { station } from "./Stations";
 import { datastore } from "./Datastore";
 
 export interface radio {
-    textChannel: TextBasedChannel | undefined | null,
-    voiceChannel: VoiceBasedChannel | undefined,
-    connection: VoiceConnection | null,
+    textChannel: TextBasedChannel | null,
+    voiceChannel: VoiceBasedChannel | null,
+    connection: VoiceConnection | undefined,
     message: Message | null,
     station: station,
     datastore?: datastore,
     currentTime?: number,
     startTime: number,
     playTime?: number,
-    guild?: any
+    guild?: Guild | { id: string, name?: string }
 }
 
 export interface state {
@@ -78,10 +78,11 @@ export default class Radio extends Map<string, radio> {
             const construct: radio = {
                 textChannel: client.channels.cache.get(state.channels.text) as TextBasedChannel,
                 voiceChannel: client.channels.cache.get(state.channels.voice) as VoiceBasedChannel,
-                connection: null,
+                connection: undefined,
                 message: null,
                 station: station,
-                startTime: date.getTime()
+                startTime: date.getTime(),
+                guild: guild
             };
             this.set(guild.id, construct);
 
@@ -91,7 +92,7 @@ export default class Radio extends Map<string, radio> {
                     joinVoiceChannel({
                         channelId: voiceChannel.id,
                         guildId: voiceChannel.guild.id,
-                        adapterCreator: voiceChannel.guild.voiceAdapterCreator
+                        adapterCreator: voiceChannel.guild.voiceAdapterCreator as DiscordGatewayAdapterCreator
                     });
 
                 construct.connection = connection;
