@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.5.7 (19.6.2023)
+## 0.5.7 (19.6.2024)
 
 Patch Release
 
@@ -10,7 +10,7 @@ Patch Release
 **Contributors:**
 [cwchristerw](<https://github.com/cwchristerw>)
 
-## 0.5.6 (8.6.2023)
+## 0.5.6 (8.6.2024)
 
 Patch Release
 
@@ -23,7 +23,7 @@ Patch Release
 **Contributors:**
 [cwchristerw](<https://github.com/cwchristerw>)
 
-## 0.5.5 (30.4.2023)
+## 0.5.5 (30.4.2024)
 
 Patch Release
 
