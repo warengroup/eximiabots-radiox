@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, EmbedBuilder, Guild, OAuth2Guild, StringSelectMenuInteraction } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChannelType, ChatInputCommandInteraction, EmbedBuilder, Guild, OAuth2Guild, StringSelectMenuInteraction } from "discord.js";
 import RadioClient from "../../Client";
 import { station } from "../classes/Stations";
 
@@ -7,6 +7,7 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
 
     const radio = client.radio?.get(guild.id);
     if(!radio) return;
+    if(radio.textChannel?.type == ChannelType.DM || radio.textChannel?.type == ChannelType.GroupDM) return;
     const audioPlayer = client.streamer?.listen(station);
     if(!audioPlayer) return;
     radio.connection?.subscribe(audioPlayer);
@@ -123,7 +124,7 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
     let timer : NodeJS.Timeout = setInterval(async function(){
         const radio = client.radio?.get(guild.id);
 
-        if(!radio || !oldRadio || radio.station.name != oldRadio.station.name) {
+        if(!radio || !oldRadio || radio.station.name != oldRadio.station.name || radio.textChannel?.type == ChannelType.DM || radio.textChannel?.type == ChannelType.GroupDM) {
             return clearInterval(timer);
         }
 

@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType, ChatInputCommandInteraction, GuildMember, PermissionFlagsBits, StringSelectMenuInteraction } from "discord.js";
-import { getVoiceConnection, joinVoiceChannel } from "@discordjs/voice";
+import { DiscordGatewayAdapterCreator, getVoiceConnection, joinVoiceChannel } from "@discordjs/voice";
 import RadioClient from "../../Client";
 import { radio } from "../classes/Radio"
 
@@ -129,10 +129,11 @@ export default {
         const construct: radio = {
             textChannel: interaction.channel,
             voiceChannel: voiceChannel,
-            connection: null,
+            connection: undefined,
             message: null,
             station: station,
-            startTime: date.getTime()
+            startTime: date.getTime(),
+            guild: interaction.guild
         };
         client.radio?.set(interaction.guild?.id, construct);
 
@@ -142,7 +143,7 @@ export default {
                 joinVoiceChannel({
                     channelId: voiceChannel.id,
                     guildId: voiceChannel.guild.id,
-                    adapterCreator: voiceChannel.guild.voiceAdapterCreator
+                    adapterCreator: voiceChannel.guild?.voiceAdapterCreator as DiscordGatewayAdapterCreator
                 });
             construct.connection = connection;
             let date = new Date();

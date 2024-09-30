@@ -1,9 +1,6 @@
 import { GuildMember, PermissionFlagsBits, VoiceState } from "discord.js";
 import RadioClient from "../../Client";
-const {
-    getVoiceConnection,
-    joinVoiceChannel
-} = require("@discordjs/voice");
+import { DiscordGatewayAdapterCreator, getVoiceConnection, joinVoiceChannel } from "@discordjs/voice";
 
 export default async function voiceStateUpdate(client: RadioClient, oldState: VoiceState, newState: VoiceState) {
     if (oldState.channel === null) return;
@@ -27,9 +24,9 @@ export default async function voiceStateUpdate(client: RadioClient, oldState: Vo
                 setTimeout(
                     async () => (
                         radio.connection = joinVoiceChannel({
-                            channelId: oldState.channel?.id,
-                            guildId: oldState.channel?.guild.id,
-                            adapterCreator: oldState.channel?.guild.voiceAdapterCreator
+                            channelId: oldState.channel?.id as string,
+                            guildId: oldState.channel?.guild.id as string,
+                            adapterCreator: oldState.channel?.guild.voiceAdapterCreator as DiscordGatewayAdapterCreator
                         })
                     ),
                     1000

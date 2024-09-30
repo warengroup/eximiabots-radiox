@@ -1,4 +1,4 @@
-import { Guild } from "discord.js";
+import { Guild, OAuth2Guild } from "discord.js";
 import RadioClient from "../../Client";
 import { radio } from "./Radio";
 
@@ -18,7 +18,7 @@ export default class Statistics {
         this.map = new Map();
     }
 
-    update(client: RadioClient, guild: Guild | null, radio: radio) {
+    update(client: RadioClient, guild: Guild | { id: string, name?: string } | undefined, radio: radio) {
         if(!guild) return;
 
         client.datastore?.checkEntry(guild.id);

@@ -76,7 +76,7 @@ export default class Datastore {
         return this.map.get(id);
     }
 
-    updateEntry(guild: Guild | { id: string, name: string }, newData: datastore) {
+    updateEntry(guild: Guild | { id: string, name?: string }, newData: datastore) {
         newData.guild.name = guild.name;
 
         let date = new Date();
