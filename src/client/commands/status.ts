@@ -9,7 +9,7 @@ export default {
 
         if(!client.user) return interaction.reply({
             content: client.messages.emojis["error"] + client.messages.maintenance,
-            ephemeral: true
+            flags: 'Ephemeral'
         });
 
         let uptime = client.funcs.msToTime(client.uptime || 0);
@@ -35,7 +35,7 @@ export default {
 
         interaction.reply({
             embeds: [embed],
-            ephemeral: true
+            flags: 'Ephemeral'
         });
 
     }

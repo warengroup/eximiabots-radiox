@@ -10,7 +10,7 @@ export default {
 
         if(!client.user) return interaction.reply({
             content: client.messages.emojis["error"] + client.messages.maintenance,
-            ephemeral: true
+            flags: 'Ephemeral'
         });
 
         const embed = new EmbedBuilder()
@@ -28,7 +28,7 @@ export default {
 
         interaction.reply({
             embeds: [embed],
-            ephemeral: true
+            flags: 'Ephemeral'
         });
     }
 };

@@ -37,6 +37,6 @@ export default function listStations(client: RadioClient, interaction: ButtonInt
     return interaction.reply({
         content: '**Select station:**',
         components: [menu],
-        ephemeral: true
+        flags: 'Ephemeral'
     });
 }

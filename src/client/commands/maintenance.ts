@@ -11,7 +11,7 @@ export default {
 
         if(!client.funcs.isDev(client.config.devIDs, interaction.user.id)) return interaction.reply({
             content: client.messages.emojis["error"] + client.messages.notAllowed,
-            ephemeral: true
+            flags: 'Ephemeral'
         });
 
         let action : number | string | null = null;
@@ -107,7 +107,7 @@ export default {
             return interaction.reply({
                 content: "**" + client.messages.maintenanceTitle + "**",
                 components: [menu],
-                ephemeral: true
+                flags: 'Ephemeral'
             });
         }
 
@@ -124,7 +124,7 @@ export default {
 
         interaction.reply({
             embeds: [embed],
-            ephemeral: true
+            flags: 'Ephemeral'
         });
 
         let guilds = await client.guilds.fetch();
