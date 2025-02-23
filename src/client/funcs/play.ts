@@ -212,7 +212,7 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
         content: client.messages.emojis["play"] + client.messages.replace(client.messages.play, {
             "%radio.station.name%": radio.station.name
         }),
-        ephemeral: true
+        flags: 'Ephemeral'
     });
 
 }

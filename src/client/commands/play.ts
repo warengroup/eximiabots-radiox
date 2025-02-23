@@ -18,7 +18,7 @@ export default {
         if(client.config.maintenanceMode){
             return interaction.reply({
                 content: client.messages.emojis["error"] + client.messages.maintenance,
-                ephemeral: true
+                flags: 'Ephemeral'
             });
         }
 
@@ -27,7 +27,7 @@ export default {
                 content: client.messages.emojis["error"] + client.messages.replace(client.messages.errorToGetPlaylist, {
                     "%client.config.supportGuild%": client.config.supportGuild
                 }),
-                ephemeral: true
+                flags: 'Ephemeral'
             });
         }
 
@@ -52,32 +52,32 @@ export default {
 
         if (!voiceChannel) return interaction.reply({
             content: client.messages.emojis["error"] + client.messages.noVoiceChannel,
-            ephemeral: true
+            flags: 'Ephemeral'
         });
 
         if (radio) {
             if (voiceChannel !== radio.voiceChannel) return interaction.reply({
                 content: client.messages.emojis["error"] + client.messages.wrongVoiceChannel,
-                ephemeral: true
+                flags: 'Ephemeral'
             });
         }
 
         if (!query) return interaction.reply({
             content: client.messages.noQuery,
-            ephemeral: true
+            flags: 'Ephemeral'
         });
 
         const permissions = voiceChannel.permissionsFor(interaction.client.user);
         if (!permissions?.has(PermissionFlagsBits.Connect)) {
             return interaction.reply({
                 content: client.messages.emojis["error"] + client.messages.noPermsConnect,
-                ephemeral: true
+                flags: 'Ephemeral'
             });
         }
         if (!permissions?.has(PermissionFlagsBits.Speak)) {
             return interaction.reply({
                 content: client.messages.emojis["error"] + client.messages.noPermsSpeak,
-                ephemeral: true
+                flags: 'Ephemeral'
             });
         }
         let station;
@@ -87,7 +87,7 @@ export default {
             if(number > client.stations.length - 1) {
                 return interaction.reply({
                     content: client.messages.emojis["error"] + client.messages.wrongStationNumber,
-                    ephemeral: true
+                    flags: 'Ephemeral'
                 });
             } else {
                 station = client.stations[number];
@@ -96,7 +96,7 @@ export default {
 
             if(query.length < 3) return interaction.reply({
                 content: client.messages.emojis["error"] + client.messages.tooShortSearch,
-                ephemeral: true
+                flags: 'Ephemeral'
             });
 
             let type = "text";
@@ -108,7 +108,7 @@ export default {
             const sstation = client.stations.search(query, type);
             if (!sstation) return interaction.reply({
                 content: client.messages.emojis["error"] + client.messages.noSearchResults,
-                ephemeral: true
+                flags: 'Ephemeral'
             });
             station = sstation;
         }
@@ -155,7 +155,7 @@ export default {
             client.radio?.delete(interaction.guild?.id);
             return interaction.reply({
                 content: client.messages.emojis["error"] + `An error occured: ${error}`,
-                ephemeral: true
+                flags: 'Ephemeral'
             });
         }
     }

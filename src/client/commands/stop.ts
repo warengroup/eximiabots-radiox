@@ -48,7 +48,7 @@ export default {
 
             interaction.reply({
                 content: client.messages.emojis["stop"] + client.messages.stop,
-                ephemeral: true
+                flags: 'Ephemeral'
             });
         }
     }

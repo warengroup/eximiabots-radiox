@@ -10,7 +10,7 @@ export default function interactionCreate(client: RadioClient, interaction: Inte
 
     if (!permissions?.has(PermissionFlagsBits.EmbedLinks)) return interaction.reply({
         content: client.messages.emojis["error"] + client.messages.noPermsEmbed,
-        ephemeral: true
+        flags: 'Ephemeral'
     });
 
     if(interaction.isChatInputCommand()){
@@ -23,7 +23,7 @@ export default function interactionCreate(client: RadioClient, interaction: Inte
         } catch (error) {
             interaction.reply({
                 content: client.messages.emojis["error"] + client.messages.runningCommandFailed,
-                ephemeral: true
+                flags: 'Ephemeral'
             });
             console.error(error);
         }
@@ -37,7 +37,7 @@ export default function interactionCreate(client: RadioClient, interaction: Inte
         } catch (error) {
             interaction.reply({
                 content: client.messages.emojis["error"] + client.messages.runningCommandFailed,
-                ephemeral: true
+                flags: 'Ephemeral'
             });
             console.error(error);
         }

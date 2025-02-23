@@ -10,7 +10,7 @@ export default {
 
         if(!interaction.guild) return interaction.reply({
             content: client.messages.emojis["error"] + client.messages.maintenance,
-            ephemeral: true
+            flags: 'Ephemeral'
         });
 
         let currentGuild = client.datastore?.getEntry(interaction.guild.id);
@@ -22,7 +22,7 @@ export default {
                 content: client.messages.emojis["error"] + client.messages.replace(client.messages.errorToGetPlaylist, {
                     "%client.config.supportGuild%": client.config.supportGuild
                 }),
-                ephemeral: true
+                flags: 'Ephemeral'
             });
         }
 
@@ -45,7 +45,7 @@ export default {
 
         interaction.reply({
             embeds: [embed],
-            ephemeral: true
+            flags: 'Ephemeral'
         });
     }
 };

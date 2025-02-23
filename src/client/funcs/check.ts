@@ -11,14 +11,14 @@ export default function check(client: RadioClient, interaction: ButtonInteractio
             content: client.messages.emojis["error"] + client.messages.replace(client.messages.errorToGetPlaylist, {
                 "%client.config.supportGuild%": client.config.supportGuild
             }),
-            ephemeral: true
+            flags: 'Ephemeral'
         });
         return false;
     }
     if (!radio) {
         interaction.reply({
             content: client.messages.emojis["error"] + client.messages.notPlaying,
-            ephemeral: true
+            flags: 'Ephemeral'
         });
         return false;
     }
@@ -26,7 +26,7 @@ export default function check(client: RadioClient, interaction: ButtonInteractio
     if (interaction.member instanceof GuildMember && interaction.member?.voice.channel !== radio.voiceChannel) {
         interaction.reply({
             content: client.messages.emojis["error"] + client.messages.wrongVoiceChannel,
-            ephemeral: true
+            flags: 'Ephemeral'
         });
         return false;
     }
