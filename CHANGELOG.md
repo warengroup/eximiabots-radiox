@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 0.5.9 (23.2.2025)
+
+Patch Release
+
+- Updating code, because Discord.js has deprecated few options previously used.
+
+**Package**
+- Dependencies Update
+
+**Contributors:**
+[cwchristerw](<https://github.com/cwchristerw>)
+
 ## 0.5.8 (30.9.2024)
 
 Patch Release
