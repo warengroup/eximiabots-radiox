@@ -1,6 +1,6 @@
 {
   "name": "eximiabots-radiox",
-  "version": "0.5.10",
+  "version": "0.5.11",
   "description": "Internet Radio to your Discord guild",
   "main": "index.js",
   "scripts": {
