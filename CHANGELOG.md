@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 0.5.10 (14.6.2025)
+
+Patch Release
+
+**Package**
+- Dependencies Update
+
+**Miscellaneous:**
+- Dockerfile: Use NodeJS 22
+
+**Contributors:**
+[cwchristerw](<https://github.com/cwchristerw>)
+
 ## 0.5.9 (23.2.2025)
 
 Patch Release
