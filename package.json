@@ -1,6 +1,6 @@
 {
   "name": "eximiabots-radiox",
-  "version": "0.5.10",
+  "version": "0.5.11",
   "description": "Internet Radio to your Discord guild",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@discordjs/voice": "^0.18.0",
-    "discord.js": "^14.19.3",
+    "discord.js": "^14.20.0",
     "dotenv": "^16.5.0",
     "libsodium-wrappers": "^0.7.15",
     "path": "^0.12.7"
