@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 0.5.13 (31.12.2025)
+
+Patch Release
+
+**Package**
+- Dependencies Update
+
+**Contributors:**
+[cwchristerw](<https://github.com/cwchristerw>)
+
 ## 0.5.12 (22.12.2025)
 
 Patch Release
