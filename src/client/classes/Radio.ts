@@ -10,6 +10,7 @@ export interface radio {
     connection: VoiceConnection | undefined,
     message: Message | null,
     station: station,
+    track?: string,
     datastore?: datastore,
     currentTime?: number,
     startTime: number,

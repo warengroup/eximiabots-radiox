@@ -11,7 +11,6 @@ export interface station {
         type: "radioplay" | "supla" | "yle",
         address: string | string
     }
-    track?: string;
 }
 
 export default class Stations extends Array {

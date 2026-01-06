@@ -20,27 +20,27 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
             .catch(error => {
             });
 
-            radio.station.track = "-";
+            radio.track = "-";
 
             if(playlist){
                 switch(radio.station.playlist.type){
                     case "radioplay":
                         if(playlist[0] && playlist[0].stationNowPlaying && playlist[0].stationNowPlaying.nowPlayingArtist && playlist[0].stationNowPlaying.nowPlayingTrack){
-                            radio.station.track = "__" + playlist[0].stationNowPlaying.nowPlayingArtist + "__" + "\n" + playlist[0].stationNowPlaying.nowPlayingTrack;
+                            radio.track = "__" + playlist[0].stationNowPlaying.nowPlayingArtist + "__" + "\n" + playlist[0].stationNowPlaying.nowPlayingTrack;
                         }
                         break;
                     case "supla":
                         if(playlist.items && playlist.items[0] && playlist.items[0].artist && playlist.items[0].song){
-                            radio.station.track = "__" + playlist.items[0].artist + "__" + "\n" + playlist.items[0].song;
+                            radio.track = "__" + playlist.items[0].artist + "__" + "\n" + playlist.items[0].song;
                         }
                         break;
                     case "yle":
                         if(playlist.data && playlist.data.performer && playlist.data.title){
-                            radio.station.track = "__" + playlist.data.performer + "__" + "\n" + playlist.data.title;
+                            radio.track = "__" + playlist.data.performer + "__" + "\n" + playlist.data.title;
                         }
                         break;
                     default:
-                        radio.station.track = "-";
+                        radio.track = "-";
                 }
             }
         }
@@ -60,7 +60,7 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
         {
             name: client.messages.playTitle2,
             value: client.messages.replace(client.messages.playDescription2, {
-                "%radio.station.track%": radio.station.track != undefined ? "\n\n" + radio.station.track : "-"
+                "%radio.station.track%": radio.track != undefined ? "\n\n" + radio.track : "-"
             })
         },
         {
@@ -135,27 +135,27 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
                 .catch(error => {
                 });
 
-                radio.station.track = "-";
+                radio.track = "-";
 
                 if(playlist){
                     switch(radio.station.playlist?.type){
                         case "radioplay":
                             if(playlist[0] && playlist[0].stationNowPlaying && playlist[0].stationNowPlaying.nowPlayingArtist && playlist[0].stationNowPlaying.nowPlayingTrack){
-                                radio.station.track = "__" + playlist[0].stationNowPlaying.nowPlayingArtist + "__" + "\n" + playlist[0].stationNowPlaying.nowPlayingTrack;
+                                radio.track = "__" + playlist[0].stationNowPlaying.nowPlayingArtist + "__" + "\n" + playlist[0].stationNowPlaying.nowPlayingTrack;
                             }
                             break;
                         case "supla":
                             if(playlist.items && playlist.items[0] && playlist.items[0].artist && playlist.items[0].song){
-                                radio.station.track = "__" + playlist.items[0].artist + "__" + "\n" + playlist.items[0].song;
+                                radio.track = "__" + playlist.items[0].artist + "__" + "\n" + playlist.items[0].song;
                             }
                             break;
                         case "yle":
                             if(playlist.data && playlist.data.performer && playlist.data.title){
-                                radio.station.track = "__" + playlist.data.performer + "__" + "\n" + playlist.data.title;
+                                radio.track = "__" + playlist.data.performer + "__" + "\n" + playlist.data.title;
                             }
                             break;
                         default:
-                            radio.station.track = "-";
+                            radio.track = "-";
                     }
                 }
             }
@@ -180,7 +180,7 @@ export default async function play(client: RadioClient, interaction: ChatInputCo
         {
             name: client.messages.playTitle2,
             value: client.messages.replace(client.messages.playDescription2, {
-                "%radio.station.track%": radio.station.track != undefined ? "\n\n" + radio.station.track : "-"
+                "%radio.station.track%": radio.track != undefined ? "\n\n" + radio.track : "-"
             })
         },
         {
