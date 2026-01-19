@@ -22,7 +22,7 @@
     "@snazzah/davey": "^0.1.9",
     "discord.js": "^14.25.1",
     "dotenv": "^17.2.3",
-    "libsodium-wrappers": "^0.8.0",
+    "libsodium-wrappers": "^0.8.1",
     "path": "^0.12.7"
   },
   "devDependencies": {
