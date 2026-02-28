@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 0.5.14 (28.2.2026)
+
+Patch Release
+
+**Package**
+- Dependencies Update
+
+**Miscellaneous:**
+- Dockerfile: Use NodeJS 24
+
+**Contributors:**
+[cwchristerw](<https://github.com/cwchristerw>)
+
 ## 0.5.13 (31.12.2025)
 
 Patch Release

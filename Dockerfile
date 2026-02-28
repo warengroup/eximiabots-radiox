@@ -1,4 +1,4 @@
-FROM docker.io/library/node:22-alpine
+FROM docker.io/library/node:24-alpine
 
 #Dependencies
 RUN apk add --virtual .build-deps python3 make g++ gcc git
