@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 0.5.15 (4.4.2026)
+
+Patch Release
+
+**Package**
+- Dependencies Update
+
+**Contributors:**
+[cwchristerw](<https://github.com/cwchristerw>)
+
 ## 0.5.14 (28.2.2026)
 
 Patch Release
